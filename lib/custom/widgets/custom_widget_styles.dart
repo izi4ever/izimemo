@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ThemeWidgetStyles {
+class CustomWidgetStyles {
   static ButtonStyle whiteButtonBudge = ElevatedButton.styleFrom(
     elevation: 0,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),

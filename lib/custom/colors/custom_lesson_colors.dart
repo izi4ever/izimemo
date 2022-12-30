@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-enum ThemeLessonColors {
+enum CustomLessonColors {
   red(color: Color(0xFFBB1111)),
   green(color: Color(0xFF119955)),
   blue(color: Color(0xFF1155AA)),
@@ -13,7 +13,7 @@ enum ThemeLessonColors {
   amber(color: Color(0xFFFFC107)),
   pink(color: Color(0xFFFF00FF));
 
-  const ThemeLessonColors({
+  const CustomLessonColors({
     required this.color,
   });
 

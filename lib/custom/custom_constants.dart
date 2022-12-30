@@ -1,4 +1,4 @@
-class ThemeConstants {
+class CustomConstants {
   static const double urlFieldHeight = 38;
   static const double webviewRadius = 20;
   static const double lessonRadius = 15;

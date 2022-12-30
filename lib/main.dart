@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
+import 'custom/colors/custom_design_colors.dart';
 import 'home_page/home_page.dart';
-import 'theme/theme_design_colors.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -24,8 +24,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch().copyWith(
-          primary: ThemeDesignColors.darkBlue,
-          secondary: ThemeDesignColors.lightBlue,
+          primary: CustomDesignColors.darkBlue,
+          secondary: CustomDesignColors.lightBlue,
         ),
       ),
     );

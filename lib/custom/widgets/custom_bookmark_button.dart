@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../theme_bookmark_colors.dart';
+import '../colors/custom_bookmark_colors.dart';
 
-class ThemeBookmarkButton extends StatelessWidget {
+class CustomBookmarkButton extends StatelessWidget {
   final String title;
   final String url;
-  const ThemeBookmarkButton({
+  const CustomBookmarkButton({
     super.key,
     required this.title,
     required this.url,
@@ -13,7 +13,7 @@ class ThemeBookmarkButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorsNumber = ThemeBookmarkColors.values.length;
+    final colorsNumber = CustomBookmarkColors.values.length;
     return ElevatedButton(
       onPressed: () {
         print('url: $url');
@@ -21,7 +21,7 @@ class ThemeBookmarkButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         elevation: 0,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
-        backgroundColor: ThemeBookmarkColors.values[(url.length + colorsNumber) % colorsNumber].color,
+        backgroundColor: CustomBookmarkColors.values[(url.length + colorsNumber) % colorsNumber].color,
         foregroundColor: Colors.grey[700],
       ),
       child: Text(

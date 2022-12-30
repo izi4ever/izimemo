@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:izimemo/home_page/default_links.dart';
-import 'package:izimemo/theme/theme_widget_styles.dart';
-import 'package:izimemo/theme/widgets/theme_bookmark_button.dart';
+import 'package:izimemo/custom/widgets/custom_widget_styles.dart';
+import 'package:izimemo/custom/widgets/custom_bookmark_button.dart';
+import 'package:izimemo/home_page/custom_links/default_links.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import '../theme/theme_constants.dart';
-import '../theme/theme_design_colors.dart';
-import '../theme/theme_lesson_colors.dart';
-import 'additional_links.dart';
+import '../custom/custom_constants.dart';
+import '../custom/colors/custom_design_colors.dart';
+import '../custom/colors/custom_lesson_colors.dart';
+import 'custom_links/additional_links.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -60,11 +60,11 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.only(left: 20, right: 20, top: 18, bottom: 12),
       borderRadius: 12,
-      backgroundColor: ThemeDesignColors.mediumBlue,
+      backgroundColor: CustomDesignColors.mediumBlue,
       snackPosition: SnackPosition.BOTTOM,
       icon: const Icon(
         Icons.hdr_strong,
-        color: ThemeDesignColors.darkBlue,
+        color: CustomDesignColors.darkBlue,
       ),
       onTap: (snack) => Get.closeCurrentSnackbar(),
     );
@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   Future<bool> onGoForward() async {
     urlFieldUnfocused;
     if (canGoForward) {
-      webController.goForward();
+      await webController.goForward();
     } else {
       showSnackBar('Forward history is empty');
     }
@@ -175,7 +175,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     });
 
     appBarAnimationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 300));
-    appBarSizeAnimation = Tween<double>(begin: ThemeConstants.appBarHeight, end: 0.0)
+    appBarSizeAnimation = Tween<double>(begin: CustomConstants.appBarHeight, end: 0.0)
         // .animate(appBarAnimationController);
         // .animate(CurvedAnimation(parent: appBarAnimationController, curve: Curves.decelerate));
         .animate(CurvedAnimation(parent: appBarAnimationController, curve: Curves.easeIn));
@@ -191,14 +191,14 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       child: Scaffold(
         backgroundColor: Colors.black,
         drawer: Drawer(
-          backgroundColor: ThemeDesignColors.lightBlue,
+          backgroundColor: CustomDesignColors.lightBlue,
           child: Column(
             children: [
               Stack(
                 children: [
                   DrawerHeader(
                     decoration: const BoxDecoration(
-                      color: ThemeDesignColors.darkBlue,
+                      color: CustomDesignColors.darkBlue,
                     ),
                     child: Center(
                       child: Column(
@@ -212,14 +212,14 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                           Text(
                             'Izimemo',
                             style: GoogleFonts.lobster(
-                              textStyle: const TextStyle(color: ThemeDesignColors.lightBlue, fontSize: 22),
+                              textStyle: const TextStyle(color: CustomDesignColors.lightBlue, fontSize: 22),
                             ),
                           ),
                           const Text(
                             'Learn while relaxing',
                             // 'Relax and learn',
                             // 'Relax and study',
-                            style: TextStyle(color: ThemeDesignColors.lightBlue, fontWeight: FontWeight.w700),
+                            style: TextStyle(color: CustomDesignColors.lightBlue, fontWeight: FontWeight.w700),
                           ),
                           const SizedBox(height: 16),
                         ],
@@ -241,7 +241,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       ),
                       child: const Text(
                         'v1.0.3',
-                        style: TextStyle(color: ThemeDesignColors.darkBlue, fontSize: 12, fontWeight: FontWeight.w500),
+                        style: TextStyle(color: CustomDesignColors.darkBlue, fontSize: 12, fontWeight: FontWeight.w500),
                       ),
                     ),
                   ),
@@ -290,9 +290,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     right: 0,
                     bottom: 7,
                     child: Container(
-                      height: ThemeConstants.webviewRadius,
+                      height: CustomConstants.webviewRadius,
                       decoration: const BoxDecoration(
-                        color: ThemeDesignColors.lightBlue,
+                        color: CustomDesignColors.lightBlue,
                         borderRadius: BorderRadius.only(
                           // topLeft: Radius.elliptical(500, 30),
                           topRight: Radius.elliptical(500, 30),
@@ -339,13 +339,13 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             onPressed: () {},
                             icon: const FaIcon(
                               FontAwesomeIcons.shareNodes,
-                              color: ThemeDesignColors.greyBlue,
+                              color: CustomDesignColors.greyBlue,
                               size: 18,
                             ),
                             label: const Text(
                               'Share opened content with friends',
                               style: TextStyle(
-                                color: ThemeDesignColors.darkBlue,
+                                color: CustomDesignColors.darkBlue,
                               ),
                             ),
                             style: TextButton.styleFrom(
@@ -357,14 +357,14 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             onPressed: () {},
                             icon: const FaIcon(
                               FontAwesomeIcons.solidHeart,
-                              color: ThemeDesignColors.greyBlue,
+                              color: CustomDesignColors.greyBlue,
                               size: 18,
                             ),
                             label: const Text(
                               // TODO Добавить эту страницу в закладки
                               'Add opened content to bookmark',
                               style: TextStyle(
-                                color: ThemeDesignColors.darkBlue,
+                                color: CustomDesignColors.darkBlue,
                               ),
                             ),
                             style: TextButton.styleFrom(
@@ -385,7 +385,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                               if (e.active == true) {
                                 return Padding(
                                   padding: const EdgeInsets.only(right: 10),
-                                  child: ThemeBookmarkButton(
+                                  child: CustomBookmarkButton(
                                     title: e.title,
                                     url: e.url,
                                   ),
@@ -410,13 +410,13 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         children: [
                           ElevatedButton(
                             onPressed: onClearCache,
-                            style: ThemeWidgetStyles.whiteButtonBudge,
+                            style: CustomWidgetStyles.whiteButtonBudge,
                             child: const Text('Clear cache'),
                           ),
                           const SizedBox(width: 8),
                           ElevatedButton(
                             onPressed: onClearCookies,
-                            style: ThemeWidgetStyles.whiteButtonBudge,
+                            style: CustomWidgetStyles.whiteButtonBudge,
                             child: const Text('Clear cookies'),
                           ),
                         ],
@@ -436,7 +436,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         appBar: AppBar(
           toolbarHeight: appBarSizeAnimation.value,
           title: SizedBox(
-            height: ThemeConstants.urlFieldHeight,
+            height: CustomConstants.urlFieldHeight,
             child: Stack(
               children: [
                 Padding(
@@ -447,9 +447,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       duration: const Duration(milliseconds: 150),
                       child: LinearProgressIndicator(
                         value: loadingPercentage / 100.0,
-                        color: ThemeDesignColors.mediumBlue,
+                        color: CustomDesignColors.mediumBlue,
                         backgroundColor: Colors.white,
-                        minHeight: ThemeConstants.urlFieldHeight,
+                        minHeight: CustomConstants.urlFieldHeight,
                       ),
                     ),
                   ),
@@ -465,8 +465,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     //       TextSelection(baseOffset: 0, extentOffset: _urlTextController.text.length);
                     // },
                     textAlignVertical: TextAlignVertical.center,
-                    style: const TextStyle(color: ThemeDesignColors.darkBlue),
-                    cursorColor: ThemeDesignColors.darkBlue,
+                    style: const TextStyle(color: CustomDesignColors.darkBlue),
+                    cursorColor: CustomDesignColors.darkBlue,
                     cursorHeight: 22,
                     cursorWidth: 1,
                     decoration: InputDecoration(
@@ -486,7 +486,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                           // FontAwesomeIcons.solidHeart,
                           FontAwesomeIcons.heart,
                           size: 20,
-                          color: ThemeDesignColors.darkBlue,
+                          color: CustomDesignColors.darkBlue,
                         ),
                       ),
                       suffixIcon: onUrlFieldFocus
@@ -495,7 +495,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                               onPressed: onLoadUrlField,
                               icon: const Icon(
                                 Icons.arrow_forward,
-                                color: ThemeDesignColors.darkBlue,
+                                color: CustomDesignColors.darkBlue,
                               ),
                             )
                           : (loadingPercentage < 100)
@@ -507,7 +507,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                   },
                                   icon: const Icon(
                                     Icons.close,
-                                    color: ThemeDesignColors.darkBlue,
+                                    color: CustomDesignColors.darkBlue,
                                   ),
                                 )
                               : IconButton(
@@ -517,20 +517,20 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                     Icons.replay,
                                     // CupertinoIcons.arrow_2_circlepath,
                                     // size: 24,
-                                    color: ThemeDesignColors.darkBlue,
+                                    color: CustomDesignColors.darkBlue,
                                   ),
                                 ),
                       border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(100)),
-                        borderSide: BorderSide(color: ThemeDesignColors.darkBlue, width: 2),
+                        borderSide: BorderSide(color: CustomDesignColors.darkBlue, width: 2),
                       ),
                       enabledBorder: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(100)),
-                        borderSide: BorderSide(color: ThemeDesignColors.darkBlue, width: 2),
+                        borderSide: BorderSide(color: CustomDesignColors.darkBlue, width: 2),
                       ),
                       focusedBorder: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(100)),
-                        borderSide: BorderSide(color: ThemeDesignColors.lightBlue, width: 0),
+                        borderSide: BorderSide(color: CustomDesignColors.lightBlue, width: 0),
                       ),
                     ),
                   ),
@@ -569,31 +569,31 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               child: Stack(
                 children: [
                   Container(
-                    color: ThemeDesignColors.darkBlue,
-                    height: ThemeConstants.webviewRadius,
+                    color: CustomDesignColors.darkBlue,
+                    height: CustomConstants.webviewRadius,
                   ),
                   Positioned(
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    top: 0 + ThemeConstants.webviewRadius,
+                    top: 0 + CustomConstants.webviewRadius,
                     child: Container(
                       decoration: BoxDecoration(
-                        color: ThemeLessonColors.aquamarine.color,
+                        color: CustomLessonColors.aquamarine.color,
                         // color: ThemeColors.amber,
                         borderRadius: BorderRadius.only(
                           // If keyboard is/not active
                           bottomLeft: (MediaQuery.of(context).viewInsets.bottom == 0)
-                              ? const Radius.circular(ThemeConstants.lessonRadius)
+                              ? const Radius.circular(CustomConstants.lessonRadius)
                               : const Radius.circular(0),
                           bottomRight: (MediaQuery.of(context).viewInsets.bottom == 0)
-                              ? const Radius.circular(ThemeConstants.lessonRadius)
+                              ? const Radius.circular(CustomConstants.lessonRadius)
                               : const Radius.circular(0),
                         ),
                       ),
                       height: (MediaQuery.of(context).orientation == Orientation.portrait)
-                          ? ThemeConstants.lessonHeightPortrait + ThemeConstants.webviewRadius
-                          : ThemeConstants.lessonHeightLandscape + ThemeConstants.webviewRadius,
+                          ? CustomConstants.lessonHeightPortrait + CustomConstants.webviewRadius
+                          : CustomConstants.lessonHeightLandscape + CustomConstants.webviewRadius,
                     ),
                   ),
                   Positioned(
@@ -602,21 +602,21 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     top: 0,
                     bottom: (MediaQuery.of(context).viewInsets.bottom == 0)
                         ? (MediaQuery.of(context).orientation == Orientation.portrait)
-                            ? ThemeConstants.lessonHeightPortrait
-                            : ThemeConstants.lessonHeightLandscape
+                            ? CustomConstants.lessonHeightPortrait
+                            : CustomConstants.lessonHeightLandscape
                         : 0,
                     child: ClipRRect(
                       // borderRadius: (MediaQuery.of(context).viewInsets.bottom == 0)
                       //     ? const BorderRadius.all(Radius.circular(ThemeConstants.webviewRadius))
                       //     : const BorderRadius.all(Radius.circular(0)),
                       borderRadius: BorderRadius.only(
-                        topLeft: const Radius.circular(ThemeConstants.webviewRadius),
-                        topRight: const Radius.circular(ThemeConstants.webviewRadius),
+                        topLeft: const Radius.circular(CustomConstants.webviewRadius),
+                        topRight: const Radius.circular(CustomConstants.webviewRadius),
                         bottomLeft: (MediaQuery.of(context).viewInsets.bottom == 0)
-                            ? const Radius.circular(ThemeConstants.webviewRadius)
+                            ? const Radius.circular(CustomConstants.webviewRadius)
                             : const Radius.circular(0),
                         bottomRight: (MediaQuery.of(context).viewInsets.bottom == 0)
-                            ? const Radius.circular(ThemeConstants.webviewRadius)
+                            ? const Radius.circular(CustomConstants.webviewRadius)
                             : const Radius.circular(0),
                       ),
                       child: WebView(

@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-enum ThemeBookmarkColors {
+enum CustomBookmarkColors {
   red(color: Color.fromARGB(255, 255, 241, 241)),
   green(color: Color.fromARGB(255, 241, 255, 233)),
   blue(color: Color.fromARGB(255, 237, 237, 255)),
@@ -11,7 +11,7 @@ enum ThemeBookmarkColors {
   // amber(color: Color.fromARGB(255, 254, 250, 240)),
   // olive(color: Color.fromARGB(255, 241, 255, 198));
 
-  const ThemeBookmarkColors({
+  const CustomBookmarkColors({
     required this.color,
   });
 
