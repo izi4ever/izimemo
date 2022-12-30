@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:izimemo/custom/widgets/custom_widget_styles.dart';
 import 'package:izimemo/custom/widgets/custom_bookmark_button.dart';
+import 'package:izimemo/custom/widgets/custom_widget_styles.dart';
 import 'package:izimemo/home_page/custom_links/default_links.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import '../custom/custom_constants.dart';
 import '../custom/colors/custom_design_colors.dart';
 import '../custom/colors/custom_lesson_colors.dart';
+import '../custom/custom_constants.dart';
+import '../custom/dialogs.dart';
 import 'custom_links/additional_links.dart';
 
 class HomePage extends StatefulWidget {
@@ -41,41 +42,14 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   void get urlFieldUnfocused => FocusManager.instance.primaryFocus?.unfocus();
 
-  void showSnackBar(String title) {
-    Get.snackbar(
-      '',
-      '',
-      titleText: Text(
-        title,
-        style: const TextStyle(
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-      messageText: const Text(
-        '',
-        style: TextStyle(fontSize: 0),
-      ),
-      duration: const Duration(seconds: 5),
-      barBlur: 0,
-      margin: const EdgeInsets.all(10),
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 18, bottom: 12),
-      borderRadius: 12,
-      backgroundColor: CustomDesignColors.mediumBlue,
-      snackPosition: SnackPosition.BOTTOM,
-      icon: const Icon(
-        Icons.hdr_strong,
-        color: CustomDesignColors.darkBlue,
-      ),
-      onTap: (snack) => Get.closeCurrentSnackbar(),
-    );
-  }
+  Dialogs dialogs = Dialogs();
 
   Future<bool> onGoBack() async {
     urlFieldUnfocused;
     if (canGoBack) {
       await webController.goBack();
     } else {
-      showSnackBar('Backward history is empty');
+      dialogs.showSnackBar('Backward history is empty');
     }
     return false;
   }
@@ -85,36 +59,47 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     if (canGoForward) {
       await webController.goForward();
     } else {
-      showSnackBar('Forward history is empty');
+      dialogs.showSnackBar('Forward history is empty');
     }
     return canGoForward;
   }
 
-  void onReload() async {
-    urlFieldUnfocused;
+  Future<void> onReload() async {
     await webController.reload();
   }
 
   Future<void> onLoadUrl(String url) async {
-    // await webController.loadUrl(url);
-    var parseUrl = Uri.parse(url).toString();
-    await webController.loadUrl(parseUrl);
+    await webController.loadUrl(Uri.parse(url).toString());
   }
 
   Future<void> onLoadUrlField() async {
     urlFieldUnfocused;
-    String textFromUrlTextController = urlTextController.text;
-    inputTextInUrlField = textFromUrlTextController;
-    if (textFromUrlTextController.indexOf('http') != 0) {
-      textFromUrlTextController = 'http://$textFromUrlTextController';
+
+    var urlText = urlTextController.text;
+    var loadedUrl = urlText;
+    if (urlText.indexOf('http') != 0) {
+      loadedUrl = 'http://$urlText';
+
+      var matchCaseOne = RegExp(
+              "^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?",
+              caseSensitive: false)
+          .firstMatch(loadedUrl);
+      var matchCaseTwo =
+          RegExp("^([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?", caseSensitive: false)
+              .firstMatch(loadedUrl);
+      if (matchCaseOne != null || matchCaseTwo != null) {
+        print("valid URL");
+      } else {
+        loadedUrl = 'https://www.google.com/search?q=${urlText.replaceAll(' ', '+')}';
+      }
     }
-    await onLoadUrl(textFromUrlTextController);
+    await onLoadUrl(loadedUrl);
   }
 
   Future<void> onClearCache() async {
     await webController.clearCache();
     Get.back();
-    showSnackBar('Cache is deleted');
+    dialogs.showSnackBar('Cache is deleted');
   }
 
   Future<void> onClearCookies() async {
@@ -124,31 +109,18 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       message = 'Cookies are clean';
     }
     Get.back();
-    showSnackBar(message);
+    dialogs.showSnackBar(message);
   }
 
-  bool buttonShow = false;
-  void floatingButtonVisibility() async {
+  Future<void> appBarHeightWhenScrolling() async {
     urlFieldUnfocused;
 
-    // try {
-    //   webScrollYNew = await webController.getScrollY();
-    //   print('WebScrolling: $webScrollYNew');
-    // } catch (e) {
-    //   print('WebScrolling: $webScrollYNew');
-    //   webScrollYNew = 0;
-    //   debugPrint('webController.getScrollY() null exception');
-    // }
+    try {
+      webScrollYNew = await webController.getScrollY();
+    } catch (e) {
+      webScrollYNew = 0;
+    }
 
-    // if (webScrollYNew > webScrollYOld) {
-    //   appBarAnimationController.forward();
-    // } else if (webScrollYNew < webScrollYOld) {
-    //   appBarAnimationController.reverse();
-    // }
-    // webScrollYOld = webScrollYNew;
-
-    webScrollYNew = await webController.getScrollY();
-    // print('WebScrolling: $webScrollYNew');
     if (webScrollYNew > webScrollYOld) {
       appBarAnimationController.forward();
     } else if (webScrollYNew < webScrollYOld) {
@@ -176,8 +148,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
     appBarAnimationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 300));
     appBarSizeAnimation = Tween<double>(begin: CustomConstants.appBarHeight, end: 0.0)
-        // .animate(appBarAnimationController);
-        // .animate(CurvedAnimation(parent: appBarAnimationController, curve: Curves.decelerate));
         .animate(CurvedAnimation(parent: appBarAnimationController, curve: Curves.easeIn));
     appBarAnimationController.addListener(() {
       setState(() {});
@@ -203,7 +173,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     child: Center(
                       child: Column(
                         children: [
-                          // const SizedBox(height: 4),
                           Image.asset(
                             'assets/izimemo_logo_big_white.png',
                             height: 48,
@@ -217,8 +186,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                           ),
                           const Text(
                             'Learn while relaxing',
-                            // 'Relax and learn',
-                            // 'Relax and study',
                             style: TextStyle(color: CustomDesignColors.lightBlue, fontWeight: FontWeight.w700),
                           ),
                           const SizedBox(height: 16),
@@ -227,7 +194,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     ),
                   ),
                   Positioned(
-                    // top: 35,
                     top: 54,
                     left: 0,
                     child: Container(
@@ -262,7 +228,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         ),
                         Row(
                           children: [
-                            // const SizedBox(width: 16),
                             IconButton(
                               onPressed: () {},
                               icon: const Icon(
@@ -294,7 +259,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       decoration: const BoxDecoration(
                         color: CustomDesignColors.lightBlue,
                         borderRadius: BorderRadius.only(
-                          // topLeft: Radius.elliptical(500, 30),
                           topRight: Radius.elliptical(500, 30),
                         ),
                       ),
@@ -315,7 +279,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                               if (e.active == true) {
                                 return IconButton(
                                   onPressed: () async {
-                                    urlFieldUnfocused;
                                     Navigator.pop(context);
                                     await onLoadUrl(e.link);
                                   },
@@ -329,7 +292,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       ),
                     ),
                     const SizedBox(height: 6),
-                    // const Divider(height: 1),
                     Padding(
                       padding: const EdgeInsets.only(left: 18, top: 4, bottom: 4),
                       child: Column(
@@ -361,7 +323,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                               size: 18,
                             ),
                             label: const Text(
-                              // TODO Добавить эту страницу в закладки
                               'Add opened content to bookmark',
                               style: TextStyle(
                                 color: CustomDesignColors.darkBlue,
@@ -476,14 +437,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         onPressed: () {
                           urlFieldUnfocused;
                         },
-                        // icon: const Icon(Icons.star, color: Colors.white),
-                        // icon: const Icon(
-                        //   CupertinoIcons.heart,
-                        //   size: 23,
-                        //   color: ThemeDesignColors.darkBlue,
-                        // ),
                         icon: const FaIcon(
-                          // FontAwesomeIcons.solidHeart,
                           FontAwesomeIcons.heart,
                           size: 20,
                           color: CustomDesignColors.darkBlue,
@@ -502,7 +456,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                               ? IconButton(
                                   padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 7),
                                   onPressed: () {
-                                    urlFieldUnfocused;
                                     webController.loadUrl("about:blank");
                                   },
                                   icon: const Icon(
@@ -515,8 +468,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                   onPressed: onReload,
                                   icon: const Icon(
                                     Icons.replay,
-                                    // CupertinoIcons.arrow_2_circlepath,
-                                    // size: 24,
                                     color: CustomDesignColors.darkBlue,
                                   ),
                                 ),
@@ -540,7 +491,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           ),
           actions: [
             onUrlFieldFocus
-                // ? const SizedBox.shrink()
                 ? const SizedBox(width: 16)
                 : IconButton(
                     icon: Icon(
@@ -580,7 +530,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     child: Container(
                       decoration: BoxDecoration(
                         color: CustomLessonColors.aquamarine.color,
-                        // color: ThemeColors.amber,
                         borderRadius: BorderRadius.only(
                           // If keyboard is/not active
                           bottomLeft: (MediaQuery.of(context).viewInsets.bottom == 0)
@@ -606,9 +555,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             : CustomConstants.lessonHeightLandscape
                         : 0,
                     child: ClipRRect(
-                      // borderRadius: (MediaQuery.of(context).viewInsets.bottom == 0)
-                      //     ? const BorderRadius.all(Radius.circular(ThemeConstants.webviewRadius))
-                      //     : const BorderRadius.all(Radius.circular(0)),
                       borderRadius: BorderRadius.only(
                         topLeft: const Radius.circular(CustomConstants.webviewRadius),
                         topRight: const Radius.circular(CustomConstants.webviewRadius),
@@ -622,14 +568,18 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       child: WebView(
                         initialUrl: 'google.com',
                         onWebResourceError: (error) {
-                          final searchString = inputTextInUrlField.replaceAll(' ', '+');
-                          onLoadUrl('https://www.google.com/search?q=$searchString');
+                          if (error.errorCode == -2) {
+                            final searchString = urlTextController.text.replaceAll(' ', '+');
+                            onLoadUrl('https://www.google.com/search?q=$searchString');
+                          }
                         },
                         javascriptMode: JavascriptMode.unrestricted,
                         onWebViewCreated: (controller) {
                           webController = controller;
                         },
                         onPageStarted: (url) {
+                          urlFieldUnfocused;
+
                           setState(() {
                             loadingPercentage = 0;
                           });
@@ -660,8 +610,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                           ..add(
                             Factory<VerticalDragGestureRecognizer>(
                               () => VerticalDragGestureRecognizer()
-                                ..onDown = (tap) {
-                                  floatingButtonVisibility();
+                                ..onDown = (tap) async {
+                                  await appBarHeightWhenScrolling();
                                 },
                             ),
                           ),
