@@ -164,196 +164,204 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           backgroundColor: CustomDesignColors.lightBlue,
           child: Column(
             children: [
-              Stack(
-                children: [
-                  DrawerHeader(
-                    decoration: const BoxDecoration(
-                      color: CustomDesignColors.darkBlue,
-                    ),
-                    child: Center(
-                      child: Column(
-                        children: [
-                          Image.asset(
-                            'assets/izimemo_logo_big_white.png',
-                            height: 48,
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'Izimemo',
-                            style: GoogleFonts.lobster(
-                              textStyle: const TextStyle(color: CustomDesignColors.lightBlue, fontSize: 22),
-                            ),
-                          ),
-                          const Text(
-                            'Learn while relaxing',
-                            style: TextStyle(color: CustomDesignColors.lightBlue, fontWeight: FontWeight.w700),
-                          ),
-                          const SizedBox(height: 16),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 54,
-                    left: 0,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 4),
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(3),
-                          bottomRight: Radius.circular(3),
-                        ),
-                        color: Colors.white,
-                      ),
-                      child: const Text(
-                        'v1.0.3',
-                        style: TextStyle(color: CustomDesignColors.darkBlue, fontSize: 12, fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    right: 6,
-                    top: 18,
-                    bottom: 0,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.thumb_up_alt_outlined,
-                            size: 14,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.share,
-                                size: 14,
-                                color: Colors.white,
-                              ),
-                            ),
-                            const SizedBox(width: 14),
-                          ],
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.qr_code_2,
-                            size: 14,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: 7,
-                    child: Container(
-                      height: CustomConstants.webviewRadius,
-                      decoration: const BoxDecoration(
-                        color: CustomDesignColors.lightBlue,
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.elliptical(500, 30),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
               Expanded(
                 child: ListView(
                   padding: EdgeInsets.zero,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 6.0),
-                      child: Wrap(
-                        children: [
-                          ...DefaultLinks.values.map(
-                            (e) {
-                              if (e.active == true) {
-                                return IconButton(
-                                  onPressed: () async {
-                                    Navigator.pop(context);
-                                    await onLoadUrl(e.link);
-                                  },
-                                  icon: Image.asset('assets/bookmarks/${e.imageFileName}'),
-                                );
-                              }
-                              return const SizedBox.shrink();
-                            },
+                    Stack(
+                      children: [
+                        DrawerHeader(
+                          decoration: const BoxDecoration(
+                            color: CustomDesignColors.darkBlue,
                           ),
-                        ],
-                      ),
+                          child: Center(
+                            child: Column(
+                              children: [
+                                Image.asset(
+                                  'assets/izimemo_logo_big_white.png',
+                                  height: 48,
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  'Izimemo',
+                                  style: GoogleFonts.lobster(
+                                    textStyle: const TextStyle(color: CustomDesignColors.lightBlue, fontSize: 22),
+                                  ),
+                                ),
+                                const Text(
+                                  'Learn while relaxing',
+                                  style: TextStyle(color: CustomDesignColors.lightBlue, fontWeight: FontWeight.w700),
+                                ),
+                                const SizedBox(height: 16),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          top: 54,
+                          left: 0,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 4),
+                            decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(3),
+                                bottomRight: Radius.circular(3),
+                              ),
+                              color: Colors.white,
+                            ),
+                            child: const Text(
+                              'v1.0.3',
+                              style: TextStyle(
+                                  color: CustomDesignColors.darkBlue, fontSize: 12, fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          right: 6,
+                          top: 18,
+                          bottom: 0,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              IconButton(
+                                onPressed: () {},
+                                icon: const Icon(
+                                  Icons.thumb_up_alt_outlined,
+                                  size: 14,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(
+                                      Icons.share,
+                                      size: 14,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 14),
+                                ],
+                              ),
+                              IconButton(
+                                onPressed: () {},
+                                icon: const Icon(
+                                  Icons.qr_code_2,
+                                  size: 14,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Positioned(
+                          left: 0,
+                          right: 0,
+                          bottom: 7,
+                          child: Container(
+                            height: CustomConstants.webviewRadius,
+                            decoration: const BoxDecoration(
+                              color: CustomDesignColors.lightBlue,
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.elliptical(500, 30),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 6),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 18, top: 4, bottom: 4),
+                    Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          TextButton.icon(
-                            onPressed: () {},
-                            icon: const FaIcon(
-                              FontAwesomeIcons.shareNodes,
-                              color: CustomDesignColors.greyBlue,
-                              size: 18,
+                          Padding(
+                            padding: const EdgeInsets.only(left: 6.0),
+                            child: Wrap(
+                              children: [
+                                ...DefaultLinks.values.map(
+                                  (e) {
+                                    if (e.active == true) {
+                                      return IconButton(
+                                        onPressed: () async {
+                                          Navigator.pop(context);
+                                          await onLoadUrl(e.link);
+                                        },
+                                        icon: Image.asset('assets/bookmarks/${e.imageFileName}'),
+                                      );
+                                    }
+                                    return const SizedBox.shrink();
+                                  },
+                                ),
+                              ],
                             ),
-                            label: const Text(
-                              'Share opened content with friends',
-                              style: TextStyle(
-                                color: CustomDesignColors.darkBlue,
-                              ),
-                            ),
-                            style: TextButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                minimumSize: const Size(0, 0)),
                           ),
-                          TextButton.icon(
-                            onPressed: () {},
-                            icon: const FaIcon(
-                              FontAwesomeIcons.solidHeart,
-                              color: CustomDesignColors.greyBlue,
-                              size: 18,
-                            ),
-                            label: const Text(
-                              'Add opened content to bookmark',
-                              style: TextStyle(
-                                color: CustomDesignColors.darkBlue,
-                              ),
-                            ),
-                            style: TextButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                minimumSize: const Size(0, 0)),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 6),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 12),
-                      child: Wrap(
-                        children: [
-                          ...AdditionalLinks.values.map(
-                            (e) {
-                              if (e.active == true) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(right: 10),
-                                  child: CustomBookmarkButton(
-                                    title: e.title,
-                                    url: e.url,
+                          const SizedBox(height: 6),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 18, top: 4, bottom: 4),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TextButton.icon(
+                                  onPressed: () {},
+                                  icon: const FaIcon(
+                                    FontAwesomeIcons.shareNodes,
+                                    color: CustomDesignColors.greyBlue,
+                                    size: 18,
                                   ),
-                                );
-                              }
-                              return const SizedBox.shrink();
-                            },
+                                  label: const Text(
+                                    'Share opened content with friends',
+                                    style: TextStyle(
+                                      color: CustomDesignColors.darkBlue,
+                                    ),
+                                  ),
+                                  style: TextButton.styleFrom(
+                                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                      minimumSize: const Size(0, 0)),
+                                ),
+                                TextButton.icon(
+                                  onPressed: () {},
+                                  icon: const FaIcon(
+                                    FontAwesomeIcons.solidHeart,
+                                    color: CustomDesignColors.greyBlue,
+                                    size: 18,
+                                  ),
+                                  label: const Text(
+                                    'Add opened content to bookmark',
+                                    style: TextStyle(
+                                      color: CustomDesignColors.darkBlue,
+                                    ),
+                                  ),
+                                  style: TextButton.styleFrom(
+                                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                      minimumSize: const Size(0, 0)),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 12),
+                            child: Wrap(
+                              children: [
+                                ...AdditionalLinks.values.map(
+                                  (e) {
+                                    if (e.active == true) {
+                                      return Padding(
+                                        padding: const EdgeInsets.only(right: 10),
+                                        child: CustomBookmarkButton(
+                                          title: e.title,
+                                          url: e.url,
+                                        ),
+                                      );
+                                    }
+                                    return const SizedBox.shrink();
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -361,6 +369,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   ],
                 ),
               ),
+
+
               const Divider(height: 0),
               Padding(
                 padding: const EdgeInsets.only(top: 16, bottom: 16, left: 12, right: 4),
@@ -391,6 +401,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   ],
                 ),
               ),
+
+              
             ],
           ),
         ),
