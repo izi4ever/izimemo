@@ -9,10 +9,10 @@ import 'package:izimemo/custom/widgets/custom_social_button_in_menu.dart';
 import 'package:izimemo/home_page/custom_links/default_links.dart';
 import 'package:izimemo/home_page/snippets/snippet_appbar_title.dart';
 import 'package:izimemo/home_page/snippets/snippet_header_menu.dart';
+import 'package:izimemo/home_page/study_widget/study_widget.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../custom/colors/custom_design_colors.dart';
-import '../custom/colors/custom_lesson_colors.dart';
 import '../custom/custom_constants.dart';
 import '../custom/dialogs.dart';
 import 'custom_links/additional_links.dart';
@@ -71,7 +71,13 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   }
 
   Future<void> onLoadUrl(String url) async {
-    await webController.loadUrl(Uri.parse(url).toString());
+    if (url != 'about:blank') {
+      await webController.loadUrl(Uri.parse(url).toString());
+    } else if (canGoBack) {
+      await onGoBackPressed();
+    } else {
+      await webController.loadUrl(Uri.parse('https://www.google.com/').toString());
+    }
   }
 
   Future<void> onUrlEditingComplete() async {
@@ -332,7 +338,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             //   urlTextController.selection = TextSelection(baseOffset: 0, extentOffset: urlTextController.text.length);
             // },
             onAddBookmarkPressed: () {},
-            onStopLoadPressed: () async => await webController.loadUrl("about:blank"),
+            onStopLoadPressed: () async => await webController.loadUrl('about:blank'),
             onReloadPressed: () async => await onReloadPressed(),
             canGoBack: canGoBack,
             onGoBackPressed: () async => await onGoBackPressed(),
@@ -387,19 +393,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             ? const Radius.circular(CustomConstants.lessonRadius)
                             : const Radius.circular(0),
                       ),
-                      child: Container(
-                        color: CustomLessonColors.aquamarine.color,
-                        height: (MediaQuery.of(context).orientation == Orientation.portrait)
-                            ? CustomConstants.lessonHeightPortrait + CustomConstants.webviewRadius
-                            : CustomConstants.lessonHeightLandscape + CustomConstants.webviewRadius,
-                        padding: const EdgeInsets.only(
-                          top: CustomConstants.webviewRadius + CustomConstants.lessonRadius,
-                          bottom: CustomConstants.lessonRadius,
-                          left: CustomConstants.lessonRadius,
-                          right: CustomConstants.lessonRadius,
-                        ),
-                        child: const Center(child: Text('Some text to learning')),
-                      ),
+                      child: const StudyWidget(),
                     ),
                   ),
                   Positioned(

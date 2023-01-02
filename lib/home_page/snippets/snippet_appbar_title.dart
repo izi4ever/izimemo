@@ -42,14 +42,12 @@ class SnippetAppBarTitle extends StatelessWidget {
         child: Stack(
           children: [
             Padding(
-              // padding: EdgeInsets.all(onUrlFieldFocus ? 0 : 0.1),
               padding: EdgeInsets.all(onUrlFieldFocus ? 0 : 0.1),
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(100)),
                 child: AnimatedSize(
                   duration: const Duration(milliseconds: 150),
                   child: LinearProgressIndicator(
-                    // value: loadingPercentage / 100.0,
                     value: loadingPercentage / 100.0,
                     color: CustomDesignColors.mediumBlue,
                     backgroundColor: Colors.white,
@@ -64,10 +62,6 @@ class SnippetAppBarTitle extends StatelessWidget {
                 controller: urlTextController,
                 focusNode: urlTextFocus,
                 onEditingComplete: onUrlEditingComplete,
-                // onTap: () {
-                //   _urlTextController.selection =
-                //       TextSelection(baseOffset: 0, extentOffset: _urlTextController.text.length);
-                // },
                 onTap: onUrlTap,
                 textAlignVertical: TextAlignVertical.center,
                 style: const TextStyle(color: CustomDesignColors.darkBlue),
@@ -78,9 +72,6 @@ class SnippetAppBarTitle extends StatelessWidget {
                   contentPadding: const EdgeInsets.only(top: 0),
                   prefixIcon: IconButton(
                     padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 7),
-                    // onPressed: () {
-                    //   urlFieldUnfocused;
-                    // },
                     onPressed: onAddBookmarkPressed,
                     icon: const FaIcon(
                       FontAwesomeIcons.heart,
@@ -100,9 +91,6 @@ class SnippetAppBarTitle extends StatelessWidget {
                       : (loadingPercentage < 100)
                           ? IconButton(
                               padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 7),
-                              // onPressed: () {
-                              //   webController.loadUrl("about:blank");
-                              // },
                               onPressed: onStopLoadPressed,
                               icon: const Icon(
                                 Icons.close,
@@ -111,7 +99,6 @@ class SnippetAppBarTitle extends StatelessWidget {
                             )
                           : IconButton(
                               padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 7),
-                              // onPressed: onReload,
                               onPressed: onReloadPressed,
                               icon: const Icon(
                                 Icons.replay,
