@@ -31,6 +31,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   late AnimationController appBarAnimationController;
   late Animation appBarSizeAnimation;
   late bool onUrlFieldFocus;
+
   late String fullUrl;
   late String shortUrl;
   late String inputTextInUrlField;
@@ -46,8 +47,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   Dialogs dialogs = Dialogs();
 
-  Future<bool> onGoBackPressed() async {
-    urlFieldUnfocused;
+  Future<bool> onGoBack() async {
     if (canGoBack) {
       await webController.goBack();
     } else {
@@ -56,8 +56,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     return false;
   }
 
-  Future<bool> onGoForwardPressed() async {
-    urlFieldUnfocused;
+  Future<bool> onGoForward() async {
     if (canGoForward) {
       await webController.goForward();
     } else {
@@ -66,7 +65,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     return canGoForward;
   }
 
-  Future<void> onReloadPressed() async {
+  Future<void> onReload() async {
     await webController.reload();
   }
 
@@ -74,15 +73,13 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     if (url != 'about:blank') {
       await webController.loadUrl(Uri.parse(url).toString());
     } else if (canGoBack) {
-      await onGoBackPressed();
+      await onGoBack();
     } else {
       await webController.loadUrl(Uri.parse('https://www.google.com/').toString());
     }
   }
 
   Future<void> onUrlEditingComplete() async {
-    urlFieldUnfocused;
-
     var urlText = urlTextController.text;
     var loadedUrl = urlText;
     if (urlText.indexOf('http') != 0) {
@@ -121,8 +118,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   }
 
   Future<void> appBarHeightWhenScrolling() async {
-    urlFieldUnfocused;
-
     try {
       webScrollYNew = await webController.getScrollY();
     } catch (e) {
@@ -145,8 +140,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   }
 
   void onPageStarted(String url) {
-    urlFieldUnfocused;
-
     setState(() {
       loadingPercentage = 0;
     });
@@ -204,7 +197,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: onGoBackPressed,
+      onWillPop: onGoBack,
       child: Scaffold(
         backgroundColor: Colors.black,
         drawer: Drawer(
@@ -333,17 +326,26 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             loadingPercentage: loadingPercentage,
             urlTextController: urlTextController,
             urlTextFocus: urlTextFocus,
-            onUrlEditingComplete: () async => await onUrlEditingComplete(),
+            onUrlEditingComplete: () async {
+              urlFieldUnfocused;
+              await onUrlEditingComplete();
+            },
             // onUrlTap: () {
             //   urlTextController.selection = TextSelection(baseOffset: 0, extentOffset: urlTextController.text.length);
             // },
             onAddBookmarkPressed: () {},
             onStopLoadPressed: () async => await webController.loadUrl('about:blank'),
-            onReloadPressed: () async => await onReloadPressed(),
+            onReloadPressed: () async => await onReload(),
             canGoBack: canGoBack,
-            onGoBackPressed: () async => await onGoBackPressed(),
+            onGoBackPressed: () async {
+              urlFieldUnfocused;
+              await onGoBack();
+            },
             canGoForward: canGoForward,
-            onGoForwardPressed: () async => await onGoForwardPressed(),
+            onGoForwardPressed: () async {
+              urlFieldUnfocused;
+              await onGoForward();
+            },
           ),
           actions: [
             onUrlFieldFocus
@@ -354,7 +356,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       size: 18,
                       color: canGoBack ? const Color(0xFFFFFFFF) : const Color(0x55FFFFFF),
                     ),
-                    onPressed: onGoBackPressed,
+                    onPressed: onGoBack,
                   ),
             onUrlFieldFocus
                 ? const SizedBox.shrink()
@@ -364,7 +366,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       size: 18,
                       color: canGoForward ? const Color(0xFFFFFFFF) : const Color(0x55FFFFFF),
                     ),
-                    onPressed: onGoForwardPressed,
+                    onPressed: () async {
+                      urlFieldUnfocused;
+                      await onGoForward();
+                    },
                   ),
           ],
           elevation: 0,
@@ -423,7 +428,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         javascriptMode: JavascriptMode.unrestricted,
                         initialUrl: 'google.com',
                         onWebResourceError: (error) async => await onWebError(error),
-                        onPageStarted: (url) => onPageStarted(url),
+                        onPageStarted: (url) {
+                          urlFieldUnfocused;
+                          onPageStarted(url);
+                        },
                         onPageFinished: (url) async => await onPageFinished(url),
                         onProgress: (progress) => onProgress(progress),
                         gestureRecognizers: Set()
@@ -431,6 +439,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             Factory<VerticalDragGestureRecognizer>(
                               () => VerticalDragGestureRecognizer()
                                 ..onDown = (tap) async {
+                                  urlFieldUnfocused;
                                   await appBarHeightWhenScrolling();
                                 },
                             ),
