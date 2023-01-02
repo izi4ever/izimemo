@@ -3,10 +3,12 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:izimemo/custom/widgets/custom_bookmark_button.dart';
-import 'package:izimemo/custom/widgets/custom_widget_styles.dart';
+import 'package:izimemo/custom/widgets/custom_settings_button.dart';
+import 'package:izimemo/custom/widgets/custom_social_button_in_menu.dart';
 import 'package:izimemo/home_page/custom_links/default_links.dart';
+import 'package:izimemo/home_page/snippets/snippet_appbar_title.dart';
+import 'package:izimemo/home_page/snippets/snippet_header_menu.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../custom/colors/custom_design_colors.dart';
@@ -44,7 +46,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   Dialogs dialogs = Dialogs();
 
-  Future<bool> onGoBack() async {
+  Future<bool> onGoBackPressed() async {
     urlFieldUnfocused;
     if (canGoBack) {
       await webController.goBack();
@@ -54,7 +56,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     return false;
   }
 
-  Future<bool> onGoForward() async {
+  Future<bool> onGoForwardPressed() async {
     urlFieldUnfocused;
     if (canGoForward) {
       await webController.goForward();
@@ -64,7 +66,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     return canGoForward;
   }
 
-  Future<void> onReload() async {
+  Future<void> onReloadPressed() async {
     await webController.reload();
   }
 
@@ -72,7 +74,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     await webController.loadUrl(Uri.parse(url).toString());
   }
 
-  Future<void> onLoadUrlField() async {
+  Future<void> onUrlEditingComplete() async {
     urlFieldUnfocused;
 
     var urlText = urlTextController.text;
@@ -88,7 +90,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           RegExp("^([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?", caseSensitive: false)
               .firstMatch(loadedUrl);
       if (matchCaseOne != null || matchCaseTwo != null) {
-        print("valid URL");
+        print('Valid URL');
       } else {
         loadedUrl = 'https://www.google.com/search?q=${urlText.replaceAll(' ', '+')}';
       }
@@ -129,6 +131,45 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     webScrollYOld = webScrollYNew;
   }
 
+  Future<void> onWebError(WebResourceError error) async {
+    if (error.errorCode == -2) {
+      final searchString = urlTextController.text.replaceAll(' ', '+');
+      await onLoadUrl('https://www.google.com/search?q=$searchString');
+    }
+  }
+
+  void onPageStarted(String url) {
+    urlFieldUnfocused;
+
+    setState(() {
+      loadingPercentage = 0;
+    });
+    fullUrl = url;
+    final listSplitUrl = url.split('/');
+    shortUrl = listSplitUrl[2];
+    if (shortUrl.substring(0, 4) == 'www.') {
+      shortUrl = shortUrl.substring(4);
+    }
+    urlTextController.text = shortUrl;
+  }
+
+  Future<void> onPageFinished(url) async {
+    canGoBack = await webController.canGoBack();
+    canGoForward = await webController.canGoForward();
+
+    setState(() {
+      loadingPercentage = 100;
+      canGoBack;
+      canGoForward;
+    });
+  }
+
+  void onProgress(int progress) {
+    setState(() {
+      loadingPercentage = progress;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -157,7 +198,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: onGoBack,
+      onWillPop: onGoBackPressed,
       child: Scaffold(
         backgroundColor: Colors.black,
         drawer: Drawer(
@@ -168,227 +209,102 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                 child: ListView(
                   padding: EdgeInsets.zero,
                   children: [
-                    Stack(
+                    SnippetHeaderMenu(
+                      releaseNo: 'v1.0.3',
+                      onLogoPressed: () {},
+                      onLikePressed: () {},
+                      onSharedPressed: () {},
+                      onQRPressed: () {},
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        DrawerHeader(
-                          decoration: const BoxDecoration(
-                            color: CustomDesignColors.darkBlue,
-                          ),
-                          child: Center(
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  'assets/izimemo_logo_big_white.png',
-                                  height: 48,
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  'Izimemo',
-                                  style: GoogleFonts.lobster(
-                                    textStyle: const TextStyle(color: CustomDesignColors.lightBlue, fontSize: 22),
-                                  ),
-                                ),
-                                const Text(
-                                  'Learn while relaxing',
-                                  style: TextStyle(color: CustomDesignColors.lightBlue, fontWeight: FontWeight.w700),
-                                ),
-                                const SizedBox(height: 16),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          top: 54,
-                          left: 0,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 4),
-                            decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(3),
-                                bottomRight: Radius.circular(3),
-                              ),
-                              color: Colors.white,
-                            ),
-                            child: const Text(
-                              'v1.0.3',
-                              style: TextStyle(
-                                  color: CustomDesignColors.darkBlue, fontSize: 12, fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          right: 6,
-                          top: 18,
-                          bottom: 0,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                        Padding(
+                          padding: const EdgeInsets.only(left: 6.0),
+                          child: Wrap(
                             children: [
-                              IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  Icons.thumb_up_alt_outlined,
-                                  size: 14,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(
-                                      Icons.share,
-                                      size: 14,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 14),
-                                ],
-                              ),
-                              IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  Icons.qr_code_2,
-                                  size: 14,
-                                  color: Colors.white,
-                                ),
+                              ...DefaultLinks.values.map(
+                                (e) {
+                                  if (e.active == true) {
+                                    return IconButton(
+                                      onPressed: () async {
+                                        Navigator.pop(context);
+                                        await onLoadUrl(e.link);
+                                      },
+                                      icon: Image.asset('assets/bookmarks/${e.imageFileName}'),
+                                    );
+                                  }
+                                  return const SizedBox.shrink();
+                                },
                               ),
                             ],
                           ),
                         ),
-                        Positioned(
-                          left: 0,
-                          right: 0,
-                          bottom: 7,
-                          child: Container(
-                            height: CustomConstants.webviewRadius,
-                            decoration: const BoxDecoration(
-                              color: CustomDesignColors.lightBlue,
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.elliptical(500, 30),
+                        const SizedBox(height: 6),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 18, top: 4, bottom: 4),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CustomSocialButtonInMenu(
+                                icon: FontAwesomeIcons.shareNodes,
+                                title: 'Share opened content with friends',
+                                onPressed: () {},
                               ),
-                            ),
+                              CustomSocialButtonInMenu(
+                                icon: FontAwesomeIcons.solidHeart,
+                                title: 'Add opened content to bookmark',
+                                onPressed: () {},
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12),
+                          child: Wrap(
+                            children: [
+                              ...AdditionalLinks.values.map(
+                                (e) {
+                                  if (e.active == true) {
+                                    return Padding(
+                                      padding: const EdgeInsets.only(right: 10),
+                                      child: CustomBookmarkButton(
+                                        title: e.title,
+                                        url: e.url,
+                                        onPressed: () {},
+                                      ),
+                                    );
+                                  }
+                                  return const SizedBox.shrink();
+                                },
+                              ),
+                            ],
                           ),
                         ),
                       ],
                     ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 6.0),
-                            child: Wrap(
-                              children: [
-                                ...DefaultLinks.values.map(
-                                  (e) {
-                                    if (e.active == true) {
-                                      return IconButton(
-                                        onPressed: () async {
-                                          Navigator.pop(context);
-                                          await onLoadUrl(e.link);
-                                        },
-                                        icon: Image.asset('assets/bookmarks/${e.imageFileName}'),
-                                      );
-                                    }
-                                    return const SizedBox.shrink();
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 6),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 18, top: 4, bottom: 4),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                TextButton.icon(
-                                  onPressed: () {},
-                                  icon: const FaIcon(
-                                    FontAwesomeIcons.shareNodes,
-                                    color: CustomDesignColors.greyBlue,
-                                    size: 18,
-                                  ),
-                                  label: const Text(
-                                    'Share opened content with friends',
-                                    style: TextStyle(
-                                      color: CustomDesignColors.darkBlue,
-                                    ),
-                                  ),
-                                  style: TextButton.styleFrom(
-                                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-                                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                      minimumSize: const Size(0, 0)),
-                                ),
-                                TextButton.icon(
-                                  onPressed: () {},
-                                  icon: const FaIcon(
-                                    FontAwesomeIcons.solidHeart,
-                                    color: CustomDesignColors.greyBlue,
-                                    size: 18,
-                                  ),
-                                  label: const Text(
-                                    'Add opened content to bookmark',
-                                    style: TextStyle(
-                                      color: CustomDesignColors.darkBlue,
-                                    ),
-                                  ),
-                                  style: TextButton.styleFrom(
-                                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-                                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                      minimumSize: const Size(0, 0)),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 6),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 12),
-                            child: Wrap(
-                              children: [
-                                ...AdditionalLinks.values.map(
-                                  (e) {
-                                    if (e.active == true) {
-                                      return Padding(
-                                        padding: const EdgeInsets.only(right: 10),
-                                        child: CustomBookmarkButton(
-                                          title: e.title,
-                                          url: e.url,
-                                        ),
-                                      );
-                                    }
-                                    return const SizedBox.shrink();
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
                   ],
                 ),
               ),
-
-
               const Divider(height: 0),
               Padding(
-                padding: const EdgeInsets.only(top: 16, bottom: 16, left: 12, right: 4),
+                padding: (MediaQuery.of(context).orientation == Orientation.portrait)
+                    ? const EdgeInsets.only(top: 10, bottom: 10, left: 12, right: 4)
+                    : const EdgeInsets.only(top: 4, bottom: 4, left: 12, right: 4),
                 child: Row(
                   children: [
                     Expanded(
                       child: Row(
                         children: [
-                          ElevatedButton(
+                          CustomSettingsButton(
                             onPressed: onClearCache,
-                            style: CustomWidgetStyles.whiteButtonBudge,
-                            child: const Text('Clear cache'),
+                            title: 'Clear cache',
                           ),
                           const SizedBox(width: 8),
-                          ElevatedButton(
+                          CustomSettingsButton(
                             onPressed: onClearCookies,
-                            style: CustomWidgetStyles.whiteButtonBudge,
-                            child: const Text('Clear cookies'),
+                            title: 'Clear cookies',
                           ),
                         ],
                       ),
@@ -401,105 +317,27 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   ],
                 ),
               ),
-
-              
             ],
           ),
         ),
         appBar: AppBar(
           toolbarHeight: appBarSizeAnimation.value,
-          title: SizedBox(
-            height: CustomConstants.urlFieldHeight,
-            child: Stack(
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(onUrlFieldFocus ? 0 : 0.1),
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(100)),
-                    child: AnimatedSize(
-                      duration: const Duration(milliseconds: 150),
-                      child: LinearProgressIndicator(
-                        value: loadingPercentage / 100.0,
-                        color: CustomDesignColors.mediumBlue,
-                        backgroundColor: Colors.white,
-                        minHeight: CustomConstants.urlFieldHeight,
-                      ),
-                    ),
-                  ),
-                ),
-                AnimatedSize(
-                  duration: const Duration(milliseconds: 150),
-                  child: TextField(
-                    controller: urlTextController,
-                    focusNode: urlTextFocus,
-                    onEditingComplete: onLoadUrlField,
-                    // onTap: () {
-                    //   _urlTextController.selection =
-                    //       TextSelection(baseOffset: 0, extentOffset: _urlTextController.text.length);
-                    // },
-                    textAlignVertical: TextAlignVertical.center,
-                    style: const TextStyle(color: CustomDesignColors.darkBlue),
-                    cursorColor: CustomDesignColors.darkBlue,
-                    cursorHeight: 22,
-                    cursorWidth: 1,
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.only(top: 0),
-                      prefixIcon: IconButton(
-                        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 7),
-                        onPressed: () {
-                          urlFieldUnfocused;
-                        },
-                        icon: const FaIcon(
-                          FontAwesomeIcons.heart,
-                          size: 20,
-                          color: CustomDesignColors.darkBlue,
-                        ),
-                      ),
-                      suffixIcon: onUrlFieldFocus
-                          ? IconButton(
-                              padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 7),
-                              onPressed: onLoadUrlField,
-                              icon: const Icon(
-                                Icons.arrow_forward,
-                                color: CustomDesignColors.darkBlue,
-                              ),
-                            )
-                          : (loadingPercentage < 100)
-                              ? IconButton(
-                                  padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 7),
-                                  onPressed: () {
-                                    webController.loadUrl("about:blank");
-                                  },
-                                  icon: const Icon(
-                                    Icons.close,
-                                    color: CustomDesignColors.darkBlue,
-                                  ),
-                                )
-                              : IconButton(
-                                  padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 7),
-                                  onPressed: onReload,
-                                  icon: const Icon(
-                                    Icons.replay,
-                                    color: CustomDesignColors.darkBlue,
-                                  ),
-                                ),
-                      border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(100)),
-                        borderSide: BorderSide(color: CustomDesignColors.darkBlue, width: 2),
-                      ),
-                      enabledBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(100)),
-                        borderSide: BorderSide(color: CustomDesignColors.darkBlue, width: 2),
-                      ),
-                      focusedBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(100)),
-                        borderSide: BorderSide(color: CustomDesignColors.lightBlue, width: 0),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+          title: SnippetAppBarTitle(
+            onUrlFieldFocus: onUrlFieldFocus,
+            loadingPercentage: loadingPercentage,
+            urlTextController: urlTextController,
+            urlTextFocus: urlTextFocus,
+            onUrlEditingComplete: () async => await onUrlEditingComplete(),
+            // onUrlTap: () {
+            //   urlTextController.selection = TextSelection(baseOffset: 0, extentOffset: urlTextController.text.length);
+            // },
+            onAddBookmarkPressed: () {},
+            onStopLoadPressed: () async => await webController.loadUrl("about:blank"),
+            onReloadPressed: () async => await onReloadPressed(),
+            canGoBack: canGoBack,
+            onGoBackPressed: () async => await onGoBackPressed(),
+            canGoForward: canGoForward,
+            onGoForwardPressed: () async => await onGoForwardPressed(),
           ),
           actions: [
             onUrlFieldFocus
@@ -510,7 +348,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       size: 18,
                       color: canGoBack ? const Color(0xFFFFFFFF) : const Color(0x55FFFFFF),
                     ),
-                    onPressed: onGoBack,
+                    onPressed: onGoBackPressed,
                   ),
             onUrlFieldFocus
                 ? const SizedBox.shrink()
@@ -520,7 +358,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       size: 18,
                       color: canGoForward ? const Color(0xFFFFFFFF) : const Color(0x55FFFFFF),
                     ),
-                    onPressed: onGoForward,
+                    onPressed: onGoForwardPressed,
                   ),
           ],
           elevation: 0,
@@ -538,29 +376,37 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    top: 0 + CustomConstants.webviewRadius,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: CustomLessonColors.aquamarine.color,
-                        borderRadius: BorderRadius.only(
-                          // If keyboard is/not active
-                          bottomLeft: (MediaQuery.of(context).viewInsets.bottom == 0)
-                              ? const Radius.circular(CustomConstants.lessonRadius)
-                              : const Radius.circular(0),
-                          bottomRight: (MediaQuery.of(context).viewInsets.bottom == 0)
-                              ? const Radius.circular(CustomConstants.lessonRadius)
-                              : const Radius.circular(0),
-                        ),
+                    // top: 0 + CustomConstants.webviewRadius,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        // If keyboard is/not active
+                        bottomLeft: (MediaQuery.of(context).viewInsets.bottom == 0)
+                            ? const Radius.circular(CustomConstants.lessonRadius)
+                            : const Radius.circular(0),
+                        bottomRight: (MediaQuery.of(context).viewInsets.bottom == 0)
+                            ? const Radius.circular(CustomConstants.lessonRadius)
+                            : const Radius.circular(0),
                       ),
-                      height: (MediaQuery.of(context).orientation == Orientation.portrait)
-                          ? CustomConstants.lessonHeightPortrait + CustomConstants.webviewRadius
-                          : CustomConstants.lessonHeightLandscape + CustomConstants.webviewRadius,
+                      child: Container(
+                        color: CustomLessonColors.aquamarine.color,
+                        height: (MediaQuery.of(context).orientation == Orientation.portrait)
+                            ? CustomConstants.lessonHeightPortrait + CustomConstants.webviewRadius
+                            : CustomConstants.lessonHeightLandscape + CustomConstants.webviewRadius,
+                        padding: const EdgeInsets.only(
+                          top: CustomConstants.webviewRadius + CustomConstants.lessonRadius,
+                          bottom: CustomConstants.lessonRadius,
+                          left: CustomConstants.lessonRadius,
+                          right: CustomConstants.lessonRadius,
+                        ),
+                        child: const Center(child: Text('Some text to learning')),
+                      ),
                     ),
                   ),
                   Positioned(
                     left: 0,
                     right: 0,
                     top: 0,
+                    // If keyboard is/not active
                     bottom: (MediaQuery.of(context).viewInsets.bottom == 0)
                         ? (MediaQuery.of(context).orientation == Orientation.portrait)
                             ? CustomConstants.lessonHeightPortrait
@@ -570,6 +416,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       borderRadius: BorderRadius.only(
                         topLeft: const Radius.circular(CustomConstants.webviewRadius),
                         topRight: const Radius.circular(CustomConstants.webviewRadius),
+                        // If keyboard is/not active
                         bottomLeft: (MediaQuery.of(context).viewInsets.bottom == 0)
                             ? const Radius.circular(CustomConstants.webviewRadius)
                             : const Radius.circular(0),
@@ -578,46 +425,13 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             : const Radius.circular(0),
                       ),
                       child: WebView(
-                        initialUrl: 'google.com',
-                        onWebResourceError: (error) {
-                          if (error.errorCode == -2) {
-                            final searchString = urlTextController.text.replaceAll(' ', '+');
-                            onLoadUrl('https://www.google.com/search?q=$searchString');
-                          }
-                        },
+                        onWebViewCreated: (controller) => webController = controller,
                         javascriptMode: JavascriptMode.unrestricted,
-                        onWebViewCreated: (controller) {
-                          webController = controller;
-                        },
-                        onPageStarted: (url) {
-                          urlFieldUnfocused;
-
-                          setState(() {
-                            loadingPercentage = 0;
-                          });
-                          fullUrl = url;
-                          final listSplitUrl = url.split('/');
-                          shortUrl = listSplitUrl[2];
-                          if (shortUrl.substring(0, 4) == 'www.') {
-                            shortUrl = shortUrl.substring(4);
-                          }
-                          urlTextController.text = shortUrl;
-                        },
-                        onPageFinished: (url) async {
-                          canGoBack = await webController.canGoBack();
-                          canGoForward = await webController.canGoForward();
-
-                          setState(() {
-                            loadingPercentage = 100;
-                            canGoBack;
-                            canGoForward;
-                          });
-                        },
-                        onProgress: (progress) {
-                          setState(() {
-                            loadingPercentage = progress;
-                          });
-                        },
+                        initialUrl: 'google.com',
+                        onWebResourceError: (error) async => await onWebError(error),
+                        onPageStarted: (url) => onPageStarted(url),
+                        onPageFinished: (url) async => await onPageFinished(url),
+                        onProgress: (progress) => onProgress(progress),
                         gestureRecognizers: Set()
                           ..add(
                             Factory<VerticalDragGestureRecognizer>(
