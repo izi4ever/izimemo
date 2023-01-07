@@ -18,7 +18,7 @@ class HomePageController extends GetxController {
     if (canGoBack.value) {
       await webController.goBack();
     } else {
-      dialogs.showSnackBar('Backward history is empty');
+      dialogs.showSnackBar('backward_empty'.tr);
     }
     return false;
   }
@@ -27,7 +27,7 @@ class HomePageController extends GetxController {
     if (canGoForward.value) {
       await webController.goForward();
     } else {
-      dialogs.showSnackBar('Forward history is empty');
+      dialogs.showSnackBar('forward_empty'.tr);
     }
     return canGoForward;
   }
@@ -37,13 +37,15 @@ class HomePageController extends GetxController {
   }
 
   Future<void> onLoadUrl(WebViewController webController, String url) async {
-    if (url != 'about:blank') {
-      await webController.loadUrl(Uri.parse(url).toString());
-    } else if (canGoBack.value) {
-      await onGoBack(webController);
-    } else {
-      await webController.loadUrl(Uri.parse('https://www.google.com/').toString());
-    }
+    await webController.loadUrl(Uri.parse(url).toString());
+
+    // if (url != 'about:blank') {
+    //   await webController.loadUrl(Uri.parse(url).toString());
+    // } else if (canGoBack.value) {
+    //   await onGoBack(webController);
+    // } else {
+    //   await webController.loadUrl(Uri.parse('https://www.google.com/').toString());
+    // }
   }
 
   Future<void> onUrlEditingComplete(WebViewController webController, String urlTextFromField) async {
@@ -71,14 +73,14 @@ class HomePageController extends GetxController {
   Future<void> onClearCache(WebViewController webController) async {
     await webController.clearCache();
     Get.back();
-    dialogs.showSnackBar('Cache is deleted');
+    dialogs.showSnackBar('cache_deleted'.tr);
   }
 
   Future<void> onClearCookies() async {
     final bool hadCookies = await CookieManager().clearCookies();
-    String message = 'Cookies are deleted';
+    String message = 'cookies_deleted'.tr;
     if (!hadCookies) {
-      message = 'Cookies are clean';
+      message = 'cookies_clean'.tr;
     }
     Get.back();
     dialogs.showSnackBar(message);

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import 'custom/colors/custom_design_colors.dart';
+import 'custom/translations.dart';
 import 'home_page/home_page.dart';
 
 void main() {
@@ -19,6 +20,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      translations: Languages(),
+      locale: Get.deviceLocale,
+      fallbackLocale: const Locale('en', 'US'),
       title: 'IZIMEMO',
       home: const HomePage(),
       debugShowCheckedModeBanner: false,

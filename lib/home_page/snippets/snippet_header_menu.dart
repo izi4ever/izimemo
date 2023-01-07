@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../custom/colors/custom_design_colors.dart';
@@ -44,9 +45,9 @@ class SnippetHeaderMenu extends StatelessWidget {
                       textStyle: const TextStyle(color: CustomDesignColors.lightBlue, fontSize: 22),
                     ),
                   ),
-                  const Text(
-                    'Learn while relaxing',
-                    style: TextStyle(color: CustomDesignColors.lightBlue, fontWeight: FontWeight.w700),
+                  Text(
+                    'slogan'.tr,
+                    style: const TextStyle(color: CustomDesignColors.lightBlue, fontWeight: FontWeight.w700),
                   ),
                   const SizedBox(height: 16),
                 ],
@@ -73,7 +74,7 @@ class SnippetHeaderMenu extends StatelessWidget {
           ),
         ),
         Positioned(
-          right: 6,
+          right: 4,
           top: 18,
           bottom: 0,
           child: Column(

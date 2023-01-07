@@ -1,0 +1,67 @@
+import 'package:get/get.dart';
+
+class Languages extends Translations {
+  @override
+  Map<String, Map<String, String>> get keys => {
+        'en_US': {
+          'slogan': 'Learn while relaxing',
+          'share_content': 'Share opened content with friends',
+          'add_bookmark': 'Add opened content to bookmark',
+          'clear_cache': 'Cache',
+          'clear_cookies': 'Cookies',
+          'backward_empty': 'Backward history is empty',
+          'forward_empty': 'Forward history is empty',
+          'cache_deleted': 'Cache is deleted',
+          'cookies_deleted': 'Cookies are deleted',
+          'cookies_clean': 'Cookies are clean',
+        },
+        'ru_RU': {
+          'slogan': 'Отдыхай и учись',
+          'share_content': 'Переслать друзьям текущий контент',
+          'add_bookmark': 'Добавить в закладки текущий контент',
+          'clear_cache': 'Кэш',
+          'clear_cookies': 'Куки',
+          'backward_empty': 'История назад пуста',
+          'forward_empty': 'История вперёд пуста',
+          'cache_deleted': 'Кэш удалён',
+          'cookies_deleted': 'Куки удалены',
+          'cookies_clean': 'Куки пусты',
+        },
+        'uk_UA': {
+          'slogan': 'Відпочивай та навчайся',
+          'share_content': 'Переслати друзям те, що відкрито',
+          'add_bookmark': 'Додати в закладки те, що відкрито',
+          'clear_cache': 'Кеш',
+          'clear_cookies': 'Кукі',
+          'backward_empty': 'Історія назад порожня',
+          'forward_empty': 'Історія вперед порожня',
+          'cache_deleted': 'Кеш видалено',
+          'cookies_deleted': 'Кукі видалено',
+          'cookies_clean': 'Кукі порожні',
+        },
+        'de_DE': {
+          'slogan': 'Entspanne dich und studiere',
+          'share_content': 'Schicke Freunden aktuelle Inhalte',
+          'add_bookmark': 'Zu Lesezeichen hinzufügen',
+          'clear_cache': 'Cache',
+          'clear_cookies': 'Cookies',
+          'backward_empty': 'Der Rückwärtsverlauf ist leer',
+          'forward_empty': 'Weiterleitungsverlauf ist leer',
+          'cache_deleted': 'Cache wird gelöscht',
+          'cookies_deleted': 'Cookies werden gelöscht',
+          'cookies_clean': 'Kekse sind sauber',
+        },
+        'fr_FR': {
+          'slogan': 'Détendez-vous et étudiez',
+          'share_content': 'Envoyer le contenu actuel à vos amis',
+          'add_bookmark': 'Ajouter aux favoris',
+          'clear_cache': 'Cache',
+          'clear_cookies': 'Cookies',
+          'backward_empty': 'L\'historique en arrière est vide',
+          'forward_empty': 'L\'historique de transfert est vide',
+          'cache_deleted': 'Le cache est supprimé',
+          'cookies_deleted': 'Les cookies sont supprimés',
+          'cookies_clean': 'Les cookies sont propres',
+        },
+      };
+}

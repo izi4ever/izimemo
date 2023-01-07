@@ -4,18 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:izimemo/custom/widgets/custom_bookmark_button.dart';
-import 'package:izimemo/custom/widgets/custom_settings_button.dart';
 import 'package:izimemo/custom/widgets/custom_social_button_in_menu.dart';
 import 'package:izimemo/home_page/custom_links/default_links.dart';
 import 'package:izimemo/home_page/home_page_controller.dart';
 import 'package:izimemo/home_page/snippets/snippet_appbar_title.dart';
 import 'package:izimemo/home_page/snippets/snippet_header_menu.dart';
-import 'package:izimemo/home_page/study_widget/study_widget.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../custom/colors/custom_design_colors.dart';
 import '../custom/custom_constants.dart';
+import '../custom/widgets/custom_settings_icon_button.dart';
 import 'custom_links/additional_links.dart';
+import 'study_widget/study_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -44,6 +44,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       webScrollYNew = await webController.getScrollY();
     } catch (e) {
       webScrollYNew = 0;
+      print('getScrollY catch error: $e');
     }
 
     if (webScrollYNew > webScrollYOld) {
@@ -112,8 +113,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                   if (e.active == true) {
                                     return IconButton(
                                       onPressed: () async {
-                                        Navigator.pop(context);
-                                        await homePageController.onLoadUrl(webController, e.link);
+                                        Get.back();
+                                        await homePageController.onLoadUrl(webController, e.url);
                                       },
                                       icon: Image.asset('assets/bookmarks/${e.imageFileName}'),
                                     );
@@ -132,12 +133,12 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             children: [
                               CustomSocialButtonInMenu(
                                 icon: FontAwesomeIcons.shareNodes,
-                                title: 'Share opened content with friends',
+                                title: 'share_content'.tr,
                                 onPressed: () {},
                               ),
                               CustomSocialButtonInMenu(
                                 icon: FontAwesomeIcons.solidHeart,
-                                title: 'Add opened content to bookmark',
+                                title: 'add_bookmark'.tr,
                                 onPressed: () {},
                               ),
                             ],
@@ -156,7 +157,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                       child: CustomBookmarkButton(
                                         title: e.title,
                                         url: e.url,
-                                        onPressed: () {},
+                                        onPressed: () async {
+                                          Get.back();
+                                          await homePageController.onLoadUrl(webController, e.url);
+                                        },
                                       ),
                                     );
                                   }
@@ -181,14 +185,16 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     Expanded(
                       child: Row(
                         children: [
-                          CustomSettingsButton(
+                          CustomSettingsIconButton(
                             onPressed: () async => await homePageController.onClearCache(webController),
-                            title: 'Clear cache',
+                            title: 'clear_cache'.tr,
+                            icon: FontAwesomeIcons.trashCan,
                           ),
-                          const SizedBox(width: 8),
-                          CustomSettingsButton(
+                          const SizedBox(width: 10),
+                          CustomSettingsIconButton(
                             onPressed: () async => await homePageController.onClearCookies(),
-                            title: 'Clear cookies',
+                            title: 'clear_cookies'.tr,
+                            icon: FontAwesomeIcons.trashCan,
                           ),
                         ],
                       ),
@@ -207,31 +213,31 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         appBar: AppBar(
           toolbarHeight: appBarSizeAnimation.value,
           title: Obx(() => SnippetAppBarTitle(
-            onUrlFieldFocus: onUrlFieldFocus,
-            loadingPercentage: homePageController.loadingPercentage.value,
-            urlTextController: urlTextController,
-            urlTextFocus: urlTextFocus,
-            onUrlEditingComplete: () async {
-              urlFieldUnfocused;
-              await homePageController.onUrlEditingComplete(webController, urlTextController.text);
-            },
-            // onUrlTap: () {
-            //   urlTextController.selection = TextSelection(baseOffset: 0, extentOffset: urlTextController.text.length);
-            // },
-            onAddBookmarkPressed: () {},
-            onStopLoadPressed: () async => await webController.loadUrl('about:blank'),
-            onReloadPressed: () async => await homePageController.onReload(webController),
-            canGoBack: homePageController.canGoBack.value,
-            onGoBackPressed: () async {
-              urlFieldUnfocused;
-              await homePageController.onGoBack(webController);
-            },
-            canGoForward: homePageController.canGoForward.value,
-            onGoForwardPressed: () async {
-              urlFieldUnfocused;
-              await homePageController.onGoForward(webController);
-            },
-          )),
+                onUrlFieldFocus: onUrlFieldFocus,
+                loadingPercentage: homePageController.loadingPercentage.value,
+                urlTextController: urlTextController,
+                urlTextFocus: urlTextFocus,
+                onUrlEditingComplete: () async {
+                  urlFieldUnfocused;
+                  await homePageController.onUrlEditingComplete(webController, urlTextController.text);
+                },
+                // onUrlTap: () {
+                //   urlTextController.selection = TextSelection(baseOffset: 0, extentOffset: urlTextController.text.length);
+                // },
+                onAddBookmarkPressed: () {},
+                onStopLoadPressed: () async => await webController.loadUrl('about:blank'),
+                onReloadPressed: () async => await homePageController.onReload(webController),
+                canGoBack: homePageController.canGoBack.value,
+                onGoBackPressed: () async {
+                  urlFieldUnfocused;
+                  await homePageController.onGoBack(webController);
+                },
+                canGoForward: homePageController.canGoForward.value,
+                onGoForwardPressed: () async {
+                  urlFieldUnfocused;
+                  await homePageController.onGoForward(webController);
+                },
+              )),
           actions: [
             onUrlFieldFocus
                 ? const SizedBox(width: 16)
@@ -239,8 +245,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       icon: Icon(
                         Icons.arrow_back_ios,
                         size: 18,
-                        color:
-                            (homePageController.canGoBack == true) ? const Color(0xFFFFFFFF) : const Color(0x55FFFFFF),
+                        color: homePageController.canGoBack.isTrue ? const Color(0xFFFFFFFF) : const Color(0x55FFFFFF),
                       ),
                       onPressed: () async => await homePageController.onGoBack(webController),
                     )),
@@ -250,7 +255,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     icon: Obx(() => Icon(
                           Icons.arrow_forward_ios,
                           size: 18,
-                          color: (homePageController.canGoForward == true)
+                          color: homePageController.canGoForward.isTrue
                               ? const Color(0xFFFFFFFF)
                               : const Color(0x55FFFFFF),
                         )),
@@ -286,7 +291,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             ? const Radius.circular(CustomConstants.lessonRadius)
                             : const Radius.circular(0),
                       ),
-                      child: const StudyWidget(),
+                      // child: const StudyWidget(),
+                      child: StudyWidget(),
                     ),
                   ),
                   Positioned(
@@ -315,11 +321,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         onWebViewCreated: (controller) => webController = controller,
                         javascriptMode: JavascriptMode.unrestricted,
                         initialUrl: 'google.com',
-                        onWebResourceError: (error) async => await homePageController.onWebError(
-                          webController,
-                          error,
-                          urlTextController.text
-                        ),
+                        onWebResourceError: (error) async =>
+                            await homePageController.onWebError(webController, error, urlTextController.text),
                         onPageStarted: (url) {
                           urlFieldUnfocused;
                           urlTextController.text = homePageController.onPageStarted(url);
