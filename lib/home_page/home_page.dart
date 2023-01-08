@@ -39,21 +39,21 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   HomePageController homePageController = HomePageController();
 
-  Future<void> appBarHeightWhenScrolling() async {
-    try {
-      webScrollYNew = await webController.getScrollY();
-    } catch (e) {
-      webScrollYNew = 0;
-      print('getScrollY catch error: $e');
-    }
+  // Future<void> appBarHeightWhenScrolling() async {
+  //   try {
+  //     webScrollYNew = await webController.getScrollY();
+  //   } catch (e) {
+  //     webScrollYNew = 0;
+  //     print('getScrollY catch error: $e');
+  //   }
 
-    if (webScrollYNew > webScrollYOld) {
-      appBarAnimationController.forward();
-    } else if (webScrollYNew < webScrollYOld) {
-      appBarAnimationController.reverse();
-    }
-    webScrollYOld = webScrollYNew;
-  }
+  //   if (webScrollYNew > webScrollYOld) {
+  //     appBarAnimationController.forward();
+  //   } else if (webScrollYNew < webScrollYOld) {
+  //     appBarAnimationController.reverse();
+  //   }
+  //   webScrollYOld = webScrollYNew;
+  // }
 
   @override
   void initState() {
@@ -280,7 +280,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    // top: 0 + CustomConstants.webviewRadius,
                     child: ClipRRect(
                       borderRadius: BorderRadius.only(
                         // If keyboard is/not active
@@ -335,7 +334,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                               () => VerticalDragGestureRecognizer()
                                 ..onDown = (tap) async {
                                   urlFieldUnfocused;
-                                  await appBarHeightWhenScrolling();
+                                  // await appBarHeightWhenScrolling();
                                 },
                             ),
                           ),
