@@ -37,6 +37,12 @@ class HomePageController extends GetxController {
   }
 
   Future<void> onLoadUrl(WebViewController webController, String url) async {
+    // try {
+    //   await webController.loadUrl(Uri.parse(url).toString());
+    // } catch (e) {
+    //   print('loadUrl error: $e');
+    // }
+
     await webController.loadUrl(Uri.parse(url).toString());
 
     // if (url != 'about:blank') {

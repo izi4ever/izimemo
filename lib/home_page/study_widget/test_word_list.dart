@@ -1,4 +1,6 @@
 List<String> testWordList = [
+  'familiar - знакомый',
+  'neighbour - сосед',
   'enroll - вносить в список',
   'by some reason - по какой-то причине',
   'tl;dr = tldr - too long; didn\'t read',

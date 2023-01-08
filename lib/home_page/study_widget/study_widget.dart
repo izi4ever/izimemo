@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:izimemo/custom/colors/custom_lesson_colors.dart';
 
 import '../../custom/custom_constants.dart';
 import 'test_word_list.dart';
@@ -9,6 +12,7 @@ class StudyWidget extends StatelessWidget {
   StudyWidget({super.key});
 
   final List<String> items = testWordList;
+  int? neighborColorNo;
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +20,9 @@ class StudyWidget extends StatelessWidget {
       items: [
         ...items.map((e) {
           var splitStrings = e.split(' - ');
+          var colorNo = randomColorNumber(neighborColorNo, CustomLessonColors.values.length);
+          neighborColorNo = colorNo;
+
           return Container(
             padding: EdgeInsets.only(
               top: (MediaQuery.of(context).orientation == Orientation.portrait)
@@ -27,7 +34,7 @@ class StudyWidget extends StatelessWidget {
               left: CustomConstants.lessonRadius,
               right: CustomConstants.lessonRadius,
             ),
-            color: (items.indexOf(e) % 2) == 1 ? Colors.amber : Colors.teal, // TODO
+            color: CustomLessonColors.values[colorNo].color,
             child: Center(
               // child: AutoSizeText(
               //   e.replaceFirst(' - ', '\n'),
@@ -78,5 +85,20 @@ class StudyWidget extends StatelessWidget {
         enlargeFactor: 1,
       ),
     );
+  }
+
+  int randomColorNumber(int? neighborColorNo, int colorLimit) {
+    var random = Random();
+    var currentRandomValue = neighborColorNo;
+
+    if (currentRandomValue == null) {
+      currentRandomValue = random.nextInt(colorLimit);
+    } else {
+      do {
+        currentRandomValue = random.nextInt(colorLimit);
+      } while (currentRandomValue == neighborColorNo);
+    }
+
+    return currentRandomValue;
   }
 }
