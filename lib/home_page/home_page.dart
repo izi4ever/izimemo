@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -25,7 +23,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
-  late WebViewController webController;
   final TextEditingController urlTextController = TextEditingController();
   late FocusNode urlTextFocus;
   late AnimationController appBarAnimationController;
@@ -83,7 +80,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => await homePageController.onGoBack(webController),
+      onWillPop: () async => await homePageController.onGoBack(),
       child: Scaffold(
         backgroundColor: Colors.black,
         drawer: Drawer(
@@ -114,7 +111,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                     return IconButton(
                                       onPressed: () async {
                                         Get.back();
-                                        await homePageController.onLoadUrl(webController, e.url);
+                                        await homePageController.onLoadUrl(e.url);
                                       },
                                       icon: Image.asset('assets/bookmarks/${e.imageFileName}'),
                                     );
@@ -159,7 +156,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                         url: e.url,
                                         onPressed: () async {
                                           Get.back();
-                                          await homePageController.onLoadUrl(webController, e.url);
+                                          await homePageController.onLoadUrl(e.url);
                                         },
                                       ),
                                     );
@@ -186,7 +183,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       child: Row(
                         children: [
                           CustomSettingsIconButton(
-                            onPressed: () async => await homePageController.onClearCache(webController),
+                            onPressed: () async => await homePageController.onClearCache(),
                             title: 'clear_cache'.tr,
                             icon: FontAwesomeIcons.trashCan,
                           ),
@@ -219,23 +216,23 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                 urlTextFocus: urlTextFocus,
                 onUrlEditingComplete: () async {
                   urlFieldUnfocused;
-                  await homePageController.onUrlEditingComplete(webController, urlTextController.text);
+                  await homePageController.onUrlEditingComplete(urlTextController.text);
                 },
                 // onUrlTap: () {
                 //   urlTextController.selection = TextSelection(baseOffset: 0, extentOffset: urlTextController.text.length);
                 // },
                 onAddBookmarkPressed: () {},
-                onStopLoadPressed: () async => await webController.loadUrl('about:blank'),
-                onReloadPressed: () async => await homePageController.onReload(webController),
+                onStopLoadPressed: () async => await homePageController.onLoadUrl('about:blank'),
+                onReloadPressed: () async => await homePageController.onReload(),
                 canGoBack: homePageController.canGoBack.value,
                 onGoBackPressed: () async {
                   urlFieldUnfocused;
-                  await homePageController.onGoBack(webController);
+                  await homePageController.onGoBack();
                 },
                 canGoForward: homePageController.canGoForward.value,
                 onGoForwardPressed: () async {
                   urlFieldUnfocused;
-                  await homePageController.onGoForward(webController);
+                  await homePageController.onGoForward();
                 },
               )),
           actions: [
@@ -247,7 +244,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         size: 18,
                         color: homePageController.canGoBack.isTrue ? const Color(0xFFFFFFFF) : const Color(0x55FFFFFF),
                       ),
-                      onPressed: () async => await homePageController.onGoBack(webController),
+                      onPressed: () async => await homePageController.onGoBack(),
                     )),
             onUrlFieldFocus
                 ? const SizedBox.shrink()
@@ -261,7 +258,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         )),
                     onPressed: () async {
                       urlFieldUnfocused;
-                      await homePageController.onGoForward(webController);
+                      await homePageController.onGoForward();
                     },
                   ),
           ],
@@ -316,29 +313,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             ? const Radius.circular(CustomConstants.webviewRadius)
                             : const Radius.circular(0),
                       ),
-                      child: WebView(
-                        onWebViewCreated: (controller) => webController = controller,
-                        javascriptMode: JavascriptMode.unrestricted,
-                        initialUrl: 'google.com',
-                        onWebResourceError: (error) async =>
-                            await homePageController.onWebError(webController, error, urlTextController.text),
-                        onPageStarted: (url) {
-                          urlFieldUnfocused;
-                          urlTextController.text = homePageController.onPageStarted(url);
-                        },
-                        onPageFinished: (url) async => await homePageController.onPageFinished(webController, url),
-                        onProgress: (progress) => homePageController.onProgress(progress),
-                        gestureRecognizers: Set()
-                          ..add(
-                            Factory<VerticalDragGestureRecognizer>(
-                              () => VerticalDragGestureRecognizer()
-                                ..onDown = (tap) async {
-                                  urlFieldUnfocused;
-                                  // await appBarHeightWhenScrolling();
-                                },
-                            ),
-                          ),
-                      ),
+                      child: WebViewWidget(controller: homePageController.webController),
                     ),
                   ),
                 ],

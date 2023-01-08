@@ -56,7 +56,8 @@ class SnippetHeaderMenu extends StatelessWidget {
           ),
         ),
         Positioned(
-          top: 54,
+          // top: 54,
+          bottom: 124,
           left: 0,
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 4),
@@ -75,8 +76,8 @@ class SnippetHeaderMenu extends StatelessWidget {
         ),
         Positioned(
           right: 4,
-          top: 18,
-          bottom: 0,
+          // top: 18,
+          bottom: 32,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [

@@ -4,6 +4,45 @@ import 'package:webview_flutter/webview_flutter.dart';
 import '../custom/dialogs.dart';
 
 class HomePageController extends GetxController {
+  var webController = WebViewController()
+    ..setJavaScriptMode(JavaScriptMode.unrestricted)
+    ..setNavigationDelegate(
+      NavigationDelegate(
+        onProgress: (int progress) {
+          // onProgress(progress);
+          // var loadingPercentage = progress.obs;
+          print('onProgress');
+        },
+        // onPageStarted: (String url) {
+        //   // urlFieldUnfocused;
+        //   // urlTextController.text = onPageStarted(url);
+        // },
+        // onPageFinished: (String url) async => await onPageFinished(url),
+        // onWebResourceError: (WebResourceError error) async =>
+        //                     await onWebError(error, urlTextController.text),
+        // onNavigationRequest: (NavigationRequest request) {
+        //   if (request.url.startsWith('https://www.youtube.com/')) {
+        //     return NavigationDecision.prevent;
+        //   }
+        //   return NavigationDecision.navigate;
+        // },
+      ),
+    )
+    ..loadRequest(Uri.parse('https://google.com/'));
+
+  // @override
+  // void onInit() {
+  //   print('onInit');
+  //   webController.setNavigationDelegate(
+  //     NavigationDelegate(
+  //       onProgress: (int progress) => onProgress(progress),
+  //       onPageStarted: (String url) => onPageStarted(url),
+  //       onPageFinished: (String url) async => await onPageFinished(url),
+  //     ),
+  //   );
+  //   super.onInit();
+  // }
+
   var canGoBack = false.obs;
   var canGoForward = false.obs;
 
@@ -14,7 +53,7 @@ class HomePageController extends GetxController {
 
   Dialogs dialogs = Dialogs();
 
-  Future<bool> onGoBack(WebViewController webController) async {
+  Future<bool> onGoBack() async {
     if (canGoBack.value) {
       await webController.goBack();
     } else {
@@ -23,7 +62,7 @@ class HomePageController extends GetxController {
     return false;
   }
 
-  Future<RxBool> onGoForward(WebViewController webController) async {
+  Future<RxBool> onGoForward() async {
     if (canGoForward.value) {
       await webController.goForward();
     } else {
@@ -32,18 +71,18 @@ class HomePageController extends GetxController {
     return canGoForward;
   }
 
-  Future<void> onReload(WebViewController webController) async {
+  Future<void> onReload() async {
     await webController.reload();
   }
 
-  Future<void> onLoadUrl(WebViewController webController, String url) async {
+  Future<void> onLoadUrl(String url) async {
     // try {
     //   await webController.loadUrl(Uri.parse(url).toString());
     // } catch (e) {
     //   print('loadUrl error: $e');
     // }
 
-    await webController.loadUrl(Uri.parse(url).toString());
+    await webController.loadRequest(Uri.parse(url));
 
     // if (url != 'about:blank') {
     //   await webController.loadUrl(Uri.parse(url).toString());
@@ -54,7 +93,7 @@ class HomePageController extends GetxController {
     // }
   }
 
-  Future<void> onUrlEditingComplete(WebViewController webController, String urlTextFromField) async {
+  Future<void> onUrlEditingComplete(String urlTextFromField) async {
     var urlText = urlTextFromField;
     var loadedUrl = urlText;
     if (urlText.indexOf('http') != 0) {
@@ -73,17 +112,17 @@ class HomePageController extends GetxController {
         loadedUrl = 'https://www.google.com/search?q=${urlText.replaceAll(' ', '+')}';
       }
     }
-    await onLoadUrl(webController, loadedUrl);
+    await onLoadUrl(loadedUrl);
   }
 
-  Future<void> onClearCache(WebViewController webController) async {
+  Future<void> onClearCache() async {
     await webController.clearCache();
     Get.back();
     dialogs.showSnackBar('cache_deleted'.tr);
   }
 
   Future<void> onClearCookies() async {
-    final bool hadCookies = await CookieManager().clearCookies();
+    final bool hadCookies = await WebViewCookieManager().clearCookies();
     String message = 'cookies_deleted'.tr;
     if (!hadCookies) {
       message = 'cookies_clean'.tr;
@@ -92,14 +131,15 @@ class HomePageController extends GetxController {
     dialogs.showSnackBar(message);
   }
 
-  Future<void> onWebError(WebViewController webController, WebResourceError error, String urlTextFromField) async {
+  Future<void> onWebError(WebResourceError error, String urlTextFromField) async {
     if (error.errorCode == -2) {
       final searchString = urlTextFromField.replaceAll(' ', '+');
-      await onLoadUrl(webController, 'https://www.google.com/search?q=$searchString');
+      await onLoadUrl('https://www.google.com/search?q=$searchString');
     }
   }
 
-  String onPageStarted(String url) {
+  void onPageStarted(String url) {
+    print('onPageStarted');
     loadingPercentage.value = 0;
     fullUrl = url;
     final listSplitUrl = url.split('/');
@@ -108,10 +148,10 @@ class HomePageController extends GetxController {
       shortUrl = shortUrl.substring(4);
     }
     // urlTextController.text = shortUrl;
-    return shortUrl;
+    // return shortUrl;
   }
 
-  Future<void> onPageFinished(WebViewController webController, String url) async {
+  Future<void> onPageFinished(String url) async {
     var canBack = await webController.canGoBack();
     var canForward = await webController.canGoForward();
     canGoBack.value = canBack;

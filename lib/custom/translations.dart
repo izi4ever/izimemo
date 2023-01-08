@@ -17,8 +17,8 @@ class Languages extends Translations {
         },
         'ru_RU': {
           'slogan': 'Отдыхай и учись',
-          'share_content': 'Переслать друзьям текущий контент',
-          'add_bookmark': 'Добавить в закладки текущий контент',
+          'share_content': 'Переслать друзьям эту страницу',
+          'add_bookmark': 'Добавить в закладки эту страницу',
           'clear_cache': 'Кэш',
           'clear_cookies': 'Куки',
           'backward_empty': 'История назад пуста',
