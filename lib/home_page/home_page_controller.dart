@@ -4,49 +4,6 @@ import 'package:webview_flutter/webview_flutter.dart';
 import '../custom/dialogs.dart';
 
 class HomePageController extends GetxController {
-  // var webController = WebViewController()
-  //   ..setJavaScriptMode(JavaScriptMode.unrestricted)
-  //   ..setNavigationDelegate(
-  //     NavigationDelegate(
-  //       onProgress: (int progress) {
-  //         // onProgress(progress);
-  //       },
-  //       onPageStarted: (String url) {
-  //         // urlFieldUnfocused;
-  //         // urlTextController.text = onPageStarted(url);
-  //       },
-  //       onPageFinished: (String url) async {
-  //         // await onPageFinished(url);
-  //       },
-  //       onWebResourceError: (WebResourceError error) async {
-  //         // await onWebError(error, urlTextController.text);
-  //       },
-  //       // onNavigationRequest: (NavigationRequest request) {
-  //       //   if (request.url.startsWith('https://www.youtube.com/')) {
-  //       //     return NavigationDecision.prevent;
-  //       //   }
-  //       //   return NavigationDecision.navigate;
-  //       // },
-  //     ),
-  //   )
-  //   ..loadRequest(Uri.parse('https://google.com/'));
-
-  // @override
-  // void onInit() {
-  //   print('onInit');
-  //   webController
-  //   ..setJavaScriptMode(JavaScriptMode.unrestricted)
-  //   ..setNavigationDelegate(
-  //     NavigationDelegate(
-  //       onProgress: (int progress) => onProgress(progress),
-  //       onPageStarted: (String url) => onPageStarted(url),
-  //       onPageFinished: (String url) async => await onPageFinished(url),
-  //     ),
-  //   )
-  //   ..loadRequest(Uri.parse('https://google.com/'));
-  //   super.onInit();
-  // }
-
   var canGoBack = false.obs;
   var canGoForward = false.obs;
 

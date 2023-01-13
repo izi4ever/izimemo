@@ -26,7 +26,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
   late final WebViewController _webController;
-  HomePageController homePageController = HomePageController();
+  final HomePageController homePageController = Get.put(HomePageController());
 
   final TextEditingController urlTextController = TextEditingController();
   late FocusNode urlTextFocus;
@@ -91,8 +91,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           },
           onProgress: (int progress) => homePageController.onProgress(progress),
           onPageFinished: (String url) async => await homePageController.onPageFinished(webController, url),
-          onWebResourceError: (WebResourceError error) async =>
-              await homePageController.onWebError(webController, error, urlTextController.text),
+          // onWebResourceError: (WebResourceError error) async =>
+          //     await homePageController.onWebError(webController, error, urlTextController.text),
         ),
       )
       ..loadRequest(Uri.parse('https://google.com/'));

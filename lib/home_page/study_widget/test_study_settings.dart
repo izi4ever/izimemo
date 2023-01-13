@@ -1,4 +1,5 @@
 class TestStudySettings {
-  static const int wordsInLesson = 5;
+  static const int firstElement = 0;
+  static const int elementsInLesson = 17;
   static const int slideInterval = 5;
 }
