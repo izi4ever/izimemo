@@ -56,22 +56,41 @@ class SnippetHeaderMenu extends StatelessWidget {
           ),
         ),
         Positioned(
-          // top: 54,
-          bottom: 124,
+          bottom: 42,
           left: 0,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(3),
-                bottomRight: Radius.circular(3),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(3),
+                    bottomRight: Radius.circular(3),
+                  ),
+                  color: Colors.white,
+                ),
+                child: Text(
+                  releaseNo,
+                  style: const TextStyle(
+                    color: CustomDesignColors.darkBlue,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ),
-              color: Colors.white,
-            ),
-            child: Text(
-              releaseNo,
-              style: const TextStyle(color: CustomDesignColors.darkBlue, fontSize: 12, fontWeight: FontWeight.w500),
-            ),
+              Padding(
+                padding: const EdgeInsets.only(left: 2, top: 40),
+                child: IconButton(
+                  onPressed: onQRPressed,
+                  icon: const Icon(
+                    Icons.help_outline,
+                    size: 28,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
         Positioned(

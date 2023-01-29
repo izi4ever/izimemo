@@ -12,8 +12,6 @@ import 'package:izimemo/home_page/study_widget/test_study_settings.dart';
 import '../../custom/custom_constants.dart';
 import 'test_word_list.dart';
 
-enum SampleItem { itemOne, itemTwo, itemThree }
-
 class StudyWidget extends StatelessWidget {
   const StudyWidget({super.key});
 
@@ -41,7 +39,6 @@ class StudyWidget extends StatelessWidget {
 
                     return GestureDetector(
                       onTap: () {
-                        print('onTap');
                         Get.bottomSheet(
                           Container(
                             margin: EdgeInsets.only(
@@ -80,9 +77,9 @@ class StudyWidget extends StatelessWidget {
                                           color: Colors.white,
                                         ),
                                       ),
-                                      title: const Text(
-                                        'You\'ve learned 73 of 1000 entries in this dictionary',
-                                        style: TextStyle(color: Colors.white),
+                                      title: Text(
+                                        '${'learned'.tr} 73 ${'of'.tr} 1000 ${'entries_in_dictionary'.tr}',
+                                        style: const TextStyle(color: Colors.white),
                                       ),
                                       trailing: IconButton(
                                         onPressed: () => Get.back(),
@@ -110,26 +107,26 @@ class StudyWidget extends StatelessWidget {
                                             const SizedBox(height: 14),
                                             TextButton.icon(
                                               onPressed: () {},
-                                              icon: Icon(Icons.check_rounded),
-                                              label: Text('I\'ve learned this entry (swipe up on card)'),
+                                              icon: const Icon(Icons.check_rounded),
+                                              label: Text('have_learned'.tr),
                                               style: TextButton.styleFrom(alignment: Alignment.topLeft),
                                             ),
                                             TextButton.icon(
                                               onPressed: () {},
-                                              icon: Icon(Icons.last_page_rounded),
-                                              label: Text('Move this enrty on later'),
+                                              icon: const Icon(Icons.last_page_rounded),
+                                              label: Text('move_later'.tr),
                                               style: TextButton.styleFrom(alignment: Alignment.topLeft),
                                             ),
                                             TextButton.icon(
                                               onPressed: () {},
-                                              icon: Icon(Icons.edit_rounded),
-                                              label: Text('Edit this entry'),
+                                              icon: const Icon(Icons.edit_rounded),
+                                              label: Text('edit_entry'.tr),
                                               style: TextButton.styleFrom(alignment: Alignment.topLeft),
                                             ),
                                             TextButton.icon(
                                               onPressed: () {},
-                                              icon: Icon(Icons.add_rounded),
-                                              label: Text('Add new entries'),
+                                              icon: const Icon(Icons.add_rounded),
+                                              label: Text('add_entries'.tr),
                                               style: TextButton.styleFrom(alignment: Alignment.topLeft),
                                             ),
                                             TextButton.icon(
@@ -139,7 +136,7 @@ class StudyWidget extends StatelessWidget {
                                                 color: Colors.red[200],
                                               ),
                                               label: Text(
-                                                'Delete this entry',
+                                                'delete_entry'.tr,
                                                 style: TextStyle(color: Colors.red[200]),
                                               ),
                                               style: TextButton.styleFrom(alignment: Alignment.topLeft),
@@ -155,11 +152,6 @@ class StudyWidget extends StatelessWidget {
                           ),
                         );
                       },
-                      // onPanUpdate: (details) {
-                      //   if (details.delta.dy < 0) {
-                      //     print('Swipe up');
-                      //   }
-                      // },
                       onVerticalDragEnd: (details) {
                         if (details.velocity.pixelsPerSecond.dy < 1) {
                           print('onVerticalDragEnd');
@@ -173,8 +165,6 @@ class StudyWidget extends StatelessWidget {
                           bottom: (MediaQuery.of(context).orientation == Orientation.portrait)
                               ? CustomConstants.lessonRadius
                               : CustomConstants.lessonRadius - 6,
-                          // left: CustomConstants.lessonRadius,
-                          // right: CustomConstants.lessonRadius,
                           left: 40,
                           right: 40,
                         ),
@@ -202,7 +192,6 @@ class StudyWidget extends StatelessWidget {
                             ),
                             style: const TextStyle(
                               fontSize: 22,
-                              // color: Colors.white,
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -235,13 +224,6 @@ class StudyWidget extends StatelessWidget {
                     ),
                   ),
                   const Expanded(child: SizedBox.shrink()),
-                  // IconButton(
-                  //   onPressed: () {},
-                  //   icon: const Icon(
-                  //     Icons.more_vert,
-                  //     color: Colors.white,
-                  //   ),
-                  // ),
                   PopupMenuButton(
                     initialValue: selectedMenu,
                     onSelected: (value) {
@@ -315,15 +297,15 @@ class StudyWidget extends StatelessWidget {
                         ),
                       ),
                       const PopupMenuDivider(),
-                      const PopupMenuItem<String>(
+                      PopupMenuItem<String>(
                         value: 'create_dictionary',
                         // padding: EdgeInsets.zero,
                         child: ListTile(
-                          leading: Icon(Icons.add),
-                          title: Text('Create dictionary'),
+                          leading: const Icon(Icons.add),
+                          title: Text('create_dictionary'.tr),
                           minLeadingWidth: 0,
                           minVerticalPadding: 0,
-                          visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                          visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
                         ),
                       ),
                     ],

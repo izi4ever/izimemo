@@ -115,7 +115,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   padding: EdgeInsets.zero,
                   children: [
                     SnippetHeaderMenu(
-                      releaseNo: 'v1.0.3',
+                      releaseNo: 'v1.0.3 beta',
                       onLogoPressed: () {},
                       onLikePressed: () {},
                       onSharedPressed: () {},
