@@ -22,6 +22,7 @@ class StudyWidget extends StatelessWidget {
     return Obx(() => Stack(
           children: [
             CarouselSlider(
+              key: GlobalKey(), // <<< Very important here
               items: [
                 ...studyWidgetController.sliderWordList.asMap().entries.map(
                   (e) {

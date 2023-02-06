@@ -6,24 +6,26 @@ import '../custom_constants.dart';
 class CustomScaffold extends StatelessWidget {
   const CustomScaffold({
     super.key,
+    required this.appBarTitle,
     this.appBarColor = CustomDesignColors.lightBlue,
     this.appBarTitleColor = CustomDesignColors.darkBlue,
     this.bodyColor = Colors.white,
     this.padding = const EdgeInsets.symmetric(horizontal: 16),
-    this.child,
+    required this.child,
   });
 
+  final String appBarTitle;
   final Color? appBarColor;
   final Color? appBarTitleColor;
   final Color? bodyColor;
   final EdgeInsetsGeometry? padding;
-  final Widget? child;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: Text(appBarTitle),
         centerTitle: true,
         backgroundColor: appBarColor,
         foregroundColor: appBarTitleColor,

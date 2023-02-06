@@ -13,10 +13,10 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+      appBarTitle: 'settings_page_title'.tr,
       child: Obx(
         () => ListView(
           children: [
-            // Numbers of entries in lesson
             const SizedBox(height: 56),
             Text.rich(
               TextSpan(children: [
@@ -27,9 +27,9 @@ class SettingsPage extends StatelessWidget {
                 WidgetSpan(
                   child: Container(
                     padding: const EdgeInsets.only(bottom: 3),
-                    child: const Text(
-                      'Number of entries per lesson — ',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    child: Text(
+                      'entries_in_lesson'.tr,
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     ),
                   ),
                 ),
@@ -64,9 +64,9 @@ class SettingsPage extends StatelessWidget {
                 WidgetSpan(
                   child: Container(
                     padding: const EdgeInsets.only(bottom: 3),
-                    child: const Text(
-                      'Seconds for showing entry — ',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    child: Text(
+                      'seconds_per_entry'.tr,
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     ),
                   ),
                 ),
@@ -100,12 +100,12 @@ class SettingsPage extends StatelessWidget {
               children: [
                 CustomElevatedButton(
                   onPressed: settingsPageController.onSaveSettings,
-                  title: 'Save',
+                  title: 'save'.tr,
                 ),
                 const SizedBox(width: 12),
                 CustomElevatedButton(
                   onPressed: settingsPageController.onCancelSettings,
-                  title: 'Cancel',
+                  title: 'cancel'.tr,
                   backgroundColor: CustomDesignColors.lightBlue,
                   foregroundColor: CustomDesignColors.darkBlue,
                 ),
