@@ -2,9 +2,31 @@ import 'dart:math';
 
 import 'package:get/get.dart';
 
+import '../../app_storage/app_settings.dart';
 import '../../custom/colors/custom_lesson_colors.dart';
+import 'test_study_settings.dart';
+import 'test_word_list.dart';
 
 class StudyWidgetController extends GetxController {
+  AppSettings appSettings = AppSettings();
+
+  List<String> get getSliderWordList => wordListGenerator(
+        testWordList,
+        TestStudySettings.firstElement,
+        appSettings.readEntriesInLesson.round(),
+      );
+  late RxList<String> sliderWordList;
+  List<int> get getSlideColorIndexList => slideColorListGenerator(sliderWordList.length);
+  late RxList<int> slideColorIndexList;
+  double get getSecondsPerEntries => appSettings.readSecondsPerEntries;
+  late RxDouble secondsPerEntries;
+
+  StudyWidgetController() {
+    sliderWordList = getSliderWordList.obs;
+    slideColorIndexList = getSlideColorIndexList.obs;
+    secondsPerEntries = getSecondsPerEntries.obs;
+  }
+
   var autoPlay = true.obs;
 
   List<String> wordListGenerator(List<String> inputList, int firstElement, int elementsInLesson) {

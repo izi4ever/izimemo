@@ -82,7 +82,7 @@ class SnippetHeaderMenu extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 2, top: 40),
                 child: IconButton(
-                  onPressed: onQRPressed,
+                  onPressed: () {},
                   icon: const Icon(
                     Icons.help_outline,
                     size: 28,

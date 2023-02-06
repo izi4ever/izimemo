@@ -14,6 +14,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import '../custom/colors/custom_design_colors.dart';
 import '../custom/custom_constants.dart';
 import '../custom/widgets/custom_settings_icon_button.dart';
+import '../settings_page/settings_page.dart';
 import 'custom_links/additional_links.dart';
 import 'study_widget/study_widget.dart';
 
@@ -221,7 +222,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     ),
                     const SizedBox(width: 8),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () => Get.to(() => SettingsPage()),
                       icon: const Icon(Icons.settings),
                     ),
                   ],
@@ -311,7 +312,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             : const Radius.circular(0),
                       ),
                       // child: const StudyWidget(),
-                      child: StudyWidget(),
+                      child: const StudyWidget(),
                     ),
                   ),
                   Positioned(

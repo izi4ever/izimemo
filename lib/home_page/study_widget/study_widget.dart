@@ -7,10 +7,8 @@ import 'package:get/get.dart';
 import 'package:izimemo/custom/colors/custom_design_colors.dart';
 import 'package:izimemo/custom/colors/custom_lesson_colors.dart';
 import 'package:izimemo/home_page/study_widget/study_widget_controller.dart';
-import 'package:izimemo/home_page/study_widget/test_study_settings.dart';
 
 import '../../custom/custom_constants.dart';
-import 'test_word_list.dart';
 
 class StudyWidget extends StatelessWidget {
   const StudyWidget({super.key});
@@ -19,21 +17,13 @@ class StudyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final StudyWidgetController studyWidgetController = Get.put(StudyWidgetController());
 
-    var items = studyWidgetController.wordListGenerator(
-      testWordList,
-      TestStudySettings.firstElement,
-      TestStudySettings.elementsInLesson,
-    );
-
-    var colorIndexList = studyWidgetController.slideColorListGenerator(items.length);
-
     String? selectedMenu;
 
     return Obx(() => Stack(
           children: [
             CarouselSlider(
               items: [
-                ...items.asMap().entries.map(
+                ...studyWidgetController.sliderWordList.asMap().entries.map(
                   (e) {
                     var splitStrings = e.value.split(' - ');
 
@@ -168,7 +158,7 @@ class StudyWidget extends StatelessWidget {
                           left: 40,
                           right: 40,
                         ),
-                        color: CustomLessonColors.values[colorIndexList[e.key]].color,
+                        color: CustomLessonColors.values[studyWidgetController.slideColorIndexList[e.key]].color,
                         child: Center(
                           child: AutoSizeText.rich(
                             TextSpan(
@@ -208,7 +198,7 @@ class StudyWidget extends StatelessWidget {
                 autoPlay: studyWidgetController.autoPlay.value,
                 viewportFraction: 1,
                 pauseAutoPlayInFiniteScroll: true,
-                autoPlayInterval: const Duration(seconds: TestStudySettings.slideInterval),
+                autoPlayInterval: Duration(seconds: studyWidgetController.secondsPerEntries.value.round()),
                 enlargeFactor: 1,
               ),
             ),
@@ -315,8 +305,6 @@ class StudyWidget extends StatelessWidget {
                       Icons.more_vert,
                       color: Colors.white,
                     ),
-                    // color: CustomDesignColors.lightBlue,
-                    // color: CustomDesignColors.mediumBlue,
                     color: CustomDesignColors.menuBlue,
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
