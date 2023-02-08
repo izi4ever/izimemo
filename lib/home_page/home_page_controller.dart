@@ -14,6 +14,12 @@ class HomePageController extends GetxController {
 
   Dialogs dialogs = Dialogs();
 
+  // late WebViewController webController;
+
+  // HomePageController(WebViewController controller) {
+  //   webController = controller;
+  // }
+
   Future<bool> onGoBack(WebViewController webController) async {
     if (canGoBack.value) {
       await webController.goBack();

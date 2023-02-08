@@ -3,19 +3,17 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:izimemo/custom/widgets/custom_bookmark_button.dart';
-import 'package:izimemo/custom/widgets/custom_social_button_in_menu.dart';
 import 'package:izimemo/home_page/custom_links/default_links.dart';
 import 'package:izimemo/home_page/home_page_controller.dart';
 import 'package:izimemo/home_page/snippets/snippet_appbar_title.dart';
 import 'package:izimemo/home_page/snippets/snippet_header_menu.dart';
+import 'package:izimemo/home_page/snippets/snippet_save_share_links.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../custom/colors/custom_design_colors.dart';
 import '../custom/custom_constants.dart';
 import '../custom/widgets/custom_settings_icon_button.dart';
 import '../settings_page/settings_page.dart';
-import 'custom_links/additional_links.dart';
 import 'study_widget/study_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -146,51 +144,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             ],
                           ),
                         ),
-                        const SizedBox(height: 6),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 18, top: 4, bottom: 4),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              CustomSocialButtonInMenu(
-                                icon: FontAwesomeIcons.shareNodes,
-                                title: 'share_content'.tr,
-                                onPressed: () {},
-                              ),
-                              CustomSocialButtonInMenu(
-                                icon: FontAwesomeIcons.solidHeart,
-                                title: 'add_bookmark'.tr,
-                                onPressed: () {},
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 6),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 12),
-                          child: Wrap(
-                            children: [
-                              ...AdditionalLinks.values.map(
-                                (e) {
-                                  if (e.active == true) {
-                                    return Padding(
-                                      padding: const EdgeInsets.only(right: 10),
-                                      child: CustomBookmarkButton(
-                                        title: e.title,
-                                        url: e.url,
-                                        onPressed: () async {
-                                          Get.back();
-                                          await homePageController.onLoadUrl(_webController, e.url);
-                                        },
-                                      ),
-                                    );
-                                  }
-                                  return const SizedBox.shrink();
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
+                        SnippetSaveShareLinks(webController: _webController,),
                       ],
                     ),
                   ],
