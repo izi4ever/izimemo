@@ -6,4 +6,5 @@ class CustomDesignColors {
   static const Color lightBlue = Color(0xFFEEF8FF);
   static const Color mediumBlue = Color.fromARGB(255, 202, 233, 255);
   static const Color menuBlue = Color.fromARGB(255, 218, 238, 254);
+  static const Color dialogBarrierColor = Color(0xF0EEF8FF);
 }

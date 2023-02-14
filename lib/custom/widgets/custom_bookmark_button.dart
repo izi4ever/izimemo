@@ -6,11 +6,13 @@ class CustomBookmarkButton extends StatelessWidget {
   final String title;
   final String url;
   final VoidCallback onPressed;
+  final VoidCallback? onLongPress;
   const CustomBookmarkButton({
     super.key,
     required this.title,
     required this.url,
     required this.onPressed,
+    this.onLongPress,
   });
 
   @override
@@ -18,6 +20,7 @@ class CustomBookmarkButton extends StatelessWidget {
     final colorsNumber = CustomBookmarkColors.values.length;
     return ElevatedButton(
       onPressed: onPressed,
+      onLongPress: onLongPress,
       style: ElevatedButton.styleFrom(
         elevation: 0,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),

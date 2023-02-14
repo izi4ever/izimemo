@@ -5,8 +5,8 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../custom/widgets/custom_bookmark_button.dart';
 import '../../custom/widgets/custom_social_button_in_menu.dart';
-import '../custom_links/additional_links.dart';
 import '../home_page_controller.dart';
+import 'snippet_save_share_links_controller.dart';
 
 class SnippetSaveShareLinks extends StatelessWidget {
   SnippetSaveShareLinks({
@@ -18,9 +18,12 @@ class SnippetSaveShareLinks extends StatelessWidget {
 
   // final HomePageController homePageController = Get.put(HomePageController());
   final HomePageController homePageController = Get.find();
+  final SnippetSaveShareLinksController snippetSaveShareLinksController = Get.put(SnippetSaveShareLinksController());
 
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
+
     return Column(
       children: [
         const SizedBox(height: 6),
@@ -47,23 +50,21 @@ class SnippetSaveShareLinks extends StatelessWidget {
           padding: const EdgeInsets.only(left: 12),
           child: Wrap(
             children: [
-              ...AdditionalLinks.values.map(
-                (e) {
-                  if (e.active == true) {
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: CustomBookmarkButton(
-                        title: e.title,
-                        url: e.url,
-                        onPressed: () async {
-                          Get.back();
-                          await homePageController.onLoadUrl(webController, e.url);
-                        },
-                      ),
-                    );
-                  }
-                  return const SizedBox.shrink();
-                },
+              ...snippetSaveShareLinksController.bookmarksList.map(
+                (e) => Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: CustomBookmarkButton(
+                    title: e['title']!,
+                    url: e['url']!,
+                    onPressed: () async {
+                      Get.back();
+                      await homePageController.onLoadUrl(webController, e['url']!);
+                    },
+                    // TODO Dialog directly with fields for editing and 3 buttons: Cancel, Save, Delete
+                    // TODO onLongPress passes index,
+                    onLongPress: snippetSaveShareLinksController.onLongPressBookmark,
+                  ),
+                ),
               ),
             ],
           ),

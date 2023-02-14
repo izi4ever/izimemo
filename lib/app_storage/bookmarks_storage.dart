@@ -19,4 +19,6 @@ class BookmarksStorage {
           'url': 'https://www.ukr.net/',
         },
       ];
+
+  void writeBookmarksList(List<Map<String, String>> value) => box.write('bookmarksList', value);
 }
