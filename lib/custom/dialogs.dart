@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:izimemo/custom/custom_constants.dart';
-import 'package:izimemo/custom/widgets/custom_elevated_button.dart';
 
 import 'colors/custom_design_colors.dart';
 
@@ -53,16 +52,14 @@ class Dialogs {
           child: content,
         ),
         actions: actions,
-        actionsAlignment: (actionsAlignment != null)
-        ? actionsAlignment
-        : MainAxisAlignment.start,
+        actionsAlignment: (actionsAlignment != null) ? actionsAlignment : MainAxisAlignment.start,
         actionsPadding: (actionsPadding != null)
-        ? actionsPadding
-        : const EdgeInsets.only(
-          bottom: 24,
-          left: 24,
-          right: 24,
-        ),
+            ? actionsPadding
+            : const EdgeInsets.only(
+                bottom: 24,
+                left: 24,
+                right: 24,
+              ),
         insetPadding: EdgeInsets.zero,
         elevation: 0,
         backgroundColor: Colors.white,

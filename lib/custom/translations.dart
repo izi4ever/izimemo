@@ -28,6 +28,7 @@ class Languages extends Translations {
           'seconds_per_entry': 'Seconds for showing entry — ',
           'save': 'Save',
           'cancel': 'Cancel',
+          'delete': 'Delete',
         },
         'ru_RU': {
           'slogan': 'Отдыхай и учись',
@@ -54,6 +55,7 @@ class Languages extends Translations {
           'seconds_per_entry': 'Секунд для показа одной записи — ',
           'save': 'Сохранить',
           'cancel': 'Отмена',
+          'delete': 'Удалить',
         },
         'uk_UA': {
           'slogan': 'Відпочивай та навчайся',
@@ -80,6 +82,7 @@ class Languages extends Translations {
           'seconds_per_entry': 'Секунд для показу кожного запису — ',
           'save': 'Зберегти',
           'cancel': 'Відміна',
+          'delete': 'Видалити',
         },
         'de_DE': {
           'slogan': 'Entspanne dich und studiere',
@@ -106,6 +109,7 @@ class Languages extends Translations {
           'seconds_per_entry': 'Sekunden zum Anzeigen des Eintrags — ',
           'save': 'Speichern',
           'cancel': 'Stornieren',
+          'delete': 'Löschen',
         },
         // 'fr_FR': {
         //   'slogan': 'Détendez-vous et étudiez',
