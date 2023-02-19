@@ -17,7 +17,7 @@ class CustomSocialButtonInMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton.icon(
-      onPressed: () {},
+      onPressed: onPressed,
       icon: FaIcon(
         icon,
         color: CustomDesignColors.greyBlue,

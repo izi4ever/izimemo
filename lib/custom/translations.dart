@@ -31,6 +31,9 @@ class Languages extends Translations {
           'delete': 'Delete',
           'title': 'Title',
           'link': 'Link',
+          'just_one_line': 'Just one line.',
+          'signs': 'signs',
+          'too_long_title': 'Too long title',
         },
         'ru_RU': {
           'slogan': 'Отдыхай и учись',
@@ -60,6 +63,9 @@ class Languages extends Translations {
           'delete': 'Удалить',
           'title': 'Название',
           'link': 'Ссылка',
+          'just_one_line': 'Только одна строка.',
+          'signs': 'знаков',
+          'too_long_title': 'Слишком длинный заголовок',
         },
         'uk_UA': {
           'slogan': 'Відпочивай та навчайся',
@@ -89,6 +95,9 @@ class Languages extends Translations {
           'delete': 'Видалити',
           'title': 'Назва',
           'link': 'Посылання',
+          'just_one_line': 'Лише один рядок.',
+          'signs': 'знаків',
+          'too_long_title': 'Дуже довга назва',
         },
         'de_DE': {
           'slogan': 'Entspanne dich und studiere',
@@ -118,6 +127,9 @@ class Languages extends Translations {
           'delete': 'Löschen',
           'title': 'Titel',
           'link': 'Link',
+          'just_one_line': 'Nur eine Zeile.',
+          'signs': 'Zeichen',
+          'too_long_title': 'Zu langer Titel',
         },
         // 'fr_FR': {
         //   'slogan': 'Détendez-vous et étudiez',

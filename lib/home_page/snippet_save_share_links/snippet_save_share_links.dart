@@ -51,12 +51,13 @@ class _SnippetSaveShareLinksState extends State<SnippetSaveShareLinks> {
               CustomSocialButtonInMenu(
                 icon: FontAwesomeIcons.shareNodes,
                 title: 'share_content'.tr,
-                onPressed: () {},
+                onPressed: () {
+                },
               ),
               CustomSocialButtonInMenu(
                 icon: FontAwesomeIcons.solidHeart,
                 title: 'add_bookmark'.tr,
-                onPressed: () {},
+                onPressed: () => dialogs.addBookmarkDialog(widget.webController),
               ),
             ],
           ),
@@ -82,7 +83,6 @@ class _SnippetSaveShareLinksState extends State<SnippetSaveShareLinks> {
                               _titleFieldController.text = e.value['title']!;
                               _linkFieldController.text = e.value['url']!;
                               dialogs.showDialog(
-                                // content: Text('Dialog content ${e.key}'),
                                 content: Form(
                                   child: SizedBox(
                                     height: 240,

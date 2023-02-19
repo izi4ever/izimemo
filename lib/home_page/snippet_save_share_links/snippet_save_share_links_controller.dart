@@ -33,5 +33,16 @@ class SnippetSaveShareLinksController extends GetxController {
   }
 
   // TODO addBookmark
-  void addBookmark(String title, String url) {}
+  void addBookmark(String title, String url) {
+    Map<String, dynamic> element = {
+      'title': title,
+      'url': url,
+    };
+
+    bookmarksList.add(element);
+
+    bookmarksStorage.writeBookmarksList(bookmarksList);
+
+    Get.back();
+  }
 }

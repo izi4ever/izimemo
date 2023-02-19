@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:izimemo/custom/custom_constants.dart';
+import 'package:izimemo/home_page/snippet_save_share_links/snippet_save_share_links_controller.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import 'colors/custom_design_colors.dart';
+import 'widgets/custom_elevated_button.dart';
+import 'widgets/custom_form_label.dart';
+import 'widgets/custom_text_form_field.dart';
 
 class Dialogs {
   void showSnackBar(String title) {
@@ -70,6 +76,71 @@ class Dialogs {
         ),
       ),
       barrierColor: CustomDesignColors.dialogBarrierColor,
+    );
+  }
+
+  void addBookmarkDialog(WebViewController webController) async {
+    SnippetSaveShareLinksController snippetSaveShareLinksController = Get.find();
+    final formKey = GlobalKey<FormState>();
+
+    final titleFieldController = TextEditingController();
+    final linkFieldController = TextEditingController();
+
+    var currentUrl = await webController.currentUrl();
+    linkFieldController.text = currentUrl!;
+
+    var pageTitle = await webController.getTitle();
+    titleFieldController.text = pageTitle!;
+
+    showDialog(
+      content: Form(
+        key: formKey,
+        child: SizedBox(
+          height: 240,
+          child: ListView(
+            children: [
+              CustomFormLabel(
+                title: 'title'.tr,
+                topPadding: 4,
+              ),
+              CustomTextFormField(
+                controller: titleFieldController,
+                validator: (val) {
+                  if (titleFieldController.text.length > CustomConstants.urlTitleMaxLength) {
+                    return 'too_long_title'.tr;
+                  } else {
+                    return null;
+                  }
+                },
+                maxLength: CustomConstants.urlTitleMaxLength,
+                maxLengthEnforcement: MaxLengthEnforcement.none,
+              ),
+              CustomFormLabel(title: 'link'.tr, topPadding: 20),
+              CustomTextFormField(
+                controller: linkFieldController,
+                maxLines: 3,
+              ),
+            ],
+          ),
+        ),
+      ),
+      actions: [
+        CustomElevatedButton(
+          onPressed: () {
+            if (formKey.currentState!.validate()) {
+              formKey.currentState!.save();
+              snippetSaveShareLinksController.addBookmark(titleFieldController.text, linkFieldController.text);
+            }
+          },
+          title: 'save'.tr,
+        ),
+        CustomElevatedButton(
+          onPressed: () => Get.back(),
+          title: 'cancel'.tr,
+          backgroundColor: CustomDesignColors.mediumBlue,
+          foregroundColor: CustomDesignColors.darkBlue,
+        ),
+      ],
     );
   }
 }
