@@ -3,8 +3,9 @@ import 'package:get_storage/get_storage.dart';
 class BookmarksStorage {
   final box = GetStorage();
 
-  List<Map<String, String>> get readBookmarksList =>
-      box.read('bookmarksList') ??
+  List<Map<String, dynamic>> get readBookmarksList =>
+  // List<dynamic> get readBookmarksList =>
+      List<Map<String, dynamic>>.from(box.read('bookmarksList') ??
       [
         {
           'title': 'Megogo',
@@ -18,7 +19,8 @@ class BookmarksStorage {
           'title': 'Ukr.net',
           'url': 'https://www.ukr.net/',
         },
-      ];
+      ]);
 
-  void writeBookmarksList(List<Map<String, String>> value) => box.write('bookmarksList', value);
+  void writeBookmarksList(List<Map<String, dynamic>> value) => box.write('bookmarksList', value);
+  // void writeBookmarksList(List<dynamic> value) => box.write('bookmarksList', value);
 }

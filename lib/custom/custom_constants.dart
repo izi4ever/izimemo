@@ -6,4 +6,6 @@ class CustomConstants {
   static const double lessonHeightPortrait = 100;
   static const double lessonHeightLandscape = 60;
   static const double appBarHeight = 56;
+  static const double textFieldRadius = 12;
+  static const int urlTitleMaxLength = 30;
 }
