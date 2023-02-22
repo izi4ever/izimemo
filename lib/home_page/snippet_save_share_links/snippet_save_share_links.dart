@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:izimemo/custom/custom_constants.dart';
@@ -11,15 +12,16 @@ import '../../custom/widgets/custom_bookmark_button.dart';
 import '../../custom/widgets/custom_elevated_button.dart';
 import '../../custom/widgets/custom_social_button_in_menu.dart';
 import '../../custom/widgets/custom_text_form_field.dart';
-import '../home_page_controller.dart';
 import 'snippet_save_share_links_controller.dart';
 
 class SnippetSaveShareLinks extends StatefulWidget {
   const SnippetSaveShareLinks({
     super.key,
+    required this.currentUrl,
     required this.webController,
   });
 
+  final String currentUrl;
   final WebViewController webController;
 
   @override
@@ -27,8 +29,6 @@ class SnippetSaveShareLinks extends StatefulWidget {
 }
 
 class _SnippetSaveShareLinksState extends State<SnippetSaveShareLinks> {
-  // final HomePageController homePageController = Get.put(HomePageController());
-  final HomePageController homePageController = Get.find();
 
   final SnippetSaveShareLinksController snippetSaveShareLinksController = Get.put(SnippetSaveShareLinksController());
 
@@ -45,22 +45,30 @@ class _SnippetSaveShareLinksState extends State<SnippetSaveShareLinks> {
         const SizedBox(height: 6),
         Padding(
           padding: const EdgeInsets.only(left: 18, top: 4, bottom: 4),
-          child: Column(
+          child: Obx(() => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomSocialButtonInMenu(
                 icon: FontAwesomeIcons.shareNodes,
                 title: 'share_content'.tr,
-                onPressed: () {
-                },
+                onPressed: () {},
               ),
-              CustomSocialButtonInMenu(
-                icon: FontAwesomeIcons.solidHeart,
+              (!snippetSaveShareLinksController.bookmarksList
+                            .map((e) => e['url'])
+                            .toList()
+                            .contains(widget.currentUrl))
+              ? CustomSocialButtonInMenu(
+                icon: FontAwesomeIcons.heart,
                 title: 'add_bookmark'.tr,
                 onPressed: () => dialogs.addBookmarkDialog(widget.webController),
+              )
+              : CustomSocialButtonInMenu(
+                icon: FontAwesomeIcons.solidHeart,
+                title: 'delete_bookmark'.tr,
+                onPressed: () => snippetSaveShareLinksController.deleteBookmarkByUrl(widget.currentUrl),
               ),
             ],
-          ),
+          )),
         ),
         const SizedBox(height: 6),
         Padding(
@@ -73,11 +81,7 @@ class _SnippetSaveShareLinksState extends State<SnippetSaveShareLinks> {
                           child: CustomBookmarkButton(
                             title: e.value['title']!,
                             url: e.value['url']!,
-                            onPressed: () async {
-                              Get.back();
-                              await homePageController.onLoadUrl(widget.webController, e.value['url']!);
-                            },
-
+                            onPressed: () async => await snippetSaveShareLinksController.onBookmarkPressed(widget.webController, e.value['url']),
                             // Dialog for editing and deleting bookmark
                             onLongPress: () {
                               _titleFieldController.text = e.value['title']!;
@@ -92,6 +96,7 @@ class _SnippetSaveShareLinksState extends State<SnippetSaveShareLinks> {
                                         CustomTextFormField(
                                           controller: _titleFieldController,
                                           maxLength: CustomConstants.urlTitleMaxLength,
+                                          maxLengthEnforcement: MaxLengthEnforcement.none,
                                         ),
                                         CustomFormLabel(title: 'link'.tr, topPadding: 0),
                                         CustomTextFormField(

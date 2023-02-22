@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         onUrlFieldFocus = urlTextFocus.hasFocus;
       });
       if (urlTextFocus.hasFocus) {
-        urlTextController.text = homePageController.fullUrl;
+        urlTextController.text = homePageController.fullUrl.value;
       } else {
         urlTextController.text = homePageController.shortUrl;
       }
@@ -144,7 +144,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             ],
                           ),
                         ),
-                        SnippetSaveShareLinks(webController: _webController,),
+                        Obx(() => SnippetSaveShareLinks(
+                          webController: _webController,
+                          currentUrl: homePageController.fullUrl.value,
+                        )),
                       ],
                     ),
                   ],
@@ -199,7 +202,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                 // onUrlTap: () {
                 //   urlTextController.selection = TextSelection(baseOffset: 0, extentOffset: urlTextController.text.length);
                 // },
-                onAddBookmarkPressed: () {},
+                // onAddBookmarkPressed: () {},
                 onStopLoadPressed: () async => await homePageController.onLoadUrl(_webController, 'about:blank'),
                 onReloadPressed: () async => await homePageController.onReload(_webController),
                 canGoBack: homePageController.canGoBack.value,
@@ -212,6 +215,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   urlFieldUnfocused;
                   await homePageController.onGoForward(_webController);
                 },
+                currentUrl: homePageController.fullUrl.value,
+                webController: _webController,
               )),
           actions: [
             onUrlFieldFocus
@@ -265,7 +270,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             ? const Radius.circular(CustomConstants.lessonRadius)
                             : const Radius.circular(0),
                       ),
-                      // child: const StudyWidget(),
                       child: const StudyWidget(),
                     ),
                   ),

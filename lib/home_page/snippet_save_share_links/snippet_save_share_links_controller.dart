@@ -1,13 +1,17 @@
 import 'package:get/get.dart';
 import 'package:izimemo/app_storage/bookmarks_storage.dart';
+import 'package:izimemo/home_page/home_page_controller.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class SnippetSaveShareLinksController extends GetxController {
-  BookmarksStorage bookmarksStorage = BookmarksStorage();
+  final BookmarksStorage bookmarksStorage = BookmarksStorage();
 
   List<Map<String, dynamic>> get getBookmarksList => bookmarksStorage.readBookmarksList;
-  // List<dynamic> get getBookmarksList => bookmarksStorage.readBookmarksList;
   late RxList<Map<String, dynamic>> bookmarksList;
-  // late RxList<dynamic> bookmarksList;
+
+  // final SnippetSaveShareLinksController snippetSaveShareLinksController = Get.put(SnippetSaveShareLinksController());
+  final HomePageController homePageController = Get.put(HomePageController());
+  // final HomePageController homePageController = Get.find();
 
   SnippetSaveShareLinksController() {
     bookmarksList = getBookmarksList.obs;
@@ -20,8 +24,15 @@ class SnippetSaveShareLinksController extends GetxController {
     Get.back();
   }
 
-  // TODO deleteBookmarkByUrl
-  void deleteBookmarkByUrl(String url) {}
+  void deleteBookmarkByUrl(String url) {
+    var indexUrlInBookmarksList = bookmarksList
+        .map((e) => e['url'])
+        .toList()
+        .indexOf(homePageController.fullUrl.value);
+
+    bookmarksList.removeAt(indexUrlInBookmarksList);
+    bookmarksStorage.writeBookmarksList(bookmarksList);
+  }
 
   void changeBookmark(int index, String newTitle, String newUrl) {
     bookmarksList[index]['title'] = newTitle;
@@ -32,7 +43,6 @@ class SnippetSaveShareLinksController extends GetxController {
     Get.back();
   }
 
-  // TODO addBookmark
   void addBookmark(String title, String url) {
     Map<String, dynamic> element = {
       'title': title,
@@ -44,5 +54,10 @@ class SnippetSaveShareLinksController extends GetxController {
     bookmarksStorage.writeBookmarksList(bookmarksList);
 
     Get.back();
+  }
+
+  Future<void> onBookmarkPressed(WebViewController webController, String url) async {
+    Get.back();
+    await homePageController.onLoadUrl(webController, url);
   }
 }

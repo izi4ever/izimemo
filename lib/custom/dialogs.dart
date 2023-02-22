@@ -80,7 +80,8 @@ class Dialogs {
   }
 
   void addBookmarkDialog(WebViewController webController) async {
-    SnippetSaveShareLinksController snippetSaveShareLinksController = Get.find();
+    final SnippetSaveShareLinksController snippetSaveShareLinksController = Get.find();
+    
     final formKey = GlobalKey<FormState>();
 
     final titleFieldController = TextEditingController();

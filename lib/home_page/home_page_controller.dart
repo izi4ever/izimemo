@@ -9,7 +9,7 @@ class HomePageController extends GetxController {
 
   var loadingPercentage = 0.obs;
 
-  late String fullUrl;
+  var fullUrl = ''.obs;
   late String shortUrl;
 
   Dialogs dialogs = Dialogs();
@@ -106,9 +106,8 @@ class HomePageController extends GetxController {
   }
 
   String onPageStarted(String url) {
-    print('onPageStarted');
     loadingPercentage.value = 0;
-    fullUrl = url;
+    fullUrl.value = url;
     final listSplitUrl = url.split('/');
     shortUrl = listSplitUrl[2];
     if (shortUrl.substring(0, 4) == 'www.') {
