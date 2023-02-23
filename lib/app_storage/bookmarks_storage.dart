@@ -7,16 +7,32 @@ class BookmarksStorage {
       List<Map<String, dynamic>>.from(box.read('bookmarksList') ??
       [
         {
-          'title': 'Ukr.net',
-          'url': 'https://www.ukr.net/',
-        },
-        {
           'title': 'Filmster',
-          'url': 'https://www.youtube.com/@FilmsterRu/playlists',
+          'url': 'https://m.youtube.com/@FilmsterRu/playlists',
         },
         {
           'title': 'VideoLand',
-          'url': 'https://www.youtube.com/@cdlandvideo/playlists',
+          'url': 'https://m.youtube.com/@cdlandvideo/playlists',
+        },
+        {
+          'title': 'Ben\'s Bargains',
+          'url': 'https://bensbargains.com/',
+        },
+        {
+          'title': 'Bred\'s Deals',
+          'url': 'https://www.bradsdeals.com/',
+        },
+        {
+          'title': 'mydealz',
+          'url': 'https://www.mydealz.de/',
+        },
+        {
+          'title': 'idealo',
+          'url': 'https://www.idealo.de/',
+        },
+        {
+          'title': 'Skyscanner',
+          'url': 'https://www.skyscanner.de/',
         },
       ]);
 
