@@ -270,7 +270,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             ? const Radius.circular(CustomConstants.lessonRadius)
                             : const Radius.circular(0),
                       ),
-                      child: const StudyWidget(),
+                      child: StudyWidget(),
                     ),
                   ),
                   Positioned(

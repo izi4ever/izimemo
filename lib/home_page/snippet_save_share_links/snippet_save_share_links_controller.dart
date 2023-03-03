@@ -9,9 +9,7 @@ class SnippetSaveShareLinksController extends GetxController {
   List<Map<String, dynamic>> get getBookmarksList => bookmarksStorage.readBookmarksList;
   late RxList<Map<String, dynamic>> bookmarksList;
 
-  // final SnippetSaveShareLinksController snippetSaveShareLinksController = Get.put(SnippetSaveShareLinksController());
   final HomePageController homePageController = Get.put(HomePageController());
-  // final HomePageController homePageController = Get.find();
 
   SnippetSaveShareLinksController() {
     bookmarksList = getBookmarksList.obs;

@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:izimemo/app_storage/app_settings.dart';
+import 'package:izimemo/app_storage/app_settings_storage.dart';
 import 'package:izimemo/home_page/study_widget/study_widget_controller.dart';
 
 class SettingsPageController extends GetxController {
-  AppSettings appSettings = AppSettings();
+  AppSettingsStorage appSettings = AppSettingsStorage();
 
   // StudyWidgetController studyWidgetController = Get.put(StudyWidgetController());
   StudyWidgetController studyWidgetController = Get.find();

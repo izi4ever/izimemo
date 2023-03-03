@@ -2,13 +2,13 @@ import 'dart:math';
 
 import 'package:get/get.dart';
 
-import '../../app_storage/app_settings.dart';
+import '../../app_storage/app_settings_storage.dart';
 import '../../custom/colors/custom_lesson_colors.dart';
 import 'test_study_settings.dart';
 import 'test_word_list.dart';
 
 class StudyWidgetController extends GetxController {
-  AppSettings appSettings = AppSettings();
+  AppSettingsStorage appSettings = AppSettingsStorage();
 
   List<String> get getSliderWordList => wordListGenerator(
         testWordList,

@@ -1,6 +1,6 @@
 import 'package:get_storage/get_storage.dart';
 
-class AppSettings {
+class AppSettingsStorage {
   final box = GetStorage();
 
   double get readEntriesInLesson => box.read('entriesInLesson') ?? 5;
@@ -14,6 +14,4 @@ class AppSettings {
 
   String get readLastUrl => box.read('lastUrl') ?? 'https://google.com/';
   void writeLastUrl(String value) => box.write('lastUrl', value);
-
-  // TODO read/write KeyLastDic
 }

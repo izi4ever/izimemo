@@ -15,12 +15,12 @@ class BookmarksStorage {
           'url': 'https://m.youtube.com/@cdlandvideo/playlists',
         },
         {
-          'title': 'Ben\'s Bargains',
-          'url': 'https://bensbargains.com/',
-        },
-        {
           'title': 'Bred\'s Deals',
           'url': 'https://www.bradsdeals.com/',
+        },
+        {
+          'title': 'Ben\'s Bargains',
+          'url': 'https://bensbargains.com/',
         },
         {
           'title': 'mydealz',
