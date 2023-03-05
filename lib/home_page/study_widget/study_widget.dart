@@ -214,7 +214,7 @@ class StudyWidget extends StatelessWidget {
                     ),
                   ),
                   const Expanded(child: SizedBox.shrink()),
-                  DictionaryMenuWidget(selectedMenu: selectedMenu),
+                  DictionaryMenuWidget(),
                 ],
               ),
             ),
