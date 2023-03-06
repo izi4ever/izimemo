@@ -35,6 +35,10 @@ class Languages extends Translations {
           'just_one_line': 'Just one line.',
           'signs': 'signs',
           'too_long_title': 'Too long title',
+          'yes': 'Yes',
+          'no': 'No',
+          'you_want_delete_dic': 'Are you sure you want to delete this dictionary?',
+          'you_want_reset_dic': 'Are you sure you want to start learning this dictionary from the beginning',
         },
         'ru_RU': {
           'slogan': 'Отдыхай и учись',
@@ -66,6 +70,10 @@ class Languages extends Translations {
           'title': 'Название',
           'link': 'Ссылка',
           'too_long_title': 'Слишком длинный заголовок',
+          'yes': 'Да',
+          'no': 'Нет',
+          'you_want_delete_dic': 'Вы уверены, что хотите удалить этот словарь?',
+          'you_want_reset_dic': 'Вы уверены, что хотите начать учить этот словарь сначала',
         },
         'uk_UA': {
           'slogan': 'Відпочивай та навчайся',
@@ -97,6 +105,10 @@ class Languages extends Translations {
           'title': 'Назва',
           'link': 'Посылання',
           'too_long_title': 'Дуже довга назва',
+          'yes': 'Так',
+          'no': 'Ні',
+          'you_want_delete_dic': 'Ви впевнені, що хочете видалити цей словник?',
+          'you_want_reset_dic': 'Ви впевнені, що хочете почати вчити цей словник спочатку?',
         },
         'de_DE': {
           'slogan': 'Entspanne dich und studiere',
@@ -128,6 +140,10 @@ class Languages extends Translations {
           'title': 'Titel',
           'link': 'Link',
           'too_long_title': 'Zu langer Titel',
+          'yes': 'Ja',
+          'no': 'Nein',
+          'you_want_delete_dic': 'Möchten Sie dieses Wörterbuch wirklich löschen?',
+          'you_want_reset_dic': 'Sind Sie sicher, dass Sie dieses Vokabular von Anfang an lernen möchten?',
         },
         // 'fr_FR': {
         //   'slogan': 'Détendez-vous et étudiez',

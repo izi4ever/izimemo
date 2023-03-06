@@ -12,9 +12,14 @@ import '../../custom/widgets/custom_elevated_button.dart';
 import '../../custom/widgets/custom_form_label.dart';
 import '../../custom/widgets/custom_text_form_field.dart';
 
-class DictionaryMenuWidget extends StatelessWidget {
+class DictionaryMenuWidget extends StatefulWidget {
   DictionaryMenuWidget({super.key});
 
+  @override
+  State<DictionaryMenuWidget> createState() => _DictionaryMenuWidgetState();
+}
+
+class _DictionaryMenuWidgetState extends State<DictionaryMenuWidget> {
   final DictionaryMenuWidgetController dictionaryMenuWidgetController = Get.put(DictionaryMenuWidgetController());
 
   final Dialogs dialogs = Dialogs();
@@ -26,16 +31,15 @@ class DictionaryMenuWidget extends StatelessWidget {
     String? selectedMenu;
 
     return Obx(() {
-      final List<Map<String, dynamic>> dicsList = dictionaryMenuWidgetController.availableDics.value;
-      print('dicsList: $dicsList');
+      List<Map<String, dynamic>> dicsList = dictionaryMenuWidgetController.availableDics.value;
       return PopupMenuButton(
-        key: UniqueKey(),
         initialValue: selectedMenu,
         onSelected: (value) {
           dictionaryMenuWidgetController.changeCurrentDic(value);
         },
         itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
           ...dicsList.asMap().entries.map(
+                // ...dictionaryMenuWidgetController.availableDics.value.asMap().entries.map(
                 (e) => PopupMenuItem(
                   key: ValueKey(e.value['storageName']),
                   value: e.value['storageName'],
@@ -43,6 +47,7 @@ class DictionaryMenuWidget extends StatelessWidget {
                     child: Slidable(
                       endActionPane: ActionPane(
                         motion: const ScrollMotion(),
+                        extentRatio: 0.7,
                         children: [
                           SlidableAction(
                             onPressed: (BuildContext context) {
@@ -90,17 +95,60 @@ class DictionaryMenuWidget extends StatelessWidget {
                           ),
                           SlidableAction(
                             onPressed: (BuildContext context) {
-                              dictionaryMenuWidgetController.deleteDic(e.key);
-                              // dictionaryMenuWidgetController.update();
+                              dialogs.showDialog(
+                                content: Text('you_want_reset_dic'.tr),
+                                actions: [
+                                  CustomElevatedButton(
+                                    onPressed: () => dictionaryMenuWidgetController.deleteDic(e.key),
+                                    title: 'yes'.tr,
+                                    // dictionaryMenuWidgetController.deleteDic(e.key);
+                                  ),
+                                  CustomElevatedButton(
+                                    onPressed: () => Get.back(),
+                                    title: 'no'.tr,
+                                    backgroundColor: CustomDesignColors.mediumBlue,
+                                    foregroundColor: CustomDesignColors.darkBlue,
+                                  ),
+                                ],
+                              );
                             },
                             backgroundColor: Colors.white,
-                            foregroundColor: Colors.red[200],
-                            icon: FontAwesomeIcons.trashCan,
-                            // label: 'Delete',
+                            foregroundColor: Colors.grey,
+                            icon: FontAwesomeIcons.arrowRotateLeft,
+                            // label: 'Reset',
                             borderRadius: BorderRadius.circular(100),
                             spacing: 0,
                             padding: EdgeInsets.zero,
                           ),
+                          (dictionaryMenuWidgetController.lengthDicsList > 1)
+                              ? SlidableAction(
+                                  onPressed: (BuildContext context) {
+                                    dialogs.showDialog(
+                                      content: Text('you_want_delete_dic'.tr),
+                                      actions: [
+                                        CustomElevatedButton(
+                                          onPressed: () => dictionaryMenuWidgetController.deleteDic(e.key),
+                                          title: 'yes'.tr,
+                                          // dictionaryMenuWidgetController.deleteDic(e.key);
+                                        ),
+                                        CustomElevatedButton(
+                                          onPressed: () => Get.back(),
+                                          title: 'no'.tr,
+                                          backgroundColor: CustomDesignColors.mediumBlue,
+                                          foregroundColor: CustomDesignColors.darkBlue,
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                  backgroundColor: Colors.white,
+                                  foregroundColor: Colors.red[200],
+                                  icon: FontAwesomeIcons.trashCan,
+                                  // label: 'Delete',
+                                  borderRadius: BorderRadius.circular(100),
+                                  spacing: 0,
+                                  padding: EdgeInsets.zero,
+                                )
+                              : const SizedBox.shrink(),
                         ],
                       ),
                       child: ListTile(
