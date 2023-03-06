@@ -6,13 +6,11 @@ class DicsDataStorage {
   final box = GetStorage();
   final LineSplitter lineSplitter = const LineSplitter();
 
-  Map<String, dynamic> readWordListByDicKey(String key) {
-    return Map<String, dynamic>.from(box.read(key) ??
-        {
-          'firstEntryForStudy': 0,
-          'wordList': fillInDic(key),
-        });
-  }
+  int readFirstElementForDictionary(String dicKey) => box.read('${dicKey}_firstElement') ?? 0;
+  void writeFirstElementForDictionary(String dicKey, int value) => box.write('${dicKey}_firstElement', value);
+
+  List<String> readWordListByDicKey(String dicKey) => List<String>.from(box.read(dicKey) ?? fillInDic(dicKey));
+  void writeWordListByDicKey(String dicKey, List<String> value) => box.write(dicKey, value);
 
   List<String> fillInDic(String key) {
     if (key == 'dic_1') {
@@ -25,8 +23,6 @@ class DicsDataStorage {
       return [];
     }
   }
-
-  void writeWordListByDicKey(String key, List<String> value) => box.write(key, value);
 
   String dic1 = '''
 I [aɪ] - я

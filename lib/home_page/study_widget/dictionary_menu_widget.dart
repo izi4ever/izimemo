@@ -99,9 +99,8 @@ class _DictionaryMenuWidgetState extends State<DictionaryMenuWidget> {
                                 content: Text('you_want_reset_dic'.tr),
                                 actions: [
                                   CustomElevatedButton(
-                                    onPressed: () => dictionaryMenuWidgetController.deleteDic(e.key),
+                                    onPressed: () => dictionaryMenuWidgetController.resetDic(e.value['storageName']),
                                     title: 'yes'.tr,
-                                    // dictionaryMenuWidgetController.deleteDic(e.key);
                                   ),
                                   CustomElevatedButton(
                                     onPressed: () => Get.back(),

@@ -1,19 +1,23 @@
 import 'package:get/get.dart';
+import 'package:izimemo/app_storage/dics_data_storage.dart';
 import 'package:izimemo/app_storage/dics_description_storage.dart';
 
 class DictionaryMenuWidgetController extends GetxController {
   final DicsDescriptionStorage dicsDescriptionStorage = DicsDescriptionStorage();
+  final DicsDataStorage dicsDataStorage = DicsDataStorage();
 
   late RxInt lastCreatedDicIndex;
   late RxString lastOpenedDic;
   late RxList<Map<String, dynamic>> availableDics;
   late RxInt lengthDicsList;
+  late RxInt firstElementCurrentDic;
 
   DictionaryMenuWidgetController() {
     lastCreatedDicIndex = dicsDescriptionStorage.readLastCreatedDicIndex.obs;
     lastOpenedDic = dicsDescriptionStorage.readLastOpenedDic.obs;
     availableDics = dicsDescriptionStorage.readAvailableDics.obs;
     lengthDicsList = availableDics.length.obs;
+    firstElementCurrentDic = dicsDataStorage.readFirstElementForDictionary(lastOpenedDic.value).obs;
   }
 
   void changeCurrentDic(String currentDic) {
@@ -40,10 +44,7 @@ class DictionaryMenuWidgetController extends GetxController {
     Get.back();
   }
 
-  // TODO Reset dic
-  void resetDic(String storageName) {
-    
-  }
+  void resetDic(String storageName) => dicsDataStorage.writeFirstElementForDictionary(storageName, 0);
 
   // TODO Add dic
 }
