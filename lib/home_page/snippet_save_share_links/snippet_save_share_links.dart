@@ -29,13 +29,14 @@ class SnippetSaveShareLinks extends StatefulWidget {
 }
 
 class _SnippetSaveShareLinksState extends State<SnippetSaveShareLinks> {
-
   final SnippetSaveShareLinksController snippetSaveShareLinksController = Get.put(SnippetSaveShareLinksController());
 
   final Dialogs dialogs = Dialogs();
 
   final _titleFieldController = TextEditingController();
   final _linkFieldController = TextEditingController();
+
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -46,29 +47,29 @@ class _SnippetSaveShareLinksState extends State<SnippetSaveShareLinks> {
         Padding(
           padding: const EdgeInsets.only(left: 18, top: 4, bottom: 4),
           child: Obx(() => Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomSocialButtonInMenu(
-                icon: FontAwesomeIcons.shareNodes,
-                title: 'share_content'.tr,
-                onPressed: () {},
-              ),
-              (!snippetSaveShareLinksController.bookmarksList
-                            .map((e) => e['url'])
-                            .toList()
-                            .contains(widget.currentUrl))
-              ? CustomSocialButtonInMenu(
-                icon: FontAwesomeIcons.heart,
-                title: 'add_bookmark'.tr,
-                onPressed: () => dialogs.addBookmarkDialog(widget.webController),
-              )
-              : CustomSocialButtonInMenu(
-                icon: FontAwesomeIcons.solidHeart,
-                title: 'delete_bookmark'.tr,
-                onPressed: () => snippetSaveShareLinksController.deleteBookmarkByUrl(widget.currentUrl),
-              ),
-            ],
-          )),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomSocialButtonInMenu(
+                    icon: FontAwesomeIcons.shareNodes,
+                    title: 'share_content'.tr,
+                    onPressed: () {},
+                  ),
+                  (!snippetSaveShareLinksController.bookmarksList
+                          .map((e) => e['url'])
+                          .toList()
+                          .contains(widget.currentUrl))
+                      ? CustomSocialButtonInMenu(
+                          icon: FontAwesomeIcons.heart,
+                          title: 'add_bookmark'.tr,
+                          onPressed: () => dialogs.addBookmarkDialog(widget.webController),
+                        )
+                      : CustomSocialButtonInMenu(
+                          icon: FontAwesomeIcons.solidHeart,
+                          title: 'delete_bookmark'.tr,
+                          onPressed: () => snippetSaveShareLinksController.deleteBookmarkByUrl(widget.currentUrl),
+                        ),
+                ],
+              )),
         ),
         const SizedBox(height: 6),
         Padding(
@@ -81,13 +82,15 @@ class _SnippetSaveShareLinksState extends State<SnippetSaveShareLinks> {
                           child: CustomBookmarkButton(
                             title: e.value['title']!,
                             url: e.value['url']!,
-                            onPressed: () async => await snippetSaveShareLinksController.onBookmarkPressed(widget.webController, e.value['url']),
+                            onPressed: () async => await snippetSaveShareLinksController.onBookmarkPressed(
+                                widget.webController, e.value['url']),
                             // Dialog for editing and deleting bookmark
                             onLongPress: () {
                               _titleFieldController.text = e.value['title']!;
                               _linkFieldController.text = e.value['url']!;
                               dialogs.showDialog(
                                 content: Form(
+                                  key: formKey,
                                   child: SizedBox(
                                     height: 240,
                                     child: ListView(
@@ -97,6 +100,15 @@ class _SnippetSaveShareLinksState extends State<SnippetSaveShareLinks> {
                                           controller: _titleFieldController,
                                           maxLength: CustomConstants.urlTitleMaxLength,
                                           maxLengthEnforcement: MaxLengthEnforcement.none,
+                                          validator: (val) {
+                                            if (_titleFieldController.text.length > CustomConstants.urlTitleMaxLength) {
+                                              return 'too_long_title'.tr;
+                                            } else if (_titleFieldController.text.isEmpty) {
+                                              return 'empty_field'.tr;
+                                            } else {
+                                              return null;
+                                            }
+                                          },
                                         ),
                                         CustomFormLabel(title: 'link'.tr, topPadding: 0),
                                         CustomTextFormField(
@@ -109,11 +121,16 @@ class _SnippetSaveShareLinksState extends State<SnippetSaveShareLinks> {
                                 ),
                                 actions: [
                                   CustomElevatedButton(
-                                    onPressed: () => snippetSaveShareLinksController.changeBookmark(
-                                      e.key,
-                                      _titleFieldController.text,
-                                      _linkFieldController.text,
-                                    ),
+                                    onPressed: () {
+                                      if (formKey.currentState!.validate()) {
+                                        formKey.currentState!.save();
+                                        snippetSaveShareLinksController.changeBookmark(
+                                          e.key,
+                                          _titleFieldController.text,
+                                          _linkFieldController.text,
+                                        );
+                                      }
+                                    },
                                     title: 'save'.tr,
                                   ),
                                   CustomElevatedButton(

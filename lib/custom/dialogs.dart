@@ -109,6 +109,8 @@ class Dialogs {
                 validator: (val) {
                   if (titleFieldController.text.length > CustomConstants.urlTitleMaxLength) {
                     return 'too_long_title'.tr;
+                  } else if (titleFieldController.text.isEmpty) {
+                    return 'empty_field'.tr;
                   } else {
                     return null;
                   }

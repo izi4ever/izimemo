@@ -49,5 +49,5 @@ class DictionaryMenuWidgetController extends GetxController {
   void resetDic(String storageName) => dicsDataStorage.writeFirstElementForDictionary(storageName, 0);
 
   // TODO Add dic
-  void addDic() {}
+  void addDic(String newDicName) {}
 }

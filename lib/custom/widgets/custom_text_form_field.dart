@@ -12,6 +12,7 @@ class CustomTextFormField extends StatelessWidget {
     this.maxLines,
     this.maxLength,
     this.maxLengthEnforcement,
+    this.autofocus = false,
   });
 
   final TextEditingController? controller;
@@ -19,6 +20,7 @@ class CustomTextFormField extends StatelessWidget {
   final int? maxLength;
   final String? Function(String?)? validator;
   final MaxLengthEnforcement? maxLengthEnforcement;
+  final bool autofocus;
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +47,7 @@ class CustomTextFormField extends StatelessWidget {
           borderSide: BorderSide(color: CustomDesignColors.lightBlue, width: 1),
         ),
       ),
+      autofocus: autofocus,
     );
   }
 }

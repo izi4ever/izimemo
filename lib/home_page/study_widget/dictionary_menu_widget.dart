@@ -13,7 +13,7 @@ import '../../custom/widgets/custom_form_label.dart';
 import '../../custom/widgets/custom_text_form_field.dart';
 
 class DictionaryMenuWidget extends StatefulWidget {
-  DictionaryMenuWidget({super.key});
+  const DictionaryMenuWidget({super.key});
 
   @override
   State<DictionaryMenuWidget> createState() => _DictionaryMenuWidgetState();
@@ -24,7 +24,11 @@ class _DictionaryMenuWidgetState extends State<DictionaryMenuWidget> {
 
   final Dialogs dialogs = Dialogs();
 
-  final _titleFieldController = TextEditingController();
+  final _dicNameFieldController = TextEditingController();
+  final _newDicNameFieldController = TextEditingController();
+
+  final formCreateKey = GlobalKey<FormState>();
+  final formRenameKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +41,52 @@ class _DictionaryMenuWidgetState extends State<DictionaryMenuWidget> {
         onSelected: (value) {
           if (value != 'create_dictionary') {
             dictionaryMenuWidgetController.changeCurrentDic(value);
+          } else {
+            dialogs.showDialog(
+              content: Form(
+                key: formCreateKey,
+                child: SizedBox(
+                  height: 140,
+                  child: ListView(
+                    children: [
+                      CustomFormLabel(title: 'enter_new_dic_title'.tr, topPadding: 4),
+                      CustomTextFormField(
+                        controller: _newDicNameFieldController,
+                        maxLength: CustomConstants.urlTitleMaxLength,
+                        maxLengthEnforcement: MaxLengthEnforcement.none,
+                        autofocus: true,
+                        validator: (val) {
+                          if (_newDicNameFieldController.text.length > CustomConstants.urlTitleMaxLength) {
+                            return 'too_long_title'.tr;
+                          } else if (_newDicNameFieldController.text.isEmpty) {
+                            return 'empty_field'.tr;
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              actions: [
+                CustomElevatedButton(
+                  onPressed: () {
+                    if (formCreateKey.currentState!.validate()) {
+                      formCreateKey.currentState!.save();
+                      dictionaryMenuWidgetController.addDic(_newDicNameFieldController.text);
+                    }
+                  },
+                  title: 'create'.tr,
+                ),
+                CustomElevatedButton(
+                  onPressed: () => Get.back(),
+                  title: 'cancel'.tr,
+                  backgroundColor: CustomDesignColors.mediumBlue,
+                  foregroundColor: CustomDesignColors.darkBlue,
+                ),
+              ],
+            );
           }
         },
         itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
@@ -53,18 +103,29 @@ class _DictionaryMenuWidgetState extends State<DictionaryMenuWidget> {
                         children: [
                           SlidableAction(
                             onPressed: (BuildContext context) {
-                              _titleFieldController.text = e.value['humanName']!;
+                              _dicNameFieldController.text = e.value['humanName']!;
                               dialogs.showDialog(
                                 content: Form(
+                                  key: formRenameKey,
                                   child: SizedBox(
                                     height: 140,
                                     child: ListView(
                                       children: [
                                         CustomFormLabel(title: 'title'.tr, topPadding: 4),
                                         CustomTextFormField(
-                                          controller: _titleFieldController,
+                                          controller: _dicNameFieldController,
                                           maxLength: CustomConstants.urlTitleMaxLength,
                                           maxLengthEnforcement: MaxLengthEnforcement.none,
+                                          validator: (val) {
+                                            if (_dicNameFieldController.text.length >
+                                                CustomConstants.urlTitleMaxLength) {
+                                              return 'too_long_title'.tr;
+                                            } else if (_dicNameFieldController.text.isEmpty) {
+                                              return 'empty_field'.tr;
+                                            } else {
+                                              return null;
+                                            }
+                                          },
                                         ),
                                       ],
                                     ),
@@ -72,10 +133,15 @@ class _DictionaryMenuWidgetState extends State<DictionaryMenuWidget> {
                                 ),
                                 actions: [
                                   CustomElevatedButton(
-                                    onPressed: () => dictionaryMenuWidgetController.renameDic(
-                                      e.key,
-                                      _titleFieldController.text,
-                                    ),
+                                    onPressed: () {
+                                      if (formRenameKey.currentState!.validate()) {
+                                        formRenameKey.currentState!.save();
+                                        dictionaryMenuWidgetController.renameDic(
+                                          e.key,
+                                          _dicNameFieldController.text,
+                                        );
+                                      }
+                                    },
                                     title: 'save'.tr,
                                   ),
                                   CustomElevatedButton(
@@ -167,9 +233,6 @@ class _DictionaryMenuWidgetState extends State<DictionaryMenuWidget> {
           PopupMenuItem<String>(
             value: 'create_dictionary',
             // padding: EdgeInsets.zero,
-            onTap: () {
-              // dictionaryMenuWidgetController.addDic();
-            },
             child: ListTile(
               leading: const Icon(Icons.add),
               title: Text('create_dictionary'.tr),
