@@ -35,7 +35,9 @@ class _DictionaryMenuWidgetState extends State<DictionaryMenuWidget> {
       return PopupMenuButton(
         initialValue: selectedMenu,
         onSelected: (value) {
-          dictionaryMenuWidgetController.changeCurrentDic(value);
+          if (value != 'create_dictionary') {
+            dictionaryMenuWidgetController.changeCurrentDic(value);
+          }
         },
         itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
           ...dicsList.asMap().entries.map(
@@ -165,6 +167,9 @@ class _DictionaryMenuWidgetState extends State<DictionaryMenuWidget> {
           PopupMenuItem<String>(
             value: 'create_dictionary',
             // padding: EdgeInsets.zero,
+            onTap: () {
+              // dictionaryMenuWidgetController.addDic();
+            },
             child: ListTile(
               leading: const Icon(Icons.add),
               title: Text('create_dictionary'.tr),

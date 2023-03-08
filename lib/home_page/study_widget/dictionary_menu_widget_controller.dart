@@ -12,6 +12,8 @@ class DictionaryMenuWidgetController extends GetxController {
   late RxInt lengthDicsList;
   late RxInt firstElementCurrentDic;
 
+  // TODO for changing State? Rx<String?> selectedMenu = null.obs;
+
   DictionaryMenuWidgetController() {
     lastCreatedDicIndex = dicsDescriptionStorage.readLastCreatedDicIndex.obs;
     lastOpenedDic = dicsDescriptionStorage.readLastOpenedDic.obs;
@@ -47,4 +49,5 @@ class DictionaryMenuWidgetController extends GetxController {
   void resetDic(String storageName) => dicsDataStorage.writeFirstElementForDictionary(storageName, 0);
 
   // TODO Add dic
+  void addDic() {}
 }
