@@ -32,12 +32,10 @@ class _DictionaryMenuWidgetState extends State<DictionaryMenuWidget> {
 
   @override
   Widget build(BuildContext context) {
-    String? selectedMenu;
-
     return Obx(() {
       List<Map<String, dynamic>> dicsList = dictionaryMenuWidgetController.availableDics.value;
       return PopupMenuButton(
-        initialValue: selectedMenu,
+        initialValue: dictionaryMenuWidgetController.lastOpenedDic.value,
         onSelected: (value) {
           if (value != 'create_dictionary') {
             dictionaryMenuWidgetController.changeCurrentDic(value);
@@ -90,11 +88,14 @@ class _DictionaryMenuWidgetState extends State<DictionaryMenuWidget> {
           }
         },
         itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+          // Instead of top padding
+          const PopupMenuItem(height: 4, child: SizedBox.shrink()),
           ...dicsList.asMap().entries.map(
                 // ...dictionaryMenuWidgetController.availableDics.value.asMap().entries.map(
                 (e) => PopupMenuItem(
                   key: ValueKey(e.value['storageName']),
                   value: e.value['storageName'],
+                  // ClipRRect is for cropping element name behind menu border
                   child: ClipRRect(
                     child: Slidable(
                       endActionPane: ActionPane(
@@ -254,6 +255,7 @@ class _DictionaryMenuWidgetState extends State<DictionaryMenuWidget> {
             Radius.circular(24),
           ),
         ),
+        clipBehavior: Clip.hardEdge,
       );
     });
   }
