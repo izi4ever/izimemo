@@ -12,8 +12,6 @@ class DictionaryMenuWidgetController extends GetxController {
   late RxInt lengthDicsList;
   late RxInt firstElementCurrentDic;
 
-  // TODO for changing State? Rx<String?> selectedMenu = null.obs;
-
   DictionaryMenuWidgetController() {
     lastCreatedDicIndex = dicsDescriptionStorage.readLastCreatedDicIndex.obs;
     lastOpenedDic = dicsDescriptionStorage.readLastOpenedDic.obs;
@@ -30,24 +28,54 @@ class DictionaryMenuWidgetController extends GetxController {
   }
 
   void renameDic(int dicIndex, String newDicName) {
-    availableDics.value[dicIndex]['humanName'] = newDicName;
-    // availableDics.refresh();
+    availableDics[dicIndex]['humanName'] = newDicName;
     dicsDescriptionStorage.writeAvailableDics(availableDics);
     Get.back();
     Get.back();
   }
 
   void deleteDic(int dicIndex) {
+    String dicKey = availableDics[dicIndex]['storageName'];
+
+    // Delete dic and their index
+    dicsDataStorage.deleteWordListByDicKey(dicKey);
+    dicsDataStorage.deleteFirstElementForDictionary(dicKey);
+
+    // Delete info about dic in description list in storage
     availableDics.removeAt(dicIndex);
-    // availableDics.refresh();
     dicsDescriptionStorage.writeAvailableDics(availableDics);
+
+    //If deleted dic is current dic?
+    if (dicKey == lastOpenedDic.value) {
+      lastOpenedDic.value = availableDics[0]['storageName'];
+    }
+
+    // It will be impossible to delete dic when one left
     lengthDicsList.value = availableDics.length;
+
     Get.back();
     Get.back();
   }
 
   void resetDic(String storageName) => dicsDataStorage.writeFirstElementForDictionary(storageName, 0);
 
-  // TODO Add dic
-  void addDic(String newDicName) {}
+  void addDic(String newDicName) {
+    lastCreatedDicIndex++;
+    dicsDescriptionStorage.writeLastCreatedDicIndex(lastCreatedDicIndex.value);
+
+    String storageDicName = 'dic_${lastCreatedDicIndex.value}';
+    Map<String, dynamic> newDicDescription = {
+      'storageName': storageDicName,
+      'humanName': newDicName,
+    };
+
+    availableDics.add(newDicDescription);
+    dicsDescriptionStorage.writeAvailableDics(availableDics);
+
+    lastOpenedDic.value = storageDicName;
+    dicsDescriptionStorage.writeLastOpenedDic(lastOpenedDic.value);
+
+    Get.back();
+    Get.back();
+  }
 }

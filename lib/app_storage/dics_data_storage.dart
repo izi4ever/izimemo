@@ -8,9 +8,11 @@ class DicsDataStorage {
 
   int readFirstElementForDictionary(String dicKey) => box.read('${dicKey}_firstElement') ?? 0;
   void writeFirstElementForDictionary(String dicKey, int value) => box.write('${dicKey}_firstElement', value);
+  void deleteFirstElementForDictionary(String dicKey) => box.remove('${dicKey}_firstElement');
 
   List<String> readWordListByDicKey(String dicKey) => List<String>.from(box.read(dicKey) ?? fillInDic(dicKey));
   void writeWordListByDicKey(String dicKey, List<String> value) => box.write(dicKey, value);
+  void deleteWordListByDicKey(String dicKey) => box.remove(dicKey);
 
   List<String> fillInDic(String key) {
     if (key == 'dic_1') {
