@@ -33,7 +33,7 @@ class SettingsPageController extends GetxController {
     studyWidgetController.sliderWordList.value = studyWidgetController.getSliderWordList;
     studyWidgetController.slideColorIndexList.value = studyWidgetController.getSlideColorIndexList;
 
-    studyWidgetController.secondsPerEntries = secondsPerEntries;
+    // studyWidgetController.secondsPerEntries = secondsPerEntries;
 
     Get.back();
   }
