@@ -48,6 +48,7 @@ class DictionaryMenuWidgetController extends GetxController {
     //If deleted dic is current dic?
     if (dicKey == lastOpenedDic.value) {
       lastOpenedDic.value = availableDics[0]['storageName'];
+      firstElementCurrentDic.value = dicsDataStorage.readFirstElementForDictionary(lastOpenedDic.value);
     }
 
     // It will be impossible to delete dic when one left
@@ -57,7 +58,10 @@ class DictionaryMenuWidgetController extends GetxController {
     Get.back();
   }
 
-  void resetDic(String storageName) => dicsDataStorage.writeFirstElementForDictionary(storageName, 0);
+  void resetDic(String storageName) {
+    dicsDataStorage.writeFirstElementForDictionary(storageName, 0);
+    firstElementCurrentDic.value = 0;
+  }
 
   void addDic(String newDicName) {
     lastCreatedDicIndex++;
