@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:izimemo/custom/colors/custom_design_colors.dart';
 import 'package:izimemo/custom/colors/custom_lesson_colors.dart';
 import 'package:izimemo/home_page/study_widget/study_widget_controller.dart';
-import 'package:izimemo/settings_page/settings_page_controller.dart';
 
 import '../../custom/custom_constants.dart';
 import 'dictionary_menu_widget.dart';
@@ -14,7 +13,7 @@ class StudyWidget extends StatelessWidget {
   StudyWidget({super.key});
 
   final StudyWidgetController studyWidgetController = Get.put(StudyWidgetController());
-  final SettingsPageController settingsPageController = Get.put(SettingsPageController());
+  // final SettingsPageController settingsPageController = Get.put(SettingsPageController());
 
   @override
   Widget build(BuildContext context) {
@@ -198,8 +197,8 @@ class StudyWidget extends StatelessWidget {
                 autoPlay: studyWidgetController.autoPlay.value,
                 viewportFraction: 1,
                 pauseAutoPlayInFiniteScroll: true,
-                // autoPlayInterval: Duration(seconds: studyWidgetController.secondsPerEntries.value.round()),
-                autoPlayInterval: Duration(seconds: settingsPageController.secondsPerEntries.value.round()),
+                autoPlayInterval: Duration(seconds: studyWidgetController.secondsPerEntries.value.round()),
+                // autoPlayInterval: Duration(seconds: settingsPageController.secondsPerEntries.value.round()),
                 enlargeFactor: 1,
               ),
             ),
