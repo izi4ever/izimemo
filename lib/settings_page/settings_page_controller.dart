@@ -1,13 +1,13 @@
 import 'package:get/get.dart';
 import 'package:izimemo/app_storage/app_settings_storage.dart';
-import 'package:izimemo/home_page/study_widget/study_widget_controller.dart';
+
+import '../home_page/dictionary_widget/dictionary_controller.dart';
 
 class SettingsPageController extends GetxController {
   AppSettingsStorage appSettings = AppSettingsStorage();
 
-  StudyWidgetController studyWidgetController = Get.put(StudyWidgetController());
-  // StudyWidgetController studyWidgetController = Get.find();
-
+  final DictionaryController dictionaryController = Get.put(DictionaryController());
+  
   late RxDouble entriesInLesson;
   late RxDouble secondsPerEntries;
 
@@ -30,10 +30,10 @@ class SettingsPageController extends GetxController {
     appSettings.writeEntriesInLesson(entriesInLesson.value);
     appSettings.writeSecondsPerEntries(secondsPerEntries.value);
 
-    studyWidgetController.sliderWordList.value = studyWidgetController.getSliderWordList;
-    studyWidgetController.slideColorIndexList.value = studyWidgetController.getSlideColorIndexList;
+    dictionaryController.sliderWordList.value = dictionaryController.getSliderWordList;
+    dictionaryController.slideColorIndexList.value = dictionaryController.getSlideColorIndexList;
 
-    studyWidgetController.secondsPerEntries = secondsPerEntries;
+    dictionaryController.secondsPerEntries = secondsPerEntries;
 
     Get.back();
   }

@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:izimemo/home_page/study_widget/dictionary_menu_widget_controller.dart';
+import 'package:izimemo/home_page/dictionary_widget/dictionary_controller.dart';
 
 import '../../custom/colors/custom_design_colors.dart';
 import '../../custom/custom_constants.dart';
@@ -12,33 +12,30 @@ import '../../custom/widgets/custom_elevated_button.dart';
 import '../../custom/widgets/custom_form_label.dart';
 import '../../custom/widgets/custom_text_form_field.dart';
 
-class DictionaryMenuWidget extends StatefulWidget {
-  const DictionaryMenuWidget({super.key});
+class DictionaryMenuWidget extends StatelessWidget {
+  DictionaryMenuWidget({super.key});
 
-  @override
-  State<DictionaryMenuWidget> createState() => _DictionaryMenuWidgetState();
-}
-
-class _DictionaryMenuWidgetState extends State<DictionaryMenuWidget> {
-  final DictionaryMenuWidgetController dictionaryMenuWidgetController = Get.put(DictionaryMenuWidgetController());
+  final DictionaryController dictionaryController = Get.put(DictionaryController());
 
   final Dialogs dialogs = Dialogs();
 
   final _dicNameFieldController = TextEditingController();
+
   final _newDicNameFieldController = TextEditingController();
 
   final formCreateKey = GlobalKey<FormState>();
+
   final formRenameKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      List<Map<String, dynamic>> dicsList = dictionaryMenuWidgetController.availableDics.value;
+      List<Map<String, dynamic>> dicsList = dictionaryController.availableDics.value;
       return PopupMenuButton(
-        initialValue: dictionaryMenuWidgetController.lastOpenedDic.value,
+        initialValue: dictionaryController.lastOpenedDic.value,
         onSelected: (value) {
           if (value != 'create_dictionary') {
-            dictionaryMenuWidgetController.changeCurrentDic(value);
+            dictionaryController.changeCurrentDic(value);
           } else {
             dialogs.showDialog(
               content: Form(
@@ -72,7 +69,7 @@ class _DictionaryMenuWidgetState extends State<DictionaryMenuWidget> {
                   onPressed: () {
                     if (formCreateKey.currentState!.validate()) {
                       formCreateKey.currentState!.save();
-                      dictionaryMenuWidgetController.addDic(_newDicNameFieldController.text);
+                      dictionaryController.addDic(_newDicNameFieldController.text);
                     }
                   },
                   title: 'create'.tr,
@@ -137,7 +134,7 @@ class _DictionaryMenuWidgetState extends State<DictionaryMenuWidget> {
                                     onPressed: () {
                                       if (formRenameKey.currentState!.validate()) {
                                         formRenameKey.currentState!.save();
-                                        dictionaryMenuWidgetController.renameDic(
+                                        dictionaryController.renameDic(
                                           e.key,
                                           _dicNameFieldController.text,
                                         );
@@ -168,7 +165,7 @@ class _DictionaryMenuWidgetState extends State<DictionaryMenuWidget> {
                                 content: Text('you_want_reset_dic'.tr),
                                 actions: [
                                   CustomElevatedButton(
-                                    onPressed: () => dictionaryMenuWidgetController.resetDic(e.value['storageName']),
+                                    onPressed: () => dictionaryController.resetDic(e.value['storageName']),
                                     title: 'yes'.tr,
                                   ),
                                   CustomElevatedButton(
@@ -188,14 +185,14 @@ class _DictionaryMenuWidgetState extends State<DictionaryMenuWidget> {
                             spacing: 0,
                             padding: EdgeInsets.zero,
                           ),
-                          (dictionaryMenuWidgetController.lengthDicsList > 1)
+                          (dictionaryController.lengthDicsList > 1)
                               ? SlidableAction(
                                   onPressed: (BuildContext context) {
                                     dialogs.showDialog(
                                       content: Text('you_want_delete_dic'.tr),
                                       actions: [
                                         CustomElevatedButton(
-                                          onPressed: () => dictionaryMenuWidgetController.deleteDic(e.key),
+                                          onPressed: () => dictionaryController.deleteDic(e.key),
                                           title: 'yes'.tr,
                                           // dictionaryMenuWidgetController.deleteDic(e.key);
                                         ),

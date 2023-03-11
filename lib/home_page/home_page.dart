@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:izimemo/home_page/custom_links/default_links.dart';
+import 'package:izimemo/home_page/dictionary_widget/dictionary_widget.dart';
 import 'package:izimemo/home_page/home_page_controller.dart';
 import 'package:izimemo/home_page/snippets/snippet_appbar_title.dart';
 import 'package:izimemo/home_page/snippets/snippet_header_menu.dart';
@@ -14,7 +15,6 @@ import '../custom/colors/custom_design_colors.dart';
 import '../custom/custom_constants.dart';
 import '../custom/widgets/custom_settings_icon_button.dart';
 import '../settings_page/settings_page.dart';
-import 'study_widget/study_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -270,7 +270,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             ? const Radius.circular(CustomConstants.lessonRadius)
                             : const Radius.circular(0),
                       ),
-                      child: StudyWidget(),
+                      child: DictionaryWidget(),
                     ),
                   ),
                   Positioned(
