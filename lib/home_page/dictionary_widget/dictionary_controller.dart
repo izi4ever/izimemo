@@ -19,10 +19,10 @@ class DictionaryController extends GetxController {
   var autoPlay = true.obs;
 
   List<String> get getSliderWordList => wordListGenerator(
-        // dictionaryStorage.readWordListByDicKey(lastOpenedDic.value),
-        // dictionaryStorage.readFirstElementForDictionary(lastOpenedDic.value),
-        dictionaryStorage.readWordListByDicKey(dictionaryStorage.readLastOpenedDic),
-        dictionaryStorage.readFirstElementForDictionary(dictionaryStorage.readLastOpenedDic),
+        dictionaryStorage.readWordListByDicKey(lastOpenedDic.value),
+        dictionaryStorage.readFirstElementForDictionary(lastOpenedDic.value),
+        // dictionaryStorage.readWordListByDicKey(dictionaryStorage.readLastOpenedDic),
+        // dictionaryStorage.readFirstElementForDictionary(dictionaryStorage.readLastOpenedDic),
         appSettingsStorage.readEntriesInLesson.round(),
       );
   late RxList<String> sliderWordList;
@@ -36,8 +36,8 @@ class DictionaryController extends GetxController {
     lastOpenedDic = dictionaryStorage.readLastOpenedDic.obs;
     availableDics = dictionaryStorage.readAvailableDics.obs;
     lengthDicsList = availableDics.length.obs;
-    // firstElementCurrentDic = dictionaryStorage.readFirstElementForDictionary(lastOpenedDic.value).obs;
-    firstElementCurrentDic = dictionaryStorage.readFirstElementForDictionary(dictionaryStorage.readLastOpenedDic).obs;
+    firstElementCurrentDic = dictionaryStorage.readFirstElementForDictionary(lastOpenedDic.value).obs;
+    // firstElementCurrentDic = dictionaryStorage.readFirstElementForDictionary(dictionaryStorage.readLastOpenedDic).obs;
 
     sliderWordList = getSliderWordList.obs;
     slideColorIndexList = getSlideColorIndexList.obs;
@@ -51,6 +51,9 @@ class DictionaryController extends GetxController {
   void changeCurrentDic(String currentDic) {
     lastOpenedDic.value = currentDic;
     dictionaryStorage.writeLastOpenedDic(currentDic);
+
+    sliderWordList.value = getSliderWordList;
+    slideColorIndexList.value = getSlideColorIndexList;
   }
 
   void renameDic(int dicIndex, String newDicName) {
