@@ -57,25 +57,31 @@ class DictionaryWidget extends StatelessWidget {
                                         top: 2,
                                         bottom: 2,
                                       ),
-                                      leading: const Text(
-                                        '7.3%',
-                                        style: TextStyle(
+                                      leading: Text(
+                                        '${double.parse((dictionaryController.firstElementCurrentDic.value / dictionaryController.currentWordList.length).toStringAsFixed(1))}',
+                                        style: const TextStyle(
                                           fontSize: 30,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.white,
                                         ),
                                       ),
                                       title: Text(
-                                        '${'learned'.tr} 73 ${'of'.tr} 1000 ${'entries_in_dictionary'.tr}',
+                                        '${'learned'.tr} ${dictionaryController.firstElementCurrentDic.value} ${'of'.tr} ${dictionaryController.currentWordList.length} ${'entries_in_dictionary'.tr}',
                                         style: const TextStyle(color: Colors.white),
                                       ),
-                                      trailing: IconButton(
-                                        onPressed: () => Get.back(),
-                                        icon: const Icon(
+                                      trailing: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          shape: const CircleBorder(),
+                                          padding: const EdgeInsets.all(0),
+                                          elevation: 0,
+                                          side: const BorderSide(color: Colors.white),
+                                        ),
+                                        child: const Icon(
                                           Icons.close,
                                           color: Colors.white,
                                           size: 24,
                                         ),
+                                        onPressed: () => Get.back(),
                                       ),
                                     ),
                                     Expanded(
