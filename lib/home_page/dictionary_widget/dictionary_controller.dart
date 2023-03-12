@@ -18,8 +18,8 @@ class DictionaryController extends GetxController {
 
   var autoPlay = true.obs;
 
-  List<String> get getCurrentWordList => dictionaryStorage.readWordListByDicKey(dictionaryStorage.readLastOpenedDic);
-  late RxList<String> currentWordList;
+  List<String> get getCurrentWordsList => dictionaryStorage.readWordListByDicKey(dictionaryStorage.readLastOpenedDic);
+  late RxList<String> currentWordsList;
   List<String> get getSliderWordList => wordListGenerator(
         dictionaryStorage.readWordListByDicKey(dictionaryStorage.readLastOpenedDic),
         dictionaryStorage.readFirstElementForDictionary(dictionaryStorage.readLastOpenedDic),
@@ -31,6 +31,10 @@ class DictionaryController extends GetxController {
   double get getSecondsPerEntries => appSettingsStorage.readSecondsPerEntries;
   late RxDouble secondsPerEntries;
 
+  late List<String> _learnedWords;
+  late List<String> _learningWords;
+  late List<String> _willLearnWords;
+
   DictionaryController() {
     lastCreatedDicIndex = dictionaryStorage.readLastCreatedDicIndex.obs;
     lastOpenedDic = dictionaryStorage.readLastOpenedDic.obs;
@@ -40,14 +44,14 @@ class DictionaryController extends GetxController {
 
     sliderWordList = getSliderWordList.obs;
     slideColorIndexList = getSlideColorIndexList.obs;
-    currentWordList = getCurrentWordList.obs;
+    currentWordsList = getCurrentWordsList.obs;
     secondsPerEntries = getSecondsPerEntries.obs;
   }
 
   void updateInitialData() {
     sliderWordList.value = getSliderWordList;
     slideColorIndexList.value = getSlideColorIndexList;
-    currentWordList.value = getCurrentWordList;
+    currentWordsList.value = getCurrentWordsList;
   }
 
   //
@@ -130,6 +134,8 @@ class DictionaryController extends GetxController {
   // STUDY
   //
 
+  void playPause() => autoPlay.value = !autoPlay.value;
+
   List<String> wordListGenerator(List<String> inputList, int firstElement, int elementsInLesson) {
     if ((firstElement + elementsInLesson) > inputList.length) {
       return inputList.sublist(
@@ -159,5 +165,30 @@ class DictionaryController extends GetxController {
     return outputList;
   }
 
-  void playPause() => autoPlay.value = !autoPlay.value;
+  void splitWordsList() {
+    if (currentWordsList.isNotEmpty) {
+      // _learnedWords list
+      if (firstElementCurrentDic.value == 0) {
+        _learnedWords = [];
+      } else {
+        _learnedWords = currentWordsList.sublist(0, (firstElementCurrentDic.value - 1));
+      }
+
+      // _willLearnWords list
+      int entriesInLesson = appSettingsStorage.readEntriesInLesson.round();
+      if ((firstElementCurrentDic.value + entriesInLesson) >= currentWordsList.length) {
+        _willLearnWords = [];
+      } else {
+        _willLearnWords =
+            currentWordsList.sublist((firstElementCurrentDic.value + entriesInLesson), (currentWordsList.length - 1));
+      }
+
+      // _learningWords list
+      _learningWords = sliderWordList;
+    } else {
+      _learnedWords = [];
+      _learningWords = [];
+      _willLearnWords = [];
+    }
+  }
 }

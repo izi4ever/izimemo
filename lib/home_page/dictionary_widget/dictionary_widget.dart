@@ -58,7 +58,7 @@ class DictionaryWidget extends StatelessWidget {
                                         bottom: 2,
                                       ),
                                       leading: Text(
-                                        '${double.parse((dictionaryController.firstElementCurrentDic.value / dictionaryController.currentWordList.length).toStringAsFixed(1))}',
+                                        '${double.parse((dictionaryController.firstElementCurrentDic.value / dictionaryController.currentWordsList.length).toStringAsFixed(1))}',
                                         style: const TextStyle(
                                           fontSize: 30,
                                           fontWeight: FontWeight.w700,
@@ -66,7 +66,7 @@ class DictionaryWidget extends StatelessWidget {
                                         ),
                                       ),
                                       title: Text(
-                                        '${'learned'.tr} ${dictionaryController.firstElementCurrentDic.value} ${'of'.tr} ${dictionaryController.currentWordList.length} ${'entries_in_dictionary'.tr}',
+                                        '${'learned'.tr} ${dictionaryController.firstElementCurrentDic.value} ${'of'.tr} ${dictionaryController.currentWordsList.length} ${'entries_in_dictionary'.tr}',
                                         style: const TextStyle(color: Colors.white),
                                       ),
                                       trailing: ElevatedButton(
