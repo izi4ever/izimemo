@@ -58,7 +58,7 @@ class DictionaryWidget extends StatelessWidget {
                                         bottom: 2,
                                       ),
                                       leading: Text(
-                                        '${double.parse((dictionaryController.firstElementCurrentDic.value / dictionaryController.currentWordsList.length).toStringAsFixed(1))}',
+                                        '${((dictionaryController.firstElementCurrentDic.value / dictionaryController.currentWordsList.length) * 100).toStringAsFixed(1)}%',
                                         style: const TextStyle(
                                           fontSize: 30,
                                           fontWeight: FontWeight.w700,
@@ -100,13 +100,19 @@ class DictionaryWidget extends StatelessWidget {
                                           children: [
                                             const SizedBox(height: 14),
                                             TextButton.icon(
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                dictionaryController.learnedEntry(e.key);
+                                                Get.back();
+                                              },
                                               icon: const Icon(Icons.check_rounded),
                                               label: Text('have_learned'.tr),
                                               style: TextButton.styleFrom(alignment: Alignment.topLeft),
                                             ),
                                             TextButton.icon(
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                dictionaryController.moveEntry(e.key);
+                                                Get.back();
+                                              },
                                               icon: const Icon(Icons.last_page_rounded),
                                               label: Text('move_later'.tr),
                                               style: TextButton.styleFrom(alignment: Alignment.topLeft),
@@ -124,7 +130,10 @@ class DictionaryWidget extends StatelessWidget {
                                               style: TextButton.styleFrom(alignment: Alignment.topLeft),
                                             ),
                                             TextButton.icon(
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                dictionaryController.deleteEntry(e.key);
+                                                Get.back();
+                                              },
                                               icon: Icon(
                                                 Icons.delete_forever_outlined,
                                                 color: Colors.red[200],

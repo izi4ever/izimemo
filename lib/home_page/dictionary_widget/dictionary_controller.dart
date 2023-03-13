@@ -138,10 +138,7 @@ class DictionaryController extends GetxController {
 
   List<String> wordListGenerator(List<String> inputList, int firstElement, int elementsInLesson) {
     if ((firstElement + elementsInLesson) > inputList.length) {
-      return inputList.sublist(
-        firstElement,
-        inputList.length,
-      );
+      return inputList.sublist(firstElement);
     } else {
       return inputList.sublist(
         firstElement,
@@ -171,7 +168,8 @@ class DictionaryController extends GetxController {
       if (firstElementCurrentDic.value == 0) {
         _learnedWords = [];
       } else {
-        _learnedWords = currentWordsList.sublist(0, (firstElementCurrentDic.value - 1));
+        // _learnedWords = currentWordsList.sublist(0, (firstElementCurrentDic.value - 1));
+        _learnedWords = currentWordsList.sublist(0, (firstElementCurrentDic.value));
       }
 
       // _willLearnWords list
@@ -179,8 +177,7 @@ class DictionaryController extends GetxController {
       if ((firstElementCurrentDic.value + entriesInLesson) >= currentWordsList.length) {
         _willLearnWords = [];
       } else {
-        _willLearnWords =
-            currentWordsList.sublist((firstElementCurrentDic.value + entriesInLesson), (currentWordsList.length - 1));
+        _willLearnWords = currentWordsList.sublist((firstElementCurrentDic.value + entriesInLesson));
       }
 
       // _learningWords list
@@ -191,4 +188,63 @@ class DictionaryController extends GetxController {
       _willLearnWords = [];
     }
   }
+
+  void joinSaveUpdateDic() {
+    firstElementCurrentDic.value = _learnedWords.length;
+    dictionaryStorage.writeFirstElementForDictionary(lastOpenedDic.value, firstElementCurrentDic.value);
+    List<String> tmpList = [
+      ..._learnedWords,
+      ..._learningWords,
+      ..._willLearnWords,
+    ];
+    dictionaryStorage.writeWordListByDicKey(lastOpenedDic.value, tmpList);
+
+    updateInitialData();
+  }
+
+  void learnedEntry(int index) {
+    splitWordsList();
+    _learnedWords.add(_learningWords[index]);
+    _learningWords.removeAt(index);
+    if (_willLearnWords.isNotEmpty) {
+      _learningWords.insert(0, _willLearnWords[0]);
+      _willLearnWords.removeAt(0);
+    }
+    joinSaveUpdateDic();
+  }
+
+  void moveEntry(int index) {
+    splitWordsList();
+    _willLearnWords.add(_learningWords[index]);
+    _learningWords.removeAt(index);
+    _learningWords.insert(0, _willLearnWords[0]);
+    _willLearnWords.removeAt(0);
+    joinSaveUpdateDic();
+  }
+
+  void deleteEntry(int index) {
+    splitWordsList();
+    _learningWords.removeAt(index);
+    if (_willLearnWords.isNotEmpty) {
+      _learningWords.insert(0, _willLearnWords[0]);
+      _willLearnWords.removeAt(0);
+    }
+    joinSaveUpdateDic();
+  }
+
+  void editEntry(int index) {}
+  
+  // TODO
+  void addEntries() {}
 }
+
+    // print('>>> 1) _learnedWords: $_learnedWords');
+    // print('>>> 1) _learningWords: $_learningWords');
+    // print('>>> 1) _willLearnWords Begin: ${_willLearnWords.sublist(0, 4)}');
+    // print('>>> 1) _willLearnWords End: ${_willLearnWords.sublist((_willLearnWords.length - 4))}');
+    // print('>>> 1) : $');
+    // print('>>> 1) : $');
+    // print('>>> 2) _learnedWords: $_learnedWords');
+    // print('>>> 2) _learningWords: $_learningWords');
+    // print('>>> 2) _willLearnWords Begin: ${_willLearnWords.sublist(0, 4)}');
+    // print('>>> 2) _willLearnWords End: ${_willLearnWords.sublist((_willLearnWords.length - 4))}');
