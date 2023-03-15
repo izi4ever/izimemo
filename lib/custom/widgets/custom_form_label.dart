@@ -6,20 +6,29 @@ class CustomFormLabel extends StatelessWidget {
     super.key,
     required this.title,
     this.topPadding = 20,
+    this.horizontalPadding = 20,
+    this.fontSize = 16,
+    this.fontWeight = FontWeight.w500,
+    this.color = CustomDesignColors.darkBlue,
   });
 
   final String title;
   final double topPadding;
+  final double horizontalPadding;
+  final double fontSize;
+  final FontWeight fontWeight;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 20, right: 20, bottom: 12, top: topPadding),
+      padding: EdgeInsets.only(left: horizontalPadding, right: horizontalPadding, bottom: 12, top: topPadding),
       child: Text(
         title,
-        style: const TextStyle(
-          fontWeight: FontWeight.w500,
-          color: CustomDesignColors.darkBlue,
+        style: TextStyle(
+          fontWeight: fontWeight,
+          color: color,
+          fontSize: fontSize,
         ),
       ),
     );

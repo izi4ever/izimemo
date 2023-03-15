@@ -45,6 +45,9 @@ class Languages extends Translations {
           'enter_new_dic_title': 'Enter title for new dictionary',
           'empty_field': 'Field cannot be empty',
           'empty_dic': 'This dictionary is now empty. Tap here and add the first entries in this dictionary',
+          'edit_save_entry': 'Edit and save this entry',
+          'add_new_entry': 'Add each entry on a new line. Separate the translation with a hyphen with spaces " - "',
+          'add_at_least_one_entry': 'Add at least one entry.',
         },
         'ru_RU': {
           'slogan': 'Отдыхай и учись',
@@ -86,6 +89,9 @@ class Languages extends Translations {
           'enter_new_dic_title': 'Введите название для нового словаря',
           'empty_field': 'Поле не может быть пустым',
           'empty_dic': 'Этот словарь сейчас пуст. Нажмите здесь, чтобы добавить первые записи в этот словарь',
+          'edit_save_entry': 'Отредактируйте и сохраните эту запись',
+          'add_new_entry': 'Каждую запись добавляйте с новой строки. Перевод отделите дефисом с пробелами " - "',
+          'add_at_least_one_entry': 'Добавьте хотя бы одну запись.',
         },
         'uk_UA': {
           'slogan': 'Відпочивай та навчайся',
@@ -127,6 +133,9 @@ class Languages extends Translations {
           'enter_new_dic_title': 'Введіть назву для нового словника',
           'empty_field': 'Поле не може бути порожнім',
           'empty_dic': 'Цей словник зараз порожній. Тапніть тут та додайте перші записи в цей словник',
+          'edit_save_entry': 'Відредагуйте та збережіть цей запис',
+          'add_new_entry': 'Кожен запис додавайте з нового рядка. Переклад відділіть дефісом з пробіламі " - "',
+          'add_at_least_one_entry': 'Додайте хоча б один запис.',
         },
         'de_DE': {
           'slogan': 'Entspanne dich und studiere',
@@ -168,6 +177,9 @@ class Languages extends Translations {
           'enter_new_dic_title': 'Titel für neues Wörterbuch eingeben',
           'empty_field': 'Das Feld darf nicht leer sein',
           'empty_dic': 'Dieses Wörterbuch ist jetzt leer. Tippen Sie hier und fügen Sie die ersten Einträge in diesem Wörterbuch hinzu',
+          'edit_save_entry': 'Bearbeiten und speichern Sie diesen Eintrag',
+          'add_new_entry': 'Fügen Sie jeden Eintrag in einer neuen Zeile hinzu. Trennen Sie die Übersetzung mit einem Bindestrich mit Leerzeichen " - "',
+          'add_at_least_one_entry': 'Fügen Sie mindestens einen Eintrag hinzu.',
         },
         // 'fr_FR': {
         //   'slogan': 'Détendez-vous et étudiez',

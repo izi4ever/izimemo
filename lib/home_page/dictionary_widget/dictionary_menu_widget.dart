@@ -41,10 +41,14 @@ class DictionaryMenuWidget extends StatelessWidget {
               content: Form(
                 key: formCreateKey,
                 child: SizedBox(
-                  height: 140,
+                  height: 300,
                   child: ListView(
                     children: [
-                      CustomFormLabel(title: 'enter_new_dic_title'.tr, topPadding: 4),
+                      CustomFormLabel(
+                        title: 'enter_new_dic_title'.tr,
+                        topPadding: 4,
+                        horizontalPadding: 0,
+                      ),
                       CustomTextFormField(
                         controller: _newDicNameFieldController,
                         maxLength: CustomConstants.urlTitleMaxLength,
@@ -54,6 +58,23 @@ class DictionaryMenuWidget extends StatelessWidget {
                           if (_newDicNameFieldController.text.length > CustomConstants.urlTitleMaxLength) {
                             return 'too_long_title'.tr;
                           } else if (_newDicNameFieldController.text.isEmpty) {
+                            return 'empty_field'.tr;
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
+                      CustomFormLabel(
+                        title: '${'add_at_least_one_entry'.tr} ${'add_new_entry'.tr}',
+                        topPadding: 4,
+                        horizontalPadding: 0,
+                        fontSize: 14,
+                      ),
+                      CustomTextFormField(
+                        controller: _newDicNameFieldController,
+                        maxLines: 3,
+                        validator: (val) {
+                          if (_newDicNameFieldController.text.isEmpty) {
                             return 'empty_field'.tr;
                           } else {
                             return null;

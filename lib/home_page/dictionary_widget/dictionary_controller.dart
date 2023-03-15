@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ import '../../custom/colors/custom_lesson_colors.dart';
 class DictionaryController extends GetxController {
   final DictionaryStorage dictionaryStorage = DictionaryStorage();
   final AppSettingsStorage appSettingsStorage = AppSettingsStorage();
+  final LineSplitter lineSplitter = const LineSplitter();
 
   late RxInt lastCreatedDicIndex;
   late RxString lastOpenedDic;
@@ -20,13 +22,13 @@ class DictionaryController extends GetxController {
 
   List<String> get getCurrentWordsList => dictionaryStorage.readWordListByDicKey(dictionaryStorage.readLastOpenedDic);
   late RxList<String> currentWordsList;
-  List<String> get getSliderWordList => wordListGenerator(
+  List<String> get getSliderWordList => _wordListGenerator(
         dictionaryStorage.readWordListByDicKey(dictionaryStorage.readLastOpenedDic),
         dictionaryStorage.readFirstElementForDictionary(dictionaryStorage.readLastOpenedDic),
         appSettingsStorage.readEntriesInLesson.round(),
       );
   late RxList<String> sliderWordList;
-  List<int> get getSlideColorIndexList => slideColorListGenerator(sliderWordList.length);
+  List<int> get getSlideColorIndexList => _slideColorListGenerator(sliderWordList.length);
   late RxList<int> slideColorIndexList;
   double get getSecondsPerEntries => appSettingsStorage.readSecondsPerEntries;
   late RxDouble secondsPerEntries;
@@ -34,6 +36,8 @@ class DictionaryController extends GetxController {
   late List<String> _learnedWords;
   late List<String> _learningWords;
   late List<String> _willLearnWords;
+
+  RxInt carouselInitialPage = 0.obs;
 
   DictionaryController() {
     lastCreatedDicIndex = dictionaryStorage.readLastCreatedDicIndex.obs;
@@ -48,7 +52,7 @@ class DictionaryController extends GetxController {
     secondsPerEntries = getSecondsPerEntries.obs;
   }
 
-  void updateInitialData() {
+  void _updateInitialData() {
     sliderWordList.value = getSliderWordList;
     slideColorIndexList.value = getSlideColorIndexList;
     currentWordsList.value = getCurrentWordsList;
@@ -62,7 +66,7 @@ class DictionaryController extends GetxController {
     lastOpenedDic.value = currentDic;
     dictionaryStorage.writeLastOpenedDic(currentDic);
 
-    updateInitialData();
+    _updateInitialData();
   }
 
   void renameDic(int dicIndex, String newDicName) {
@@ -93,7 +97,7 @@ class DictionaryController extends GetxController {
     // It will be impossible to delete dic when one left
     lengthDicsList.value = availableDics.length;
 
-    updateInitialData();
+    _updateInitialData();
 
     Get.back();
     Get.back();
@@ -124,7 +128,7 @@ class DictionaryController extends GetxController {
     lastOpenedDic.value = storageDicName;
     dictionaryStorage.writeLastOpenedDic(lastOpenedDic.value);
 
-    updateInitialData();
+    _updateInitialData();
 
     Get.back();
     Get.back();
@@ -136,7 +140,7 @@ class DictionaryController extends GetxController {
 
   void playPause() => autoPlay.value = !autoPlay.value;
 
-  List<String> wordListGenerator(List<String> inputList, int firstElement, int elementsInLesson) {
+  List<String> _wordListGenerator(List<String> inputList, int firstElement, int elementsInLesson) {
     if ((firstElement + elementsInLesson) > inputList.length) {
       return inputList.sublist(firstElement);
     } else {
@@ -147,7 +151,7 @@ class DictionaryController extends GetxController {
     }
   }
 
-  List<int> slideColorListGenerator(int sliderLength) {
+  List<int> _slideColorListGenerator(int sliderLength) {
     var random = Random();
     var colorLimit = CustomLessonColors.values.length;
     List<int> outputList = [];
@@ -162,7 +166,7 @@ class DictionaryController extends GetxController {
     return outputList;
   }
 
-  void splitWordsList() {
+  void _splitWordsList() {
     if (currentWordsList.isNotEmpty) {
       // _learnedWords list
       if (firstElementCurrentDic.value == 0) {
@@ -189,7 +193,7 @@ class DictionaryController extends GetxController {
     }
   }
 
-  void joinSaveUpdateDic() {
+  void _joinSaveUpdateDic() {
     firstElementCurrentDic.value = _learnedWords.length;
     dictionaryStorage.writeFirstElementForDictionary(lastOpenedDic.value, firstElementCurrentDic.value);
     List<String> tmpList = [
@@ -199,43 +203,65 @@ class DictionaryController extends GetxController {
     ];
     dictionaryStorage.writeWordListByDicKey(lastOpenedDic.value, tmpList);
 
-    updateInitialData();
+    _updateInitialData();
   }
 
   void learnedEntry(int index) {
-    splitWordsList();
+    _splitWordsList();
     _learnedWords.add(_learningWords[index]);
     _learningWords.removeAt(index);
     if (_willLearnWords.isNotEmpty) {
       _learningWords.insert(0, _willLearnWords[0]);
       _willLearnWords.removeAt(0);
     }
-    joinSaveUpdateDic();
+    _joinSaveUpdateDic();
+    carouselInitialPage.value = 0;
   }
 
   void moveEntry(int index) {
-    splitWordsList();
+    _splitWordsList();
     _willLearnWords.add(_learningWords[index]);
     _learningWords.removeAt(index);
     _learningWords.insert(0, _willLearnWords[0]);
     _willLearnWords.removeAt(0);
-    joinSaveUpdateDic();
+    _joinSaveUpdateDic();
+    carouselInitialPage.value = 0;
   }
 
   void deleteEntry(int index) {
-    splitWordsList();
+    _splitWordsList();
     _learningWords.removeAt(index);
     if (_willLearnWords.isNotEmpty) {
       _learningWords.insert(0, _willLearnWords[0]);
       _willLearnWords.removeAt(0);
     }
-    joinSaveUpdateDic();
+    _joinSaveUpdateDic();
+    carouselInitialPage.value = 0;
   }
 
-  void editEntry(int index) {}
-  
-  // TODO
-  void addEntries() {}
+  void editEntry(int index, String replaceString) {
+    _splitWordsList();
+    _learningWords[index] = replaceString;
+    _joinSaveUpdateDic();
+    carouselInitialPage.value = index;
+  }
+
+  void addEntries(String rawString) {
+    var tmpList = cleanAndSplitString(rawString);
+    _splitWordsList();
+    _learningWords = [
+      ...tmpList,
+      ..._learningWords,
+    ];
+    _joinSaveUpdateDic();
+    carouselInitialPage.value = 0;
+  }
+
+  List<String> cleanAndSplitString(String multiRowString) {
+    var tmpList = lineSplitter.convert(multiRowString);
+    tmpList.removeWhere((element) => element.length < 5);
+    return tmpList;
+  }
 }
 
     // print('>>> 1) _learnedWords: $_learnedWords');

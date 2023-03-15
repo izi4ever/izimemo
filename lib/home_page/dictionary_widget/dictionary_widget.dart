@@ -6,6 +6,10 @@ import 'package:izimemo/custom/colors/custom_design_colors.dart';
 import 'package:izimemo/custom/colors/custom_lesson_colors.dart';
 
 import '../../custom/custom_constants.dart';
+import '../../custom/dialogs.dart';
+import '../../custom/widgets/custom_elevated_button.dart';
+import '../../custom/widgets/custom_form_label.dart';
+import '../../custom/widgets/custom_text_form_field.dart';
 import 'dictionary_controller.dart';
 import 'dictionary_menu_widget.dart';
 
@@ -14,12 +18,23 @@ class DictionaryWidget extends StatelessWidget {
 
   final DictionaryController dictionaryController = Get.put(DictionaryController());
 
+  final Dialogs dialogs = Dialogs();
+
+  final _entryEditFieldController = TextEditingController();
+  final _entryEditFormKey = GlobalKey<FormState>();
+
+  final _entryAddFieldController = TextEditingController();
+  final _entryAddFormKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
+    CarouselController carouselController = CarouselController();
+
     return Obx(() => Stack(
           children: [
             CarouselSlider(
               key: GlobalKey(), // <<< Very important here
+              carouselController: carouselController,
               items: [
                 ...dictionaryController.sliderWordList.asMap().entries.map(
                   (e) {
@@ -57,6 +72,7 @@ class DictionaryWidget extends StatelessWidget {
                                         top: 2,
                                         bottom: 2,
                                       ),
+                                      horizontalTitleGap: 12,
                                       leading: Text(
                                         '${((dictionaryController.firstElementCurrentDic.value / dictionaryController.currentWordsList.length) * 100).toStringAsFixed(1)}%',
                                         style: const TextStyle(
@@ -65,9 +81,13 @@ class DictionaryWidget extends StatelessWidget {
                                           color: Colors.white,
                                         ),
                                       ),
-                                      title: Text(
+                                      title: AutoSizeText(
                                         '${'learned'.tr} ${dictionaryController.firstElementCurrentDic.value} ${'of'.tr} ${dictionaryController.currentWordsList.length} ${'entries_in_dictionary'.tr}',
-                                        style: const TextStyle(color: Colors.white),
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          // fontSize: 14,
+                                        ),
+                                        maxLines: 2,
                                       ),
                                       trailing: ElevatedButton(
                                         style: ElevatedButton.styleFrom(
@@ -118,13 +138,104 @@ class DictionaryWidget extends StatelessWidget {
                                               style: TextButton.styleFrom(alignment: Alignment.topLeft),
                                             ),
                                             TextButton.icon(
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                _entryEditFieldController.text = e.value;
+                                                dialogs.showDialog(
+                                                    content: Form(
+                                                      key: _entryEditFormKey,
+                                                      child: SizedBox(
+                                                        height: 140,
+                                                        child: ListView(
+                                                          children: [
+                                                            CustomFormLabel(title: 'edit_save_entry'.tr, topPadding: 4),
+                                                            CustomTextFormField(
+                                                              controller: _entryEditFieldController,
+                                                              autofocus: true,
+                                                              maxLines: 3,
+                                                              validator: (val) {
+                                                                if (_entryEditFieldController.text.isEmpty) {
+                                                                  return 'empty_field'.tr;
+                                                                } else {
+                                                                  return null;
+                                                                }
+                                                              },
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    actions: [
+                                                      CustomElevatedButton(
+                                                        onPressed: () {
+                                                          if (_entryEditFormKey.currentState!.validate()) {
+                                                            _entryEditFormKey.currentState!.save();
+                                                            dictionaryController.editEntry(
+                                                                e.key, _entryEditFieldController.text);
+                                                            Get.back();
+                                                            Get.back();
+                                                          }
+                                                        },
+                                                        title: 'save'.tr,
+                                                      ),
+                                                      CustomElevatedButton(
+                                                        onPressed: () => Get.back(),
+                                                        title: 'cancel'.tr,
+                                                        backgroundColor: CustomDesignColors.mediumBlue,
+                                                        foregroundColor: CustomDesignColors.darkBlue,
+                                                      ),
+                                                    ]);
+                                              },
                                               icon: const Icon(Icons.edit_rounded),
                                               label: Text('edit_entry'.tr),
                                               style: TextButton.styleFrom(alignment: Alignment.topLeft),
                                             ),
                                             TextButton.icon(
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                dialogs.showDialog(
+                                                    content: Form(
+                                                      key: _entryAddFormKey,
+                                                      child: SizedBox(
+                                                        height: 240,
+                                                        child: ListView(
+                                                          children: [
+                                                            CustomFormLabel(title: 'add_new_entry'.tr, topPadding: 4),
+                                                            CustomTextFormField(
+                                                              controller: _entryAddFieldController,
+                                                              autofocus: true,
+                                                              maxLines: 5,
+                                                              validator: (val) {
+                                                                if (_entryAddFieldController.text.isEmpty) {
+                                                                  return 'empty_field'.tr;
+                                                                } else {
+                                                                  return null;
+                                                                }
+                                                              },
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    actions: [
+                                                      CustomElevatedButton(
+                                                        onPressed: () {
+                                                          if (_entryAddFormKey.currentState!.validate()) {
+                                                            _entryAddFormKey.currentState!.save();
+                                                            dictionaryController
+                                                                .addEntries(_entryAddFieldController.text);
+                                                            Get.back();
+                                                            Get.back();
+                                                          }
+                                                        },
+                                                        title: 'add'.tr,
+                                                      ),
+                                                      CustomElevatedButton(
+                                                        onPressed: () => Get.back(),
+                                                        title: 'cancel'.tr,
+                                                        backgroundColor: CustomDesignColors.mediumBlue,
+                                                        foregroundColor: CustomDesignColors.darkBlue,
+                                                      ),
+                                                    ]);
+                                              },
                                               icon: const Icon(Icons.add_rounded),
                                               label: Text('add_entries'.tr),
                                               style: TextButton.styleFrom(alignment: Alignment.topLeft),
@@ -214,6 +325,7 @@ class DictionaryWidget extends StatelessWidget {
                 autoPlayInterval: Duration(seconds: dictionaryController.secondsPerEntries.value.round()),
                 // autoPlayInterval: Duration(seconds: settingsPageController.secondsPerEntries.value.round()),
                 enlargeFactor: 1,
+                initialPage: dictionaryController.carouselInitialPage.value,
               ),
             ),
             Padding(
