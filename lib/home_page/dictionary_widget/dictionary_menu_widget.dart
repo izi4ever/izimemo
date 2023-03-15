@@ -22,6 +22,7 @@ class DictionaryMenuWidget extends StatelessWidget {
   final _dicNameFieldController = TextEditingController();
 
   final _newDicNameFieldController = TextEditingController();
+  final _newEntriesFieldController = TextEditingController();
 
   final formCreateKey = GlobalKey<FormState>();
 
@@ -71,10 +72,10 @@ class DictionaryMenuWidget extends StatelessWidget {
                         fontSize: 14,
                       ),
                       CustomTextFormField(
-                        controller: _newDicNameFieldController,
+                        controller: _newEntriesFieldController,
                         maxLines: 3,
                         validator: (val) {
-                          if (_newDicNameFieldController.text.isEmpty) {
+                          if (_newEntriesFieldController.text.isEmpty) {
                             return 'empty_field'.tr;
                           } else {
                             return null;
@@ -90,7 +91,7 @@ class DictionaryMenuWidget extends StatelessWidget {
                   onPressed: () {
                     if (formCreateKey.currentState!.validate()) {
                       formCreateKey.currentState!.save();
-                      dictionaryController.addDic(_newDicNameFieldController.text);
+                      dictionaryController.addDic(_newDicNameFieldController.text, _newEntriesFieldController.text);
                     }
                   },
                   title: 'create'.tr,

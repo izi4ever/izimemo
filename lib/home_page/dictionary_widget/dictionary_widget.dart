@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:izimemo/custom/colors/custom_design_colors.dart';
 import 'package:izimemo/custom/colors/custom_lesson_colors.dart';
+import 'package:izimemo/home_page/home_page.dart';
 
 import '../../custom/custom_constants.dart';
 import '../../custom/dialogs.dart';
@@ -41,6 +42,18 @@ class DictionaryWidget extends StatelessWidget {
                     var splitStrings = e.value.split(' - ');
 
                     return GestureDetector(
+                      onDoubleTap: () => dialogEditEntry(e.key, e.value),
+                      onVerticalDragUpdate: (details) {
+                        // Swipe up
+                        if (details.delta.dy < 8) {
+                          dictionaryController.learnedEntry(e.key);
+                        }
+
+                        // Swipe down
+                        if (details.delta.dy > -8) {
+                          dictionaryController.moveEntry(e.key);
+                        }
+                      },
                       onTap: () {
                         Get.bottomSheet(
                           Container(
@@ -122,7 +135,7 @@ class DictionaryWidget extends StatelessWidget {
                                             TextButton.icon(
                                               onPressed: () {
                                                 dictionaryController.learnedEntry(e.key);
-                                                Get.back();
+                                                Get.to(() => const HomePage());
                                               },
                                               icon: const Icon(Icons.check_rounded),
                                               label: Text('have_learned'.tr),
@@ -131,111 +144,20 @@ class DictionaryWidget extends StatelessWidget {
                                             TextButton.icon(
                                               onPressed: () {
                                                 dictionaryController.moveEntry(e.key);
-                                                Get.back();
+                                                Get.to(() => const HomePage());
                                               },
                                               icon: const Icon(Icons.last_page_rounded),
                                               label: Text('move_later'.tr),
                                               style: TextButton.styleFrom(alignment: Alignment.topLeft),
                                             ),
                                             TextButton.icon(
-                                              onPressed: () {
-                                                _entryEditFieldController.text = e.value;
-                                                dialogs.showDialog(
-                                                    content: Form(
-                                                      key: _entryEditFormKey,
-                                                      child: SizedBox(
-                                                        height: 140,
-                                                        child: ListView(
-                                                          children: [
-                                                            CustomFormLabel(title: 'edit_save_entry'.tr, topPadding: 4),
-                                                            CustomTextFormField(
-                                                              controller: _entryEditFieldController,
-                                                              autofocus: true,
-                                                              maxLines: 3,
-                                                              validator: (val) {
-                                                                if (_entryEditFieldController.text.isEmpty) {
-                                                                  return 'empty_field'.tr;
-                                                                } else {
-                                                                  return null;
-                                                                }
-                                                              },
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    actions: [
-                                                      CustomElevatedButton(
-                                                        onPressed: () {
-                                                          if (_entryEditFormKey.currentState!.validate()) {
-                                                            _entryEditFormKey.currentState!.save();
-                                                            dictionaryController.editEntry(
-                                                                e.key, _entryEditFieldController.text);
-                                                            Get.back();
-                                                            Get.back();
-                                                          }
-                                                        },
-                                                        title: 'save'.tr,
-                                                      ),
-                                                      CustomElevatedButton(
-                                                        onPressed: () => Get.back(),
-                                                        title: 'cancel'.tr,
-                                                        backgroundColor: CustomDesignColors.mediumBlue,
-                                                        foregroundColor: CustomDesignColors.darkBlue,
-                                                      ),
-                                                    ]);
-                                              },
+                                              onPressed: () => dialogEditEntry(e.key, e.value),
                                               icon: const Icon(Icons.edit_rounded),
                                               label: Text('edit_entry'.tr),
                                               style: TextButton.styleFrom(alignment: Alignment.topLeft),
                                             ),
                                             TextButton.icon(
-                                              onPressed: () {
-                                                dialogs.showDialog(
-                                                    content: Form(
-                                                      key: _entryAddFormKey,
-                                                      child: SizedBox(
-                                                        height: 240,
-                                                        child: ListView(
-                                                          children: [
-                                                            CustomFormLabel(title: 'add_new_entry'.tr, topPadding: 4),
-                                                            CustomTextFormField(
-                                                              controller: _entryAddFieldController,
-                                                              autofocus: true,
-                                                              maxLines: 5,
-                                                              validator: (val) {
-                                                                if (_entryAddFieldController.text.isEmpty) {
-                                                                  return 'empty_field'.tr;
-                                                                } else {
-                                                                  return null;
-                                                                }
-                                                              },
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    actions: [
-                                                      CustomElevatedButton(
-                                                        onPressed: () {
-                                                          if (_entryAddFormKey.currentState!.validate()) {
-                                                            _entryAddFormKey.currentState!.save();
-                                                            dictionaryController
-                                                                .addEntries(_entryAddFieldController.text);
-                                                            Get.back();
-                                                            Get.back();
-                                                          }
-                                                        },
-                                                        title: 'add'.tr,
-                                                      ),
-                                                      CustomElevatedButton(
-                                                        onPressed: () => Get.back(),
-                                                        title: 'cancel'.tr,
-                                                        backgroundColor: CustomDesignColors.mediumBlue,
-                                                        foregroundColor: CustomDesignColors.darkBlue,
-                                                      ),
-                                                    ]);
-                                              },
+                                              onPressed: () => dialogAddEntries(),
                                               icon: const Icon(Icons.add_rounded),
                                               label: Text('add_entries'.tr),
                                               style: TextButton.styleFrom(alignment: Alignment.topLeft),
@@ -243,7 +165,7 @@ class DictionaryWidget extends StatelessWidget {
                                             TextButton.icon(
                                               onPressed: () {
                                                 dictionaryController.deleteEntry(e.key);
-                                                Get.back();
+                                                Get.to(() => const HomePage());
                                               },
                                               icon: Icon(
                                                 Icons.delete_forever_outlined,
@@ -346,5 +268,98 @@ class DictionaryWidget extends StatelessWidget {
             ),
           ],
         ));
+  }
+
+  void dialogEditEntry(int eKey, String eValue) {
+    _entryEditFieldController.text = eValue;
+    dialogs.showDialog(
+        content: Form(
+          key: _entryEditFormKey,
+          child: SizedBox(
+            height: 140,
+            child: ListView(
+              children: [
+                CustomFormLabel(title: 'edit_save_entry'.tr, topPadding: 4),
+                CustomTextFormField(
+                  controller: _entryEditFieldController,
+                  autofocus: true,
+                  maxLines: 3,
+                  validator: (val) {
+                    if (_entryEditFieldController.text.isEmpty) {
+                      return 'empty_field'.tr;
+                    } else {
+                      return null;
+                    }
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+        actions: [
+          CustomElevatedButton(
+            onPressed: () {
+              if (_entryEditFormKey.currentState!.validate()) {
+                _entryEditFormKey.currentState!.save();
+                dictionaryController.editEntry(eKey, _entryEditFieldController.text);
+                Get.back();
+                Get.to(() => const HomePage());
+              }
+            },
+            title: 'save'.tr,
+          ),
+          CustomElevatedButton(
+            onPressed: () => Get.back(),
+            title: 'cancel'.tr,
+            backgroundColor: CustomDesignColors.mediumBlue,
+            foregroundColor: CustomDesignColors.darkBlue,
+          ),
+        ]);
+  }
+
+  void dialogAddEntries() {
+    dialogs.showDialog(
+        content: Form(
+          key: _entryAddFormKey,
+          child: SizedBox(
+            height: 240,
+            child: ListView(
+              children: [
+                CustomFormLabel(title: 'add_new_entry'.tr, topPadding: 4),
+                CustomTextFormField(
+                  controller: _entryAddFieldController,
+                  autofocus: true,
+                  maxLines: 5,
+                  validator: (val) {
+                    if (_entryAddFieldController.text.isEmpty) {
+                      return 'empty_field'.tr;
+                    } else {
+                      return null;
+                    }
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+        actions: [
+          CustomElevatedButton(
+            onPressed: () {
+              if (_entryAddFormKey.currentState!.validate()) {
+                _entryAddFormKey.currentState!.save();
+                dictionaryController.addEntries(_entryAddFieldController.text);
+                Get.back();
+                Get.to(() => const HomePage());
+              }
+            },
+            title: 'add'.tr,
+          ),
+          CustomElevatedButton(
+            onPressed: () => Get.back(),
+            title: 'cancel'.tr,
+            backgroundColor: CustomDesignColors.mediumBlue,
+            foregroundColor: CustomDesignColors.darkBlue,
+          ),
+        ]);
   }
 }

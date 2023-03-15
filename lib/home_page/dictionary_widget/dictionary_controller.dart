@@ -39,6 +39,8 @@ class DictionaryController extends GetxController {
 
   RxInt carouselInitialPage = 0.obs;
 
+  late RxBool lastEntry;
+
   DictionaryController() {
     lastCreatedDicIndex = dictionaryStorage.readLastCreatedDicIndex.obs;
     lastOpenedDic = dictionaryStorage.readLastOpenedDic.obs;
@@ -50,6 +52,12 @@ class DictionaryController extends GetxController {
     slideColorIndexList = getSlideColorIndexList.obs;
     currentWordsList = getCurrentWordsList.obs;
     secondsPerEntries = getSecondsPerEntries.obs;
+
+    if ((sliderWordList.length == 1) && (firstElementCurrentDic.value == (currentWordsList.length - 1))) {
+      lastEntry = true.obs;
+    } else {
+      lastEntry = false.obs;
+    }
   }
 
   void _updateInitialData() {
@@ -111,7 +119,7 @@ class DictionaryController extends GetxController {
     Get.back();
   }
 
-  void addDic(String newDicName) {
+  void addDic(String newDicName, String newEntries) {
     lastCreatedDicIndex++;
     dictionaryStorage.writeLastCreatedDicIndex(lastCreatedDicIndex.value);
 
@@ -127,6 +135,13 @@ class DictionaryController extends GetxController {
 
     lastOpenedDic.value = storageDicName;
     dictionaryStorage.writeLastOpenedDic(lastOpenedDic.value);
+
+    var tmpList = cleanAndSplitString(newEntries);
+    if (tmpList.isEmpty) {
+      tmpList = ['word_translation'.tr];
+    }
+    dictionaryStorage.writeWordListByDicKey(lastOpenedDic.value, tmpList);
+    dictionaryStorage.writeFirstElementForDictionary(lastOpenedDic.value, 0);
 
     _updateInitialData();
 

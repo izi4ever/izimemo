@@ -48,6 +48,7 @@ class Languages extends Translations {
           'edit_save_entry': 'Edit and save this entry',
           'add_new_entry': 'Add each entry on a new line. Separate the translation with a hyphen with spaces " - "',
           'add_at_least_one_entry': 'Add at least one entry.',
+          'word_translation': 'word - translation',
         },
         'ru_RU': {
           'slogan': 'Отдыхай и учись',
@@ -92,6 +93,7 @@ class Languages extends Translations {
           'edit_save_entry': 'Отредактируйте и сохраните эту запись',
           'add_new_entry': 'Каждую запись добавляйте с новой строки. Перевод отделите дефисом с пробелами " - "',
           'add_at_least_one_entry': 'Добавьте хотя бы одну запись.',
+          'word_translation': 'слово - перевод',
         },
         'uk_UA': {
           'slogan': 'Відпочивай та навчайся',
@@ -136,6 +138,7 @@ class Languages extends Translations {
           'edit_save_entry': 'Відредагуйте та збережіть цей запис',
           'add_new_entry': 'Кожен запис додавайте з нового рядка. Переклад відділіть дефісом з пробіламі " - "',
           'add_at_least_one_entry': 'Додайте хоча б один запис.',
+          'word_translation': 'сово - переклад',
         },
         'de_DE': {
           'slogan': 'Entspanne dich und studiere',
@@ -180,6 +183,7 @@ class Languages extends Translations {
           'edit_save_entry': 'Bearbeiten und speichern Sie diesen Eintrag',
           'add_new_entry': 'Fügen Sie jeden Eintrag in einer neuen Zeile hinzu. Trennen Sie die Übersetzung mit einem Bindestrich mit Leerzeichen " - "',
           'add_at_least_one_entry': 'Fügen Sie mindestens einen Eintrag hinzu.',
+          'word_translation': 'Wort - Übersetzung',
         },
         // 'fr_FR': {
         //   'slogan': 'Détendez-vous et étudiez',
