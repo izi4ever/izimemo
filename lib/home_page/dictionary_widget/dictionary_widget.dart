@@ -31,243 +31,286 @@ class DictionaryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     CarouselController carouselController = CarouselController();
 
-    return Obx(() => Stack(
-          children: [
-            CarouselSlider(
-              key: GlobalKey(), // <<< Very important here
-              carouselController: carouselController,
-              items: [
-                ...dictionaryController.sliderWordList.asMap().entries.map(
-                  (e) {
-                    var splitStrings = e.value.split(' - ');
+    return Obx(() {
+      bool lastEntry;
+      if ((dictionaryController.sliderWordList.length == 1) &&
+          (dictionaryController.firstElementCurrentDic.value == (dictionaryController.currentWordsList.length - 1))) {
+        lastEntry = true;
+      } else {
+        lastEntry = false;
+      }
 
-                    return GestureDetector(
-                      onDoubleTap: () => dialogEditEntry(e.key, e.value),
-                      onVerticalDragUpdate: (details) {
-                        // Swipe up
-                        if (details.delta.dy < 8) {
+      // If happen RX error in removing last entry
+      var sliderWordList = dictionaryController.sliderWordList;
+      if (sliderWordList.isEmpty) {
+        dictionaryController.resetDic(dictionaryController.lastOpenedDic.value);
+      }
+
+      return Stack(
+        children: [
+          CarouselSlider(
+            key: GlobalKey(), // <<< Very important here
+            carouselController: carouselController,
+            items: [
+              // ...dictionaryController.sliderWordList.asMap().entries.map(
+              ...sliderWordList.asMap().entries.map(
+                (e) {
+                  var splitStrings = e.value.split(' - ');
+
+                  return GestureDetector(
+                    onDoubleTap: () => dialogEditEntry(e.key, e.value),
+                    onVerticalDragUpdate: (details) {
+                      // Swipe up
+                      if (details.delta.dy < 8) {
+                        if (lastEntry) {
+                          dialogLastEntry();
+                        } else {
                           dictionaryController.learnedEntry(e.key);
                         }
+                      }
 
-                        // Swipe down
-                        if (details.delta.dy > -8) {
+                      // Swipe down
+                      if (details.delta.dy > -8) {
+                        if (lastEntry) {
+                          dialogLastEntry();
+                        } else {
                           dictionaryController.moveEntry(e.key);
                         }
-                      },
-                      onTap: () {
-                        Get.bottomSheet(
-                          Container(
-                            margin: EdgeInsets.only(
-                              bottom: (MediaQuery.of(context).orientation == Orientation.portrait)
-                                  ? CustomConstants.lessonHeightPortrait
-                                  : CustomConstants.lessonHeightLandscape,
+                      }
+                    },
+                    onTap: () {
+                      Get.bottomSheet(
+                        Container(
+                          margin: EdgeInsets.only(
+                            bottom: (MediaQuery.of(context).orientation == Orientation.portrait)
+                                ? CustomConstants.lessonHeightPortrait
+                                : CustomConstants.lessonHeightLandscape,
+                          ),
+                          padding: const EdgeInsets.only(
+                            left: 8,
+                            right: 8,
+                            bottom: 8,
+                          ),
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(14),
+                              bottomRight: Radius.circular(14),
+                              topLeft: Radius.circular(22),
+                              topRight: Radius.circular(22),
                             ),
-                            padding: const EdgeInsets.only(
-                              left: 8,
-                              right: 8,
-                              bottom: 8,
-                            ),
-                            child: ClipRRect(
-                              borderRadius: const BorderRadius.only(
-                                bottomLeft: Radius.circular(14),
-                                bottomRight: Radius.circular(14),
-                                topLeft: Radius.circular(22),
-                                topRight: Radius.circular(22),
-                              ),
-                              child: Container(
-                                color: CustomDesignColors.darkBlue,
-                                child: Column(
-                                  children: [
-                                    ListTile(
-                                      contentPadding: const EdgeInsets.only(
-                                        left: 20,
-                                        right: 4,
-                                        top: 2,
-                                        bottom: 2,
-                                      ),
-                                      horizontalTitleGap: 12,
-                                      leading: Text(
-                                        '${((dictionaryController.firstElementCurrentDic.value / dictionaryController.currentWordsList.length) * 100).toStringAsFixed(1)}%',
-                                        style: const TextStyle(
-                                          fontSize: 30,
-                                          fontWeight: FontWeight.w700,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      title: AutoSizeText(
-                                        '${'learned'.tr} ${dictionaryController.firstElementCurrentDic.value} ${'of'.tr} ${dictionaryController.currentWordsList.length} ${'entries_in_dictionary'.tr}',
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                          // fontSize: 14,
-                                        ),
-                                        maxLines: 2,
-                                      ),
-                                      trailing: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          shape: const CircleBorder(),
-                                          padding: const EdgeInsets.all(0),
-                                          elevation: 0,
-                                          side: const BorderSide(color: Colors.white),
-                                        ),
-                                        child: const Icon(
-                                          Icons.close,
-                                          color: Colors.white,
-                                          size: 24,
-                                        ),
-                                        onPressed: () => Get.back(),
+                            child: Container(
+                              color: CustomDesignColors.darkBlue,
+                              child: Column(
+                                children: [
+                                  ListTile(
+                                    contentPadding: const EdgeInsets.only(
+                                      left: 20,
+                                      right: 4,
+                                      top: 2,
+                                      bottom: 2,
+                                    ),
+                                    horizontalTitleGap: 12,
+                                    leading: Text(
+                                      '${((dictionaryController.firstElementCurrentDic.value / dictionaryController.currentWordsList.length) * 100).toStringAsFixed(1)}%',
+                                      style: const TextStyle(
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.white,
                                       ),
                                     ),
-                                    Expanded(
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                                        decoration: const BoxDecoration(
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(16),
-                                            topRight: Radius.circular(16),
-                                            bottomLeft: Radius.circular(14),
-                                            bottomRight: Radius.circular(14),
-                                          ),
-                                          color: CustomDesignColors.lightBlue,
+                                    title: AutoSizeText(
+                                      '${'learned'.tr} ${dictionaryController.firstElementCurrentDic.value} ${'of'.tr} ${dictionaryController.currentWordsList.length} ${'entries_in_dictionary'.tr}',
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        // fontSize: 14,
+                                      ),
+                                      maxLines: 2,
+                                    ),
+                                    trailing: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        shape: const CircleBorder(),
+                                        padding: const EdgeInsets.all(0),
+                                        elevation: 0,
+                                        side: const BorderSide(color: Colors.white),
+                                      ),
+                                      child: const Icon(
+                                        Icons.close,
+                                        color: Colors.white,
+                                        size: 24,
+                                      ),
+                                      onPressed: () => Get.back(),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                                      decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(16),
+                                          topRight: Radius.circular(16),
+                                          bottomLeft: Radius.circular(14),
+                                          bottomRight: Radius.circular(14),
                                         ),
-                                        child: ListView(
-                                          children: [
-                                            const SizedBox(height: 14),
-                                            TextButton.icon(
-                                              onPressed: () {
+                                        color: CustomDesignColors.lightBlue,
+                                      ),
+                                      child: ListView(
+                                        children: [
+                                          const SizedBox(height: 14),
+                                          TextButton.icon(
+                                            onPressed: () {
+                                              if (lastEntry) {
+                                                dialogLastEntry();
+                                              } else {
                                                 dictionaryController.learnedEntry(e.key);
-                                                Get.to(() => const HomePage());
-                                              },
-                                              icon: const Icon(Icons.check_rounded),
-                                              label: Text('have_learned'.tr),
-                                              style: TextButton.styleFrom(alignment: Alignment.topLeft),
-                                            ),
-                                            TextButton.icon(
-                                              onPressed: () {
+                                                Get.back();
+                                              }
+                                            },
+                                            icon: const Icon(Icons.check_rounded),
+                                            label: Text('have_learned'.tr),
+                                            style: TextButton.styleFrom(alignment: Alignment.topLeft),
+                                          ),
+                                          TextButton.icon(
+                                            onPressed: () {
+                                              if (lastEntry) {
+                                                dialogLastEntry();
+                                              } else {
                                                 dictionaryController.moveEntry(e.key);
-                                                Get.to(() => const HomePage());
-                                              },
-                                              icon: const Icon(Icons.last_page_rounded),
-                                              label: Text('move_later'.tr),
-                                              style: TextButton.styleFrom(alignment: Alignment.topLeft),
+                                                Get.back();
+                                              }
+                                            },
+                                            icon: const Icon(Icons.last_page_rounded),
+                                            label: Text('move_later'.tr),
+                                            style: TextButton.styleFrom(alignment: Alignment.topLeft),
+                                          ),
+                                          TextButton.icon(
+                                            onPressed: () => dialogEditEntry(e.key, e.value),
+                                            icon: const Icon(Icons.edit_rounded),
+                                            label: Text('edit_entry'.tr),
+                                            style: TextButton.styleFrom(alignment: Alignment.topLeft),
+                                          ),
+                                          TextButton.icon(
+                                            onPressed: () => dialogAddEntries(),
+                                            icon: const Icon(Icons.add_rounded),
+                                            label: Text('add_entries'.tr),
+                                            style: TextButton.styleFrom(alignment: Alignment.topLeft),
+                                          ),
+                                          TextButton.icon(
+                                            onPressed: () {
+                                              dictionaryController.deleteEntry(e.key);
+                                              Get.back();
+                                            },
+                                            icon: Icon(
+                                              Icons.delete_forever_outlined,
+                                              color: Colors.red[200],
                                             ),
-                                            TextButton.icon(
-                                              onPressed: () => dialogEditEntry(e.key, e.value),
-                                              icon: const Icon(Icons.edit_rounded),
-                                              label: Text('edit_entry'.tr),
-                                              style: TextButton.styleFrom(alignment: Alignment.topLeft),
+                                            label: Text(
+                                              'delete_entry'.tr,
+                                              style: TextStyle(color: Colors.red[200]),
                                             ),
-                                            TextButton.icon(
-                                              onPressed: () => dialogAddEntries(),
-                                              icon: const Icon(Icons.add_rounded),
-                                              label: Text('add_entries'.tr),
-                                              style: TextButton.styleFrom(alignment: Alignment.topLeft),
-                                            ),
-                                            TextButton.icon(
-                                              onPressed: () {
-                                                dictionaryController.deleteEntry(e.key);
-                                                Get.to(() => const HomePage());
-                                              },
-                                              icon: Icon(
-                                                Icons.delete_forever_outlined,
-                                                color: Colors.red[200],
-                                              ),
-                                              label: Text(
-                                                'delete_entry'.tr,
-                                                style: TextStyle(color: Colors.red[200]),
-                                              ),
-                                              style: TextButton.styleFrom(alignment: Alignment.topLeft),
-                                            ),
-                                          ],
-                                        ),
+                                            style: TextButton.styleFrom(alignment: Alignment.topLeft),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                    onVerticalDragEnd: (details) {
+                      if (details.velocity.pixelsPerSecond.dy < 1) {
+                        print('onVerticalDragEnd');
+                      }
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(
+                        top: (MediaQuery.of(context).orientation == Orientation.portrait)
+                            ? CustomConstants.webviewRadius + CustomConstants.lessonRadius
+                            : CustomConstants.webviewRadius - 6 + CustomConstants.lessonRadius,
+                        bottom: (MediaQuery.of(context).orientation == Orientation.portrait)
+                            ? CustomConstants.lessonRadius
+                            : CustomConstants.lessonRadius - 6,
+                        left: 40,
+                        right: 40,
+                      ),
+                      color: CustomLessonColors.values[dictionaryController.slideColorIndexList[e.key]].color,
+                      child: Center(
+                        child: (splitStrings.length > 1)
+                            ? AutoSizeText.rich(
+                                TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: splitStrings[1],
+                                      style: const TextStyle(
+                                        color: Colors.white70,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                    const TextSpan(text: '\n'),
+                                    TextSpan(
+                                      text: splitStrings[0],
+                                      style: const TextStyle(
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ],
                                 ),
+                                style: const TextStyle(
+                                  fontSize: 22,
+                                ),
+                                textAlign: TextAlign.center,
+                              )
+                            : AutoSizeText(
+                                splitStrings[0],
+                                style: const TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                                textAlign: TextAlign.center,
                               ),
-                            ),
-                          ),
-                        );
-                      },
-                      onVerticalDragEnd: (details) {
-                        if (details.velocity.pixelsPerSecond.dy < 1) {
-                          print('onVerticalDragEnd');
-                        }
-                      },
-                      child: Container(
-                        padding: EdgeInsets.only(
-                          top: (MediaQuery.of(context).orientation == Orientation.portrait)
-                              ? CustomConstants.webviewRadius + CustomConstants.lessonRadius
-                              : CustomConstants.webviewRadius - 6 + CustomConstants.lessonRadius,
-                          bottom: (MediaQuery.of(context).orientation == Orientation.portrait)
-                              ? CustomConstants.lessonRadius
-                              : CustomConstants.lessonRadius - 6,
-                          left: 40,
-                          right: 40,
-                        ),
-                        color: CustomLessonColors.values[dictionaryController.slideColorIndexList[e.key]].color,
-                        child: Center(
-                          child: AutoSizeText.rich(
-                            TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: splitStrings[1],
-                                  style: const TextStyle(
-                                    color: Colors.white70,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                const TextSpan(text: '\n'),
-                                TextSpan(
-                                  text: splitStrings[0],
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            style: const TextStyle(
-                              fontSize: 22,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
                       ),
-                    );
-                  },
-                ),
-              ],
-              options: CarouselOptions(
-                height: (MediaQuery.of(context).orientation == Orientation.portrait)
-                    ? CustomConstants.lessonHeightPortrait + CustomConstants.webviewRadius
-                    : CustomConstants.lessonHeightLandscape + CustomConstants.webviewRadius,
-                autoPlay: dictionaryController.autoPlay.value,
-                viewportFraction: 1,
-                pauseAutoPlayInFiniteScroll: true,
-                autoPlayInterval: Duration(seconds: dictionaryController.secondsPerEntries.value.round()),
-                // autoPlayInterval: Duration(seconds: settingsPageController.secondsPerEntries.value.round()),
-                enlargeFactor: 1,
-                initialPage: dictionaryController.carouselInitialPage.value,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: CustomConstants.webviewRadius),
-              child: Row(
-                children: [
-                  IconButton(
-                    onPressed: dictionaryController.playPause,
-                    icon: Icon(
-                      dictionaryController.autoPlay.value ? Icons.pause : Icons.play_arrow,
-                      color: const Color(0x44FFFFFF),
                     ),
-                  ),
-                  const Expanded(child: SizedBox.shrink()),
-                  DictionaryMenuWidget(),
-                ],
+                  );
+                },
               ),
+            ],
+            options: CarouselOptions(
+              height: (MediaQuery.of(context).orientation == Orientation.portrait)
+                  ? CustomConstants.lessonHeightPortrait + CustomConstants.webviewRadius
+                  : CustomConstants.lessonHeightLandscape + CustomConstants.webviewRadius,
+              autoPlay: dictionaryController.autoPlay.value,
+              viewportFraction: 1,
+              pauseAutoPlayInFiniteScroll: true,
+              autoPlayInterval: Duration(seconds: dictionaryController.secondsPerEntries.value.round()),
+              // autoPlayInterval: Duration(seconds: settingsPageController.secondsPerEntries.value.round()),
+              enlargeFactor: 1,
+              initialPage: dictionaryController.carouselInitialPage.value,
             ),
-          ],
-        ));
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: CustomConstants.webviewRadius),
+            child: Row(
+              children: [
+                IconButton(
+                  onPressed: dictionaryController.playPause,
+                  icon: Icon(
+                    dictionaryController.autoPlay.value ? Icons.pause : Icons.play_arrow,
+                    color: const Color(0x44FFFFFF),
+                  ),
+                ),
+                const Expanded(child: SizedBox.shrink()),
+                DictionaryMenuWidget(),
+              ],
+            ),
+          ),
+        ],
+      );
+    });
   }
 
   void dialogEditEntry(int eKey, String eValue) {
@@ -349,7 +392,8 @@ class DictionaryWidget extends StatelessWidget {
                 _entryAddFormKey.currentState!.save();
                 dictionaryController.addEntries(_entryAddFieldController.text);
                 Get.back();
-                Get.to(() => const HomePage());
+                Get.back();
+                // Get.to(() => const HomePage());
               }
             },
             title: 'add'.tr,
@@ -361,5 +405,66 @@ class DictionaryWidget extends StatelessWidget {
             foregroundColor: CustomDesignColors.darkBlue,
           ),
         ]);
+  }
+
+  void dialogLastEntry() {
+    dialogs.showDialog(
+      content: SizedBox(
+        height: 340,
+        child: ListView(
+          children: [
+            Column(
+              children: [
+                const SizedBox(height: 8),
+                Image.asset(
+                  'assets/fireworks.png',
+                  height: 100,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'congratulation'.tr,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Colors.purple,
+                    fontSize: 24,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'you_learned'.tr,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Colors.cyan,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                CustomElevatedButton(
+                  onPressed: () => dictionaryController.resetDic(dictionaryController.lastOpenedDic.value),
+                  title: 'repeat_from_beginning'.tr,
+                ),
+                const SizedBox(height: 8),
+                CustomElevatedButton(
+                  onPressed: () {
+                    dialogAddEntries();
+                  },
+                  title: 'add_new_entries'.tr,
+                  backgroundColor: CustomDesignColors.mediumBlue,
+                  foregroundColor: CustomDesignColors.darkBlue,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton.icon(
+          onPressed: () => Get.back(),
+          label: Text('cancel'.tr),
+          icon: const Icon(Icons.close),
+        ),
+      ],
+      actionsAlignment: MainAxisAlignment.center,
+    );
   }
 }

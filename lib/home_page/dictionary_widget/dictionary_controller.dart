@@ -52,12 +52,6 @@ class DictionaryController extends GetxController {
     slideColorIndexList = getSlideColorIndexList.obs;
     currentWordsList = getCurrentWordsList.obs;
     secondsPerEntries = getSecondsPerEntries.obs;
-
-    if ((sliderWordList.length == 1) && (firstElementCurrentDic.value == (currentWordsList.length - 1))) {
-      lastEntry = true.obs;
-    } else {
-      lastEntry = false.obs;
-    }
   }
 
   void _updateInitialData() {
@@ -114,6 +108,9 @@ class DictionaryController extends GetxController {
   void resetDic(String storageName) {
     dictionaryStorage.writeFirstElementForDictionary(storageName, 0);
     firstElementCurrentDic.value = 0;
+
+    _updateInitialData();
+    carouselInitialPage.value = 0;
 
     Get.back();
     Get.back();

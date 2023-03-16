@@ -49,6 +49,10 @@ class Languages extends Translations {
           'add_new_entry': 'Add each entry on a new line. Separate the translation with a hyphen with spaces " - "',
           'add_at_least_one_entry': 'Add at least one entry.',
           'word_translation': 'word - translation',
+          'congratulation': 'Congratulation!',
+          'you_learned': 'You have learned all entries in this dictionary. Now you can:',
+          'add_new_entries': 'Add new entries',
+          'repeat_from_beginning': 'Repeat from the beginning',
         },
         'ru_RU': {
           'slogan': 'Отдыхай и учись',
@@ -94,6 +98,10 @@ class Languages extends Translations {
           'add_new_entry': 'Каждую запись добавляйте с новой строки. Перевод отделите дефисом с пробелами " - "',
           'add_at_least_one_entry': 'Добавьте хотя бы одну запись.',
           'word_translation': 'слово - перевод',
+          'congratulation': 'Поздравляем!',
+          'you_learned': 'Вы выучили все записи в этом словаре. Теперь вы можете:',
+          'add_new_entries': 'Добавить новые записи',
+          'repeat_from_beginning': 'Повторить сначала',
         },
         'uk_UA': {
           'slogan': 'Відпочивай та навчайся',
@@ -139,6 +147,10 @@ class Languages extends Translations {
           'add_new_entry': 'Кожен запис додавайте з нового рядка. Переклад відділіть дефісом з пробіламі " - "',
           'add_at_least_one_entry': 'Додайте хоча б один запис.',
           'word_translation': 'сово - переклад',
+          'congratulation': 'Вітаємо!',
+          'you_learned': 'Ви вивчили всі записи в цьому словнику. Тепер ви можете:',
+          'add_new_entries': 'Додати нові записи',
+          'repeat_from_beginning': 'Повторити зпочатку',
         },
         'de_DE': {
           'slogan': 'Entspanne dich und studiere',
@@ -184,6 +196,10 @@ class Languages extends Translations {
           'add_new_entry': 'Fügen Sie jeden Eintrag in einer neuen Zeile hinzu. Trennen Sie die Übersetzung mit einem Bindestrich mit Leerzeichen " - "',
           'add_at_least_one_entry': 'Fügen Sie mindestens einen Eintrag hinzu.',
           'word_translation': 'Wort - Übersetzung',
+          'congratulation': 'Glückwunsch!',
+          'you_learned': 'Sie haben alle Einträge in diesem Wörterbuch gelernt. Jetzt kannst du:',
+          'add_new_entries': 'Neue Einträge hinzufügen',
+          'repeat_from_beginning': 'Wiederholen Sie von Anfang an',
         },
         // 'fr_FR': {
         //   'slogan': 'Détendez-vous et étudiez',
