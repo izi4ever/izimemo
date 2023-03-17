@@ -49,11 +49,12 @@ class _SnippetSaveShareLinksState extends State<SnippetSaveShareLinks> {
           child: Obx(() => Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CustomSocialButtonInMenu(
-                    icon: FontAwesomeIcons.shareNodes,
-                    title: 'share_content'.tr,
-                    onPressed: () {},
-                  ),
+                  // TODO Share links with this app ads
+                  // CustomSocialButtonInMenu(
+                  //   icon: FontAwesomeIcons.shareNodes,
+                  //   title: 'share_content'.tr,
+                  //   onPressed: () {},
+                  // ),
                   (!snippetSaveShareLinksController.bookmarksList
                           .map((e) => e['url'])
                           .toList()

@@ -6,7 +6,6 @@ import '../../custom/colors/custom_design_colors.dart';
 import '../../custom/custom_constants.dart';
 
 class SnippetHeaderMenu extends StatelessWidget {
-  final String releaseNo;
   final VoidCallback onLogoPressed;
   final VoidCallback onLikePressed;
   final VoidCallback onSharedPressed;
@@ -14,7 +13,6 @@ class SnippetHeaderMenu extends StatelessWidget {
 
   const SnippetHeaderMenu({
     super.key,
-    required this.releaseNo,
     required this.onLogoPressed,
     required this.onLikePressed,
     required this.onSharedPressed,
@@ -70,15 +68,16 @@ class SnippetHeaderMenu extends StatelessWidget {
                   ),
                   color: Colors.white,
                 ),
-                child: Text(
-                  releaseNo,
-                  style: const TextStyle(
+                child: const Text(
+                  'v 1.0.3',
+                  style: TextStyle(
                     color: CustomDesignColors.darkBlue,
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
+              // TODO Help button
               Padding(
                 padding: const EdgeInsets.only(left: 2, top: 40),
                 child: IconButton(
@@ -86,52 +85,53 @@ class SnippetHeaderMenu extends StatelessWidget {
                   icon: const Icon(
                     Icons.help_outline,
                     size: 28,
-                    color: Colors.white,
+                    // TODO color: Colors.white,
+                    color: CustomDesignColors.darkBlue,
                   ),
                 ),
               ),
             ],
           ),
         ),
-        Positioned(
-          right: 4,
-          // top: 18,
-          bottom: 32,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              IconButton(
-                onPressed: onLikePressed,
-                icon: const Icon(
-                  Icons.thumb_up_alt_outlined,
-                  size: 14,
-                  color: Colors.white,
-                ),
-              ),
-              Row(
-                children: [
-                  IconButton(
-                    onPressed: onSharedPressed,
-                    icon: const Icon(
-                      Icons.share,
-                      size: 14,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(width: 14),
-                ],
-              ),
-              IconButton(
-                onPressed: onQRPressed,
-                icon: const Icon(
-                  Icons.qr_code_2,
-                  size: 14,
-                  color: Colors.white,
-                ),
-              ),
-            ],
-          ),
-        ),
+        // TODO Marketing buttons
+        // Positioned(
+        //   right: 4,
+        //   bottom: 32,
+        //   child: Column(
+        //     crossAxisAlignment: CrossAxisAlignment.end,
+        //     children: [
+        //       IconButton(
+        //         onPressed: onLikePressed,
+        //         icon: const Icon(
+        //           Icons.thumb_up_alt_outlined,
+        //           size: 14,
+        //           color: Colors.white,
+        //         ),
+        //       ),
+        //       Row(
+        //         children: [
+        //           IconButton(
+        //             onPressed: onSharedPressed,
+        //             icon: const Icon(
+        //               Icons.share,
+        //               size: 14,
+        //               color: Colors.white,
+        //             ),
+        //           ),
+        //           const SizedBox(width: 14),
+        //         ],
+        //       ),
+        //       IconButton(
+        //         onPressed: onQRPressed,
+        //         icon: const Icon(
+        //           Icons.qr_code_2,
+        //           size: 14,
+        //           color: Colors.white,
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
         Positioned(
           left: 0,
           right: 0,

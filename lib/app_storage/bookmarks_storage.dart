@@ -34,6 +34,11 @@ class BookmarksStorage {
           'title': 'Skyscanner',
           'url': 'https://www.skyscanner.de/',
         },
+        // TODO
+        // {
+        //   'title': 'Internet Radio',
+        //   'url': 'https://www.internet-radio.com/',
+        // },
       ]);
 
   void writeBookmarksList(List<Map<String, dynamic>> value) => box.write('bookmarksList', value);
