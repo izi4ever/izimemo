@@ -37,12 +37,16 @@ class SnippetHeaderMenu extends StatelessWidget {
                     height: 48,
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    'Izimemo',
-                    style: GoogleFonts.lobster(
-                      textStyle: const TextStyle(color: CustomDesignColors.lightBlue, fontSize: 22),
+                  Transform.rotate(
+                    angle: -0.05,
+                    child: Text(
+                      'Izimemo',
+                      style: GoogleFonts.lobster(
+                        textStyle: const TextStyle(color: CustomDesignColors.lightBlue, fontSize: 22),
+                      ),
                     ),
                   ),
+                  // const SizedBox(height: 2),
                   Text(
                     'slogan'.tr,
                     style: const TextStyle(color: CustomDesignColors.lightBlue, fontWeight: FontWeight.w700),

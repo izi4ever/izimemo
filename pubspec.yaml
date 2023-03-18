@@ -36,18 +36,20 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.5
-  webview_flutter: ^4.0.2
-  google_fonts: ^3.0.1
+  webview_flutter: ^4.0.6
+  google_fonts: ^4.0.3
   get: ^4.6.5
-  font_awesome_flutter: ^10.3.0
+  font_awesome_flutter: ^10.4.0
   auto_size_text: ^3.0.0
   carousel_slider: ^4.2.1
   flutter_slidable: ^2.0.0
-  get_storage: ^2.0.3
+  get_storage: ^2.1.1
+  flutter_native_splash: ^2.2.19
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.12.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -55,10 +57,29 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
-  flutter_launcher_icons: ^0.12.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon_ios.png" # 1 file like looks
+  min_sdk_android: 21
+
+  adaptive_icon_background: "#002244"
+  adaptive_icon_foreground: "assets/splash.png"
+
+flutter_native_splash:
+  android: true
+  ios: true
+  color: "#002244"
+  # background_image: "assets/background.png"
+  image: assets/splash.png
+  android_12:
+    color: "#002244"
+    image: assets/splash.png
+  fullscreen: true
 
 # The following section is specific to Flutter packages.
 flutter:

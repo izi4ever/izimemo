@@ -1,13 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:izimemo/home_page/custom_links/default_links.dart';
 import 'package:izimemo/home_page/dictionary_widget/dictionary_widget.dart';
 import 'package:izimemo/home_page/home_page_controller.dart';
-import 'package:izimemo/home_page/snippets/snippet_appbar_title.dart';
-import 'package:izimemo/home_page/snippets/snippet_header_menu.dart';
+import 'package:izimemo/home_page/snippets_appbar_menu/snippet_appbar_title.dart';
+import 'package:izimemo/home_page/snippets_appbar_menu/snippet_header_menu.dart';
 import 'package:izimemo/home_page/snippet_save_share_links/snippet_save_share_links.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -97,6 +98,13 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       ..loadRequest(Uri.parse('https://google.com/'));
 
     _webController = webController;
+
+    initialization();
+  }
+
+  void initialization() async {
+    // await Future.delayed(const Duration(seconds: 3));
+    FlutterNativeSplash.remove();
   }
 
   @override
