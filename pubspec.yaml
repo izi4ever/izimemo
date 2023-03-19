@@ -68,17 +68,17 @@ flutter_icons:
   min_sdk_android: 21
 
   adaptive_icon_background: "#002244"
-  adaptive_icon_foreground: "assets/splash.png"
+  adaptive_icon_foreground: "assets/icon_android_fg.png"
 
 flutter_native_splash:
   android: true
   ios: true
   color: "#002244"
   # background_image: "assets/background.png"
-  image: assets/splash.png
+  image: assets/splash-2.png
   android_12:
     color: "#002244"
-    image: assets/splash.png
+    image: assets/splash-2.png
   fullscreen: true
 
 # The following section is specific to Flutter packages.
