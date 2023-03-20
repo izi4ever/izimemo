@@ -85,6 +85,14 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
         NavigationDelegate(
+          // onNavigationRequest: (NavigationRequest request) {
+          //   if (request.url.contains('youtube')) {
+          //     print('>>> youtube request: ${request.url}');
+          //     // return NavigationDecision.prevent;
+          //   }
+          //   print('>>> onNavigationRequest: ${request.url}');
+          //   return NavigationDecision.navigate;
+          // },
           onPageStarted: (String url) {
             urlFieldUnfocused;
             urlTextController.text = homePageController.onPageStarted(url);
@@ -95,7 +103,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           //     await homePageController.onWebError(webController, error, urlTextController.text),
         ),
       )
-      ..loadRequest(Uri.parse('https://google.com/'));
+      ..loadRequest(Uri.parse('https://www.google.com/'));
 
     _webController = webController;
 
@@ -152,9 +160,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                           ),
                         ),
                         Obx(() => SnippetSaveShareLinks(
-                          webController: _webController,
-                          currentUrl: homePageController.fullUrl.value,
-                        )),
+                              webController: _webController,
+                              currentUrl: homePageController.fullUrl.value,
+                            )),
                       ],
                     ),
                   ],

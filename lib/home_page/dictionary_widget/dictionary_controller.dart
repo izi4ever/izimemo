@@ -38,6 +38,7 @@ class DictionaryController extends GetxController {
   late List<String> _willLearnWords;
 
   RxInt carouselInitialPage = 0.obs;
+  int indexCurrentSlide = 0;
 
   late RxBool lastEntry;
 
@@ -150,7 +151,10 @@ class DictionaryController extends GetxController {
   // STUDY
   //
 
-  void playPause() => autoPlay.value = !autoPlay.value;
+  void playPause() {
+    autoPlay.value = !autoPlay.value;
+    carouselInitialPage.value = indexCurrentSlide;
+  }
 
   List<String> _wordListGenerator(List<String> inputList, int firstElement, int elementsInLesson) {
     if ((firstElement + elementsInLesson) > inputList.length) {

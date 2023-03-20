@@ -58,10 +58,18 @@ class DictionaryWidget extends StatelessWidget {
                   var splitStrings = e.value.split(' - ');
 
                   return GestureDetector(
-                    onDoubleTap: () => dialogEditEntry(e.key, e.value),
+                    onLongPress: () => dialogEditEntry(e.key, e.value),
+                    onDoubleTap: () {
+                      // Move entry to end
+                      if (lastEntry) {
+                        dialogLastEntry();
+                      } else {
+                        dictionaryController.moveEntry(e.key);
+                      }
+                    },
                     onVerticalDragUpdate: (details) {
-                      // Swipe up
-                      if (details.delta.dy < 8) {
+                      // Swipe up. Have learned entry
+                      if (details.delta.dy < -15) {
                         if (lastEntry) {
                           dialogLastEntry();
                         } else {
@@ -69,8 +77,8 @@ class DictionaryWidget extends StatelessWidget {
                         }
                       }
 
-                      // Swipe down
-                      if (details.delta.dy > -8) {
+                      // Swipe down. Move entry to end
+                      if (details.delta.dy > 15) {
                         if (lastEntry) {
                           dialogLastEntry();
                         } else {
@@ -220,11 +228,6 @@ class DictionaryWidget extends StatelessWidget {
                         ),
                       );
                     },
-                    onVerticalDragEnd: (details) {
-                      if (details.velocity.pixelsPerSecond.dy < 1) {
-                        print('onVerticalDragEnd');
-                      }
-                    },
                     child: Container(
                       padding: EdgeInsets.only(
                         top: (MediaQuery.of(context).orientation == Orientation.portrait)
@@ -290,6 +293,9 @@ class DictionaryWidget extends StatelessWidget {
               // autoPlayInterval: Duration(seconds: settingsPageController.secondsPerEntries.value.round()),
               enlargeFactor: 1,
               initialPage: dictionaryController.carouselInitialPage.value,
+              onPageChanged: (index, reason) {
+                dictionaryController.indexCurrentSlide = index;
+              },
             ),
           ),
           Padding(
