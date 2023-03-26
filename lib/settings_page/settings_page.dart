@@ -50,10 +50,13 @@ class SettingsPage extends StatelessWidget {
             ),
             Slider(
               value: settingsPageController.entriesInLesson.value,
-              onChanged: (double value) => settingsPageController.onChangedEntriesInLesson(value),
+              onChanged: (double value) {
+                settingsPageController.onChangedEntriesInLesson(value);
+                print('>>> Slider value: $value');
+              },
               min: 2,
-              max: 20,
-              divisions: 18,
+              max: 30,
+              divisions: 28,
               label: settingsPageController.entriesInLesson.value.round().toString(),
             ),
 
