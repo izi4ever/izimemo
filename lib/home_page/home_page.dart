@@ -11,6 +11,7 @@ import 'package:izimemo/home_page/snippets_appbar_menu/snippet_appbar_title.dart
 import 'package:izimemo/home_page/snippets_appbar_menu/snippet_header_menu.dart';
 import 'package:izimemo/home_page/snippet_save_share_links/snippet_save_share_links.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
 import '../custom/colors/custom_design_colors.dart';
 import '../custom/custom_constants.dart';
@@ -26,6 +27,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
   late final WebViewController _webController;
+  
   final HomePageController homePageController = Get.put(HomePageController());
 
   final TextEditingController urlTextController = TextEditingController();
@@ -79,7 +81,17 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       setState(() {});
     });
 
-    final WebViewController webController = WebViewController();
+    // Describe webController such to block fullscreen mode in iOS
+    late final PlatformWebViewControllerCreationParams platformParams;
+    if (WebViewPlatform.instance is WebKitWebViewPlatform) {
+      platformParams = WebKitWebViewControllerCreationParams(
+        allowsInlineMediaPlayback: true,
+        mediaTypesRequiringUserAction: const <PlaybackMediaTypes>{},
+      );
+    } else {
+      platformParams = const PlatformWebViewControllerCreationParams();
+    }
+    final WebViewController webController = WebViewController.fromPlatformCreationParams(platformParams);
 
     webController
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
