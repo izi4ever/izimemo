@@ -273,6 +273,14 @@ class DictionaryController extends GetxController {
     carouselInitialPage.value = 0;
   }
 
+  void addEntriesToEnd(String rawString) {
+    var tmpList = cleanAndSplitString(rawString);
+    _splitWordsList();
+    _willLearnWords.addAll(tmpList);
+    _joinSaveUpdateDic();
+    carouselInitialPage.value = indexCurrentSlide;
+  }
+
   List<String> cleanAndSplitString(String multiRowString) {
     var tmpList = lineSplitter.convert(multiRowString);
     tmpList.removeWhere((element) => element.length < 5);

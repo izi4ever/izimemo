@@ -78,13 +78,13 @@ class DictionaryWidget extends StatelessWidget {
                       }
 
                       // Swipe down. Move entry to end
-                      if (details.delta.dy > 15) {
-                        if (lastEntry) {
-                          dialogLastEntry();
-                        } else {
-                          dictionaryController.moveEntry(e.key);
-                        }
-                      }
+                      // if (details.delta.dy > 15) {
+                      //   if (lastEntry) {
+                      //     dialogLastEntry();
+                      //   } else {
+                      //     dictionaryController.moveEntry(e.key);
+                      //   }
+                      // }
                     },
                     onTap: () {
                       Get.bottomSheet(
@@ -374,7 +374,11 @@ class DictionaryWidget extends StatelessWidget {
             height: 240,
             child: ListView(
               children: [
-                CustomFormLabel(title: 'add_new_entry'.tr, topPadding: 4),
+                CustomFormLabel(
+                  title: 'add_new_entry'.tr,
+                  topPadding: 4,
+                  horizontalPadding: 0,
+                ),
                 CustomTextFormField(
                   controller: _entryAddFieldController,
                   autofocus: true,
@@ -405,10 +409,22 @@ class DictionaryWidget extends StatelessWidget {
             title: 'add'.tr,
           ),
           CustomElevatedButton(
-            onPressed: () => Get.back(),
-            title: 'cancel'.tr,
+            onPressed: () {
+              if (_entryAddFormKey.currentState!.validate()) {
+                _entryAddFormKey.currentState!.save();
+                dictionaryController.addEntriesToEnd(_entryAddFieldController.text);
+                Get.back();
+                Get.back();
+                // Get.to(() => const HomePage());
+              }
+            },
+            title: 'add_to_end'.tr,
             backgroundColor: CustomDesignColors.mediumBlue,
             foregroundColor: CustomDesignColors.darkBlue,
+          ),
+          TextButton(
+            onPressed: () => Get.back(),
+            child: Text('cancel'.tr),
           ),
         ]);
   }
