@@ -27,7 +27,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
   late final WebViewController _webController;
-  
+
   final HomePageController homePageController = Get.put(HomePageController());
 
   final TextEditingController urlTextController = TextEditingController();
@@ -38,24 +38,26 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   void get urlFieldUnfocused => FocusManager.instance.primaryFocus?.unfocus();
 
-  // var webScrollYOld = 0;
-  // var webScrollYNew = 0;
+  var webScrollYOld = 0;
+  var webScrollYNew = 0;
 
-  // Future<void> appBarHeightWhenScrolling() async {
-  //   try {
-  //     webScrollYNew = await webController.getScrollY();
-  //   } catch (e) {
-  //     webScrollYNew = 0;
-  //     print('getScrollY catch error: $e');
-  //   }
+  Future<void> appBarHeightWhenScrolling() async {
+    try {
+      // webScrollYNew = await _webController.getScrollY();
+      var webViewOffset = await _webController.getScrollPosition();
+      webScrollYNew = webViewOffset.dy.round();
+    } catch (e) {
+      webScrollYNew = 0;
+      print('getScrollY catch error: $e');
+    }
 
-  //   if (webScrollYNew > webScrollYOld) {
-  //     appBarAnimationController.forward();
-  //   } else if (webScrollYNew < webScrollYOld) {
-  //     appBarAnimationController.reverse();
-  //   }
-  //   webScrollYOld = webScrollYNew;
-  // }
+    if (webScrollYNew > webScrollYOld) {
+      appBarAnimationController.forward();
+    } else if (webScrollYNew < webScrollYOld) {
+      appBarAnimationController.reverse();
+    }
+    webScrollYOld = webScrollYNew;
+  }
 
   @override
   void initState() {
@@ -331,6 +333,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                 ..onDown = (tap) async {
                                   urlFieldUnfocused;
                                   // await appBarHeightWhenScrolling();
+                                  Future.delayed(
+                                      const Duration(microseconds: 300), () async => await appBarHeightWhenScrolling());
                                 },
                             ),
                           ),
