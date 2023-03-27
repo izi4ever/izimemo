@@ -11,6 +11,8 @@ enum DefaultLinks {
   cnn(url: 'https://edition.cnn.com/', imageFileName: 'cnn.png', active: true),
   cnbc(url: 'https://www.cnbc.com/world/?region=world', imageFileName: 'cnbc.png', active: true),
   translate(url: 'https://translate.google.com/', imageFileName: 'translate.png', active: true),
+  tube(url: 'https://www.cbc.ca/kids/games/play/color-pipes', imageFileName: '004-processor.png', active: true),
+  tetris(url: 'https://arenaservices.cdn.arkadiumhosted.com/playgame/api/playgame/play/gamedistribution.arkadiumarena.com/block-champ/', imageFileName: '002-tetris-1.png', active: true),
   // TODO https://web.telegram.org/?legacy=1#/login
   ;
 
