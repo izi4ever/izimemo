@@ -69,7 +69,7 @@ class DictionaryWidget extends StatelessWidget {
                     },
                     onVerticalDragUpdate: (details) {
                       // Swipe up. Have learned entry
-                      if (details.delta.dy < -15) {
+                      if (details.delta.dy < -8) {
                         if (lastEntry) {
                           dialogLastEntry();
                         } else {
@@ -78,7 +78,7 @@ class DictionaryWidget extends StatelessWidget {
                       }
 
                       // Swipe down. Move entry to end
-                      // if (details.delta.dy > 15) {
+                      // if (details.delta.dy > 8) {
                       //   if (lastEntry) {
                       //     dialogLastEntry();
                       //   } else {

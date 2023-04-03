@@ -1,15 +1,17 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:izimemo/home_page/custom_links/default_links.dart';
 import 'package:izimemo/home_page/dictionary_widget/dictionary_widget.dart';
 import 'package:izimemo/home_page/home_page_controller.dart';
+import 'package:izimemo/home_page/snippet_save_share_links/snippet_save_share_links.dart';
 import 'package:izimemo/home_page/snippets_appbar_menu/snippet_appbar_title.dart';
 import 'package:izimemo/home_page/snippets_appbar_menu/snippet_header_menu.dart';
-import 'package:izimemo/home_page/snippet_save_share_links/snippet_save_share_links.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
@@ -17,6 +19,7 @@ import '../custom/colors/custom_design_colors.dart';
 import '../custom/custom_constants.dart';
 import '../custom/widgets/custom_settings_icon_button.dart';
 import '../settings_page/settings_page.dart';
+import '../video_player_page/video_player_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -129,6 +132,24 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     FlutterNativeSplash.remove();
   }
 
+  // Future<void> openVideo() async {
+  //   FilePickerResult? filePickerResult = await FilePicker.platform.pickFiles();
+  //   if (filePickerResult != null) {
+  //     String? filePath = filePickerResult.files.single.path;
+  //     if (filePath != null) {
+  //       Get.to(() => VideoPlayerPage(filePath: filePath));
+  //     }
+  //   }
+  // }
+
+  Future<void> openVideoFile() async {
+    final ImagePicker imagePicker = ImagePicker();
+    final XFile? videoFile = await imagePicker.pickVideo(source: ImageSource.gallery);
+    if (videoFile != null) {
+      Get.to(() => VideoPlayerPage(filePath: videoFile.path));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -170,6 +191,15 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                   return const SizedBox.shrink();
                                 },
                               ),
+                              ...[
+                                IconButton(
+                                  icon: Image.asset('assets/bookmarks/001-play-button-1.png'),
+                                  // icon: Image.asset('assets/bookmarks/001-play-button.png'),
+                                  // icon: Image.asset('assets/bookmarks/001-video-player.png'),
+                                  // onPressed: openVideo,
+                                  onPressed: openVideoFile,
+                                ),
+                              ],
                             ],
                           ),
                         ),
@@ -330,11 +360,11 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                           ..add(
                             Factory<VerticalDragGestureRecognizer>(
                               () => VerticalDragGestureRecognizer()
-                                ..onDown = (tap) async {
+                                ..onDown = (tap) {
                                   urlFieldUnfocused;
                                   // await appBarHeightWhenScrolling();
-                                  Future.delayed(
-                                      const Duration(microseconds: 300), () async => await appBarHeightWhenScrolling());
+                                  Future.delayed(const Duration(microseconds: 1500),
+                                      () async => await appBarHeightWhenScrolling());
                                 },
                             ),
                           ),

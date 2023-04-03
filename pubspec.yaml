@@ -46,6 +46,10 @@ dependencies:
   get_storage: ^2.1.1
   flutter_native_splash: ^2.2.19
   webview_flutter_wkwebview: ^3.2.2
+  file_picker: ^5.2.6
+  chewie: ^1.4.0
+  video_player: ^2.6.0
+  image_picker: ^0.8.7+1
 
 dev_dependencies:
   flutter_test:
