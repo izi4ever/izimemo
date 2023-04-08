@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:izimemo/custom/widgets/custom_dropdown_button.dart';
 import 'package:izimemo/home_page/dictionary_widget/dictionary_controller.dart';
 
 import '../../custom/colors/custom_design_colors.dart';
@@ -25,7 +26,6 @@ class DictionaryMenuWidget extends StatelessWidget {
   final _newEntriesFieldController = TextEditingController();
 
   final formCreateKey = GlobalKey<FormState>();
-
   final formRenameKey = GlobalKey<FormState>();
 
   @override
@@ -39,16 +39,18 @@ class DictionaryMenuWidget extends StatelessWidget {
             dictionaryController.changeCurrentDic(value);
           } else {
             dialogs.showDialog(
+              widthRatio: 0.8,
               content: Form(
                 key: formCreateKey,
                 child: SizedBox(
-                  height: 300,
+                  height: 330,
                   child: ListView(
                     children: [
                       CustomFormLabel(
                         title: 'enter_new_dic_title'.tr,
-                        topPadding: 4,
+                        topPadding: 0,
                         horizontalPadding: 0,
+                        fontSize: 14,
                       ),
                       CustomTextFormField(
                         controller: _newDicNameFieldController,
@@ -66,7 +68,39 @@ class DictionaryMenuWidget extends StatelessWidget {
                         },
                       ),
                       CustomFormLabel(
-                        title: '${'add_at_least_one_entry'.tr} ${'add_new_entry'.tr}',
+                        // title: 'important_for_pronunciation'.tr,
+                        title: 'translation_direction'.tr,
+                        topPadding: 4,
+                        horizontalPadding: 0,
+                        fontSize: 14,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 12),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: CustomDropdownButton(
+                                hintText: 'from_language'.tr,
+                                items: dictionaryController.availableLanguages,
+                                onChanged: (String? value) => dictionaryController.formFromLanguage.value = value!,
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              flex: 1,
+                              child: CustomDropdownButton(
+                                hintText: 'to_language'.tr,
+                                items: dictionaryController.availableLanguages,
+                                onChanged: (String? value) => dictionaryController.formToLanguage.value = value!,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      CustomFormLabel(
+                        // title: '${'add_at_least_one_entry'.tr} ${'add_new_entry'.tr}',
+                        title: 'how_add_new_entries'.tr,
                         topPadding: 4,
                         horizontalPadding: 0,
                         fontSize: 14,
@@ -91,7 +125,10 @@ class DictionaryMenuWidget extends StatelessWidget {
                   onPressed: () {
                     if (formCreateKey.currentState!.validate()) {
                       formCreateKey.currentState!.save();
-                      dictionaryController.addDic(_newDicNameFieldController.text, _newEntriesFieldController.text);
+                      dictionaryController.addDic(
+                        _newDicNameFieldController.text,
+                        _newEntriesFieldController.text,
+                      );
                     }
                   },
                   title: 'create'.tr,
@@ -125,10 +162,11 @@ class DictionaryMenuWidget extends StatelessWidget {
                             onPressed: (BuildContext context) {
                               _dicNameFieldController.text = e.value['humanName']!;
                               dialogs.showDialog(
+                                widthRatio: 0.8,
                                 content: Form(
                                   key: formRenameKey,
                                   child: SizedBox(
-                                    height: 140,
+                                    height: 240,
                                     child: ListView(
                                       children: [
                                         CustomFormLabel(title: 'title'.tr, topPadding: 4),
@@ -147,6 +185,41 @@ class DictionaryMenuWidget extends StatelessWidget {
                                             }
                                           },
                                         ),
+                                        CustomFormLabel(
+                                          // title: 'important_for_pronunciation'.tr,
+                                          title: 'translation_direction'.tr,
+                                          topPadding: 4,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(bottom: 12),
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                flex: 1,
+                                                child: CustomDropdownButton(
+                                                  hintText: 'from_language'.tr,
+                                                  defaultValue: dictionaryController
+                                                      .getFromLanguageByStorageName(e.value['storageName']),
+                                                  items: dictionaryController.availableLanguages,
+                                                  onChanged: (String? value) =>
+                                                      dictionaryController.formFromLanguage.value = value!,
+                                                ),
+                                              ),
+                                              const SizedBox(width: 8),
+                                              Expanded(
+                                                flex: 1,
+                                                child: CustomDropdownButton(
+                                                  hintText: 'to_language'.tr,
+                                                  defaultValue: dictionaryController
+                                                      .getToLanguageByStorageName(e.value['storageName']),
+                                                  items: dictionaryController.availableLanguages,
+                                                  onChanged: (String? value) =>
+                                                      dictionaryController.formToLanguage.value = value!,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -156,7 +229,7 @@ class DictionaryMenuWidget extends StatelessWidget {
                                     onPressed: () {
                                       if (formRenameKey.currentState!.validate()) {
                                         formRenameKey.currentState!.save();
-                                        dictionaryController.renameDic(
+                                        dictionaryController.editDicNameAndLanguage(
                                           e.key,
                                           _dicNameFieldController.text,
                                         );

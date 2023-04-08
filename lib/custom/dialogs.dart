@@ -65,6 +65,7 @@ class Dialogs {
                 bottom: 24,
                 left: 24,
                 right: 24,
+                top: 0,
               ),
         insetPadding: EdgeInsets.zero,
         elevation: 0,
@@ -81,7 +82,7 @@ class Dialogs {
 
   void addBookmarkDialog(WebViewController webController) async {
     final SnippetSaveShareLinksController snippetSaveShareLinksController = Get.find();
-    
+
     final formKey = GlobalKey<FormState>();
 
     final titleFieldController = TextEditingController();

@@ -1,4 +1,3 @@
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -360,11 +359,11 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                           ..add(
                             Factory<VerticalDragGestureRecognizer>(
                               () => VerticalDragGestureRecognizer()
-                                ..onDown = (tap) {
+                                ..onDown = (tap) async {
                                   urlFieldUnfocused;
                                   // await appBarHeightWhenScrolling();
-                                  Future.delayed(const Duration(microseconds: 1500),
-                                      () async => await appBarHeightWhenScrolling());
+                                  await Future.delayed(
+                                      const Duration(milliseconds: 500), () async => await appBarHeightWhenScrolling());
                                 },
                             ),
                           ),

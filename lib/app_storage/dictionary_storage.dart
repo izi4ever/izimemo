@@ -27,12 +27,38 @@ class DictionaryStorage {
           'humanName': 'Fr-Ru base',
         },
       ]);
-
   void writeAvailableDics(List<Map<String, dynamic>> value) => box.write('availableDics', value);
 
   int readFirstElementForDictionary(String dicKey) => box.read('${dicKey}_firstElement') ?? 0;
   void writeFirstElementForDictionary(String dicKey, int value) => box.write('${dicKey}_firstElement', value);
   void deleteFirstElementForDictionary(String dicKey) => box.remove('${dicKey}_firstElement');
+
+  Map<String, String> readDicLanguages(String dicKey) =>
+      Map<String, String>.from(box.read('${dicKey}_languages') ?? fillInDicLanguages(dicKey));
+
+  void writeDicLanguages(String dicKey, Map<String, String> value) => box.write('${dicKey}_languages', value);
+  void deleteDicLanguages(String dicKey) => box.remove('${dicKey}_languages');
+
+  Map<String, String> fillInDicLanguages(String key) {
+    if (key == 'dic_1') {
+      return {
+        'fromLanguage': 'en-US',
+        'toLanguage': 'ru-RU',
+      };
+    } else if (key == 'dic_2') {
+      return {
+        'fromLanguage': 'de-DE',
+        'toLanguage': 'ru-RU',
+      };
+    } else if (key == 'dic_3') {
+      return {
+        'fromLanguage': 'fr-FR',
+        'toLanguage': 'ru-RU',
+      };
+    } else {
+      return {};
+    }
+  }
 
   List<String> readWordListByDicKey(String dicKey) => List<String>.from(box.read(dicKey) ?? fillInDic(dicKey));
   void writeWordListByDicKey(String dicKey, List<String> value) => box.write(dicKey, value);
@@ -2232,5 +2258,4 @@ der Zug, die Züge - поезд
 1 000 000 — миллион - [эн мильо'н] un million
 1 000 000 000 — миллиард - [эн мильяр] un milliard
 ''';
-
 }
