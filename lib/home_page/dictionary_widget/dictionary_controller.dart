@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
 
 import '../../app_storage/app_settings_storage.dart';
@@ -11,6 +12,7 @@ class DictionaryController extends GetxController {
   final DictionaryStorage dictionaryStorage = DictionaryStorage();
   final AppSettingsStorage appSettingsStorage = AppSettingsStorage();
   final LineSplitter lineSplitter = const LineSplitter();
+  FlutterTts flutterTts = FlutterTts();
 
   var autoPlay = true.obs;
 
@@ -26,6 +28,7 @@ class DictionaryController extends GetxController {
     var mapLang = dictionaryStorage.readDicLanguages(storageName);
     return mapLang['fromLanguage'];
   }
+
   String? getToLanguageByStorageName(String storageName) {
     var mapLang = dictionaryStorage.readDicLanguages(storageName);
     return mapLang['toLanguage'];
@@ -449,6 +452,46 @@ class DictionaryController extends GetxController {
     tmpList.removeWhere((element) => element.length < 5);
     return tmpList;
   }
+
+  //
+  // SOUND
+  //
+
+  Future<void> _speak(
+    String text,
+    String language,
+  ) async {
+    await flutterTts.setIosAudioCategory(
+        IosTextToSpeechAudioCategory.ambient,
+        [
+          IosTextToSpeechAudioCategoryOptions.allowBluetooth,
+          IosTextToSpeechAudioCategoryOptions.allowBluetoothA2DP,
+          IosTextToSpeechAudioCategoryOptions.mixWithOthers
+        ],
+        IosTextToSpeechAudioMode.voicePrompt);
+    flutterTts.awaitSpeakCompletion(true);
+    await flutterTts.setLanguage(language);
+    await flutterTts.setPitch(1); // Tone
+    await flutterTts.setSpeechRate(0.25); // Speed
+    await flutterTts.setVolume(1.0);
+    await flutterTts.speak(text);
+    await Future.delayed(const Duration(milliseconds: 500));
+  }
+
+  Future<void> slideSpeak(int index) async {
+    String rawText = sliderWordList[index];
+    String textWithoutTranscription = rawText.replaceAll(RegExp('\\[.*?\\]'), '');
+    var stringParts = textWithoutTranscription.split(' - ');
+    var fromLanguageLocale = getFromLanguageByStorageName(lastOpenedDic.value)!;
+    var toLanguageLocale = getToLanguageByStorageName(lastOpenedDic.value)!;
+    if (stringParts.length > 1) {
+      await _speak(stringParts[0], fromLanguageLocale);
+      await _speak(stringParts[1], toLanguageLocale);
+    }
+
+    // If 1 string, speak on second language
+    // Change order for each language
+  }
 }
 
 // print('>>> 1) _learnedWords: $_learnedWords');
@@ -461,3 +504,6 @@ class DictionaryController extends GetxController {
 // print('>>> 2) _learningWords: $_learningWords');
 // print('>>> 2) _willLearnWords Begin: ${_willLearnWords.sublist(0, 4)}');
 // print('>>> 2) _willLearnWords End: ${_willLearnWords.sublist((_willLearnWords.length - 4))}');
+
+
+// Can I control volume for each Flutter widget separately?

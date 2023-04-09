@@ -293,8 +293,9 @@ class DictionaryWidget extends StatelessWidget {
               // autoPlayInterval: Duration(seconds: settingsPageController.secondsPerEntries.value.round()),
               enlargeFactor: 1,
               initialPage: dictionaryController.carouselInitialPage.value,
-              onPageChanged: (index, reason) {
+              onPageChanged: (index, reason) async {
                 dictionaryController.indexCurrentSlide = index;
+                await dictionaryController.slideSpeak(index);
               },
             ),
           ),

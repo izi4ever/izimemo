@@ -45,7 +45,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   Future<void> appBarHeightWhenScrolling() async {
     try {
-      // webScrollYNew = await _webController.getScrollY();
       var webViewOffset = await _webController.getScrollPosition();
       webScrollYNew = webViewOffset.dy.round();
     } catch (e) {
@@ -114,7 +113,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             urlTextController.text = homePageController.onPageStarted(url);
           },
           onProgress: (int progress) => homePageController.onProgress(progress),
-          onPageFinished: (String url) async => await homePageController.onPageFinished(webController, url),
+          onPageFinished: (String url) => homePageController.onPageFinished(webController, url),
           // onWebResourceError: (WebResourceError error) async =>
           //     await homePageController.onWebError(webController, error, urlTextController.text),
         ),
@@ -152,7 +151,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => await homePageController.onGoBack(_webController),
+      onWillPop: () => homePageController.onGoBack(_webController),
       child: Scaffold(
         backgroundColor: Colors.black,
         drawer: Drawer(
@@ -180,9 +179,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                 (e) {
                                   if (e.active == true) {
                                     return IconButton(
-                                      onPressed: () async {
+                                      onPressed: () {
                                         Get.back();
-                                        await homePageController.onLoadUrl(_webController, e.url);
+                                        homePageController.onLoadUrl(_webController, e.url);
                                       },
                                       icon: Image.asset('assets/bookmarks/${e.imageFileName}'),
                                     );
@@ -222,13 +221,13 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       child: Row(
                         children: [
                           CustomSettingsIconButton(
-                            onPressed: () async => await homePageController.onClearCache(_webController),
+                            onPressed: () => homePageController.onClearCache(_webController),
                             title: 'clear_cache'.tr,
                             icon: FontAwesomeIcons.trashCan,
                           ),
                           const SizedBox(width: 10),
                           CustomSettingsIconButton(
-                            onPressed: () async => await homePageController.onClearCookies(),
+                            onPressed: () => homePageController.onClearCookies(),
                             title: 'clear_cookies'.tr,
                             icon: FontAwesomeIcons.trashCan,
                           ),
@@ -253,25 +252,25 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                 loadingPercentage: homePageController.loadingPercentage.value,
                 urlTextController: urlTextController,
                 urlTextFocus: urlTextFocus,
-                onUrlEditingComplete: () async {
+                onUrlEditingComplete: () {
                   urlFieldUnfocused;
-                  await homePageController.onUrlEditingComplete(_webController, urlTextController.text);
+                  homePageController.onUrlEditingComplete(_webController, urlTextController.text);
                 },
                 // onUrlTap: () {
                 //   urlTextController.selection = TextSelection(baseOffset: 0, extentOffset: urlTextController.text.length);
                 // },
                 // onAddBookmarkPressed: () {},
-                onStopLoadPressed: () async => await homePageController.onLoadUrl(_webController, 'about:blank'),
-                onReloadPressed: () async => await homePageController.onReload(_webController),
+                onStopLoadPressed: () => homePageController.onLoadUrl(_webController, 'about:blank'),
+                onReloadPressed: () => homePageController.onReload(_webController),
                 canGoBack: homePageController.canGoBack.value,
-                onGoBackPressed: () async {
+                onGoBackPressed: () {
                   urlFieldUnfocused;
-                  await homePageController.onGoBack(_webController);
+                  homePageController.onGoBack(_webController);
                 },
                 canGoForward: homePageController.canGoForward.value,
-                onGoForwardPressed: () async {
+                onGoForwardPressed: () {
                   urlFieldUnfocused;
-                  await homePageController.onGoForward(_webController);
+                  homePageController.onGoForward(_webController);
                 },
                 currentUrl: homePageController.fullUrl.value,
                 webController: _webController,
@@ -285,7 +284,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         size: 18,
                         color: homePageController.canGoBack.isTrue ? const Color(0xFFFFFFFF) : const Color(0x55FFFFFF),
                       ),
-                      onPressed: () async => await homePageController.onGoBack(_webController),
+                      onPressed: () => homePageController.onGoBack(_webController),
                     )),
             onUrlFieldFocus
                 ? const SizedBox.shrink()
@@ -297,9 +296,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                               ? const Color(0xFFFFFFFF)
                               : const Color(0x55FFFFFF),
                         )),
-                    onPressed: () async {
+                    onPressed: () {
                       urlFieldUnfocused;
-                      await homePageController.onGoForward(_webController);
+                      homePageController.onGoForward(_webController);
                     },
                   ),
           ],
@@ -361,7 +360,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                               () => VerticalDragGestureRecognizer()
                                 ..onDown = (tap) async {
                                   urlFieldUnfocused;
-                                  // await appBarHeightWhenScrolling();
                                   await Future.delayed(
                                       const Duration(milliseconds: 500), () async => await appBarHeightWhenScrolling());
                                 },

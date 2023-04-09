@@ -50,6 +50,8 @@ dependencies:
   chewie: ^1.4.0
   video_player: ^2.6.0
   image_picker: ^0.8.7+1
+  flutter_tts: ^3.6.3
+  # just_audio: ^0.9.32
   # url_launcher: ^6.1.10
 
 dev_dependencies:

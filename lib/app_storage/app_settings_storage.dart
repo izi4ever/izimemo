@@ -3,10 +3,10 @@ import 'package:get_storage/get_storage.dart';
 class AppSettingsStorage {
   final box = GetStorage();
 
-  double get readEntriesInLesson => box.read('entriesInLesson') ?? 5;
+  double get readEntriesInLesson => box.read('entriesInLesson') ?? 7;
   void writeEntriesInLesson(double value) => box.write('entriesInLesson', value);
 
-  double get readSecondsPerEntries => box.read('secondsPerEntries') ?? 5;
+  double get readSecondsPerEntries => box.read('secondsPerEntries') ?? 7;
   void writeSecondsPerEntries(double value) => box.write('secondsPerEntries', value);
 
   bool get readLoadLastUrl => box.read('loadLastUrl') ?? false;
