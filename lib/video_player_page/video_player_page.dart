@@ -51,6 +51,8 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
     ]);
 
     _createChewieController();
+    // TODO Add to settings
+    _videoPlayerController.setVolume(0.5); 
     setState(() {});
   }
 

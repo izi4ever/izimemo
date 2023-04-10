@@ -113,7 +113,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             urlTextController.text = homePageController.onPageStarted(url);
           },
           onProgress: (int progress) => homePageController.onProgress(progress),
-          onPageFinished: (String url) => homePageController.onPageFinished(webController, url),
+          onPageFinished: (String url) {
+            homePageController.onPageFinished(webController, url);
+            homePageController.setVolume(webController, 0.5);
+          },
           // onWebResourceError: (WebResourceError error) async =>
           //     await homePageController.onWebError(webController, error, urlTextController.text),
         ),

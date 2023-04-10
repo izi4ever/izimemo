@@ -129,4 +129,17 @@ class HomePageController extends GetxController {
   void onProgress(int progress) {
     loadingPercentage.value = progress;
   }
+
+  Future<void> setVolume(WebViewController webController, double volume) async {
+    await webController.runJavaScript('''
+      var iframe = document.querySelector('iframe');
+      if (iframe) {
+        var player = iframe.contentWindow.document.querySelector('video');
+        if (player) {
+          player.volume = 0.5;
+        }
+      }
+      }
+    ''');
+  }
 }
