@@ -132,14 +132,24 @@ class HomePageController extends GetxController {
 
   Future<void> setVolume(WebViewController webController, double volume) async {
     await webController.runJavaScript('''
+      var videos = document.getElementsByTagName('video');
+      for (var i = 0; i < videos.length; i++) {
+        videos[i].volume = $volume;
+      }
+
+      var audios = document.getElementsByTagName('audio');
+      for (var i = 0; i < audios.length; i++) {
+        audios[i].volume = $volume;
+      }
+
       var iframe = document.querySelector('iframe');
       if (iframe) {
         var player = iframe.contentWindow.document.querySelector('video');
         if (player) {
-          player.volume = 0.5;
+          player.volume = $volume;
         }
-      }
       }
     ''');
   }
+
 }
