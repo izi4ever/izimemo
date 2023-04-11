@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       translations: Languages(),
       locale: Get.deviceLocale,
       fallbackLocale: const Locale('en', 'US'),
-      title: 'IZIMEMO',
+      title: 'izimemo',
       home: const HomePage(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(

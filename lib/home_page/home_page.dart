@@ -357,8 +357,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       ),
                       child: WebViewWidget(
                         controller: _webController,
-                        gestureRecognizers: Set()
-                          ..add(
+                        gestureRecognizers: {
                             Factory<VerticalDragGestureRecognizer>(
                               () => VerticalDragGestureRecognizer()
                                 ..onDown = (tap) async {
@@ -367,7 +366,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                       const Duration(milliseconds: 500), () async => await appBarHeightWhenScrolling());
                                 },
                             ),
-                          ),
+                          },
                       ),
                     ),
                   ),
