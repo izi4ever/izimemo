@@ -199,6 +199,8 @@ class DictionaryController extends GetxController {
     slideColorIndexList = getSlideColorIndexList.obs;
     currentWordsList = getCurrentWordsList.obs;
     secondsPerEntries = getSecondsPerEntries.obs;
+
+    speakFirstSlide;
   }
 
   //
@@ -209,6 +211,8 @@ class DictionaryController extends GetxController {
     sliderWordList.value = getSliderWordList;
     slideColorIndexList.value = getSlideColorIndexList;
     currentWordsList.value = getCurrentWordsList;
+
+    speakFirstSlide;
   }
 
   void changeCurrentDic(String currentDic) {
@@ -500,10 +504,9 @@ class DictionaryController extends GetxController {
     if (index >= (sliderWordList.length - 1)) {
       directionSpeech = !directionSpeech;
     }
-
-    // If 1 string, speak on second language
-    // Change order for each language
   }
+
+  Future<void> get speakFirstSlide async => await slideSpeak(0);
 }
 
 // print('>>> 1) _learnedWords: $_learnedWords');
