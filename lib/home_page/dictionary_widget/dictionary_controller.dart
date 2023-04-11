@@ -159,6 +159,7 @@ class DictionaryController extends GetxController {
 
   RxString formFromLanguage = ''.obs;
   RxString formToLanguage = ''.obs;
+  bool directionSpeech = true;
 
   List<String> get getCurrentWordsList => dictionaryStorage.readWordListByDicKey(dictionaryStorage.readLastOpenedDic);
   late RxList<String> currentWordsList;
@@ -485,8 +486,19 @@ class DictionaryController extends GetxController {
     var fromLanguageLocale = getFromLanguageByStorageName(lastOpenedDic.value)!;
     var toLanguageLocale = getToLanguageByStorageName(lastOpenedDic.value)!;
     if (stringParts.length > 1) {
-      await _speak(stringParts[0], fromLanguageLocale);
-      await _speak(stringParts[1], toLanguageLocale);
+      if (directionSpeech) {
+        await _speak(stringParts[0], fromLanguageLocale);
+        await _speak(stringParts[1], toLanguageLocale);
+      } else {
+        await _speak(stringParts[1], toLanguageLocale);
+        await _speak(stringParts[0], fromLanguageLocale);
+      }
+    } else {
+      await _speak(textWithoutTranscription, toLanguageLocale);
+    }
+
+    if (index >= (sliderWordList.length - 1)) {
+      directionSpeech = !directionSpeech;
     }
 
     // If 1 string, speak on second language
