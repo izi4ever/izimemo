@@ -192,6 +192,8 @@ class DictionaryController extends GetxController {
 
   late RxBool lastEntry;
 
+  RxBool appIsPaused = false.obs;
+
   DictionaryController() {
     lastCreatedDicIndex = dictionaryStorage.readLastCreatedDicIndex.obs;
     lastOpenedDic = dictionaryStorage.readLastOpenedDic.obs;
@@ -517,18 +519,20 @@ class DictionaryController extends GetxController {
   }
 
   Future<void> get speakFirstSlide async => await slideSpeak(0);
+
+  Future<void> backgroundSpeech() async {
+    if (isTextReading.value) {
+      // TODO sliderWordList
+      // TODO secondsPerEntries
+      // TODO carouselInitialPage.value = indexCurrentSlide;
+      Future.delayed(Duration(seconds: secondsPerEntries.value.round()), () async {
+        ++indexCurrentSlide;
+        if (indexCurrentSlide >= slideColorIndexList.length) {
+          indexCurrentSlide = 0;
+        }
+        carouselInitialPage.value = indexCurrentSlide;
+        await slideSpeak(indexCurrentSlide);
+      });
+    }
+  }
 }
-
-// print('>>> 1) _learnedWords: $_learnedWords');
-// print('>>> 1) _learningWords: $_learningWords');
-// print('>>> 1) _willLearnWords Begin: ${_willLearnWords.sublist(0, 4)}');
-// print('>>> 1) _willLearnWords End: ${_willLearnWords.sublist((_willLearnWords.length - 4))}');
-// print('>>> 1) : $');
-// print('>>> 1) : $');
-// print('>>> 2) _learnedWords: $_learnedWords');
-// print('>>> 2) _learningWords: $_learningWords');
-// print('>>> 2) _willLearnWords Begin: ${_willLearnWords.sublist(0, 4)}');
-// print('>>> 2) _willLearnWords End: ${_willLearnWords.sublist((_willLearnWords.length - 4))}');
-
-
-// Can I control volume for each Flutter widget separately?

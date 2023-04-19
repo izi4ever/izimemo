@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:izimemo/home_page/dictionary_widget/dictionary_controller.dart';
 
 class LifecycleWidgetWrapper extends StatefulWidget {
   final Widget child;
@@ -14,6 +16,7 @@ class LifecycleWidgetWrapper extends StatefulWidget {
 
 class _LifecycleWidgetWrapperState extends State<LifecycleWidgetWrapper> with WidgetsBindingObserver {
   late AppLifecycleState _appLifecycleState;
+  DictionaryController dictionaryController = Get.put(DictionaryController());
 
   @override
   void initState() {
@@ -29,15 +32,25 @@ class _LifecycleWidgetWrapperState extends State<LifecycleWidgetWrapper> with Wi
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    setState(() {
-      _appLifecycleState = state;
-      print('>>> _appLifecycleState: $_appLifecycleState');
-    });
+    if (state == AppLifecycleState.paused) {
+      dictionaryController.appIsPaused.value = true;
+    } else {
+      dictionaryController.appIsPaused.value = false;
+    }
+    // setState(() async {
+    //   _appLifecycleState = state;
+    //   if (_appLifecycleState == AppLifecycleState.paused) {
+    //     dictionaryController.backgroundSpeech();
+    //   }
+    //   print('>>> _appLifecycleState: $_appLifecycleState');
+    // while (_appLifecycleState == AppLifecycleState.paused) {
+    //   await dictionaryController.backgroundSpeech();
+    // }
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
     return widget.child;
   }
-
 }
