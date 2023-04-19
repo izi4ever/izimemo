@@ -7,11 +7,12 @@ import 'package:get_storage/get_storage.dart';
 import 'custom/colors/custom_design_colors.dart';
 import 'custom/translations.dart';
 import 'home_page/home_page.dart';
+import 'home_page/lifecycle_widget_wrapper.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  
+
   await GetStorage.init();
 
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -31,7 +32,10 @@ class MyApp extends StatelessWidget {
       locale: Get.deviceLocale,
       fallbackLocale: const Locale('en', 'US'),
       title: 'izimemo',
-      home: const HomePage(),
+      // home: const HomePage(),
+      home: const LifecycleWidgetWrapper(
+        child: HomePage(),
+      ),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch().copyWith(

@@ -113,9 +113,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             urlTextController.text = homePageController.onPageStarted(url);
           },
           onProgress: (int progress) => homePageController.onProgress(progress),
-          onPageFinished: (String url) {
+          onPageFinished: (String url) async {
             homePageController.onPageFinished(webController, url);
-            homePageController.setVolume(webController, 0.5);
+            await Future.delayed(
+                const Duration(milliseconds: 7000), () async => await homePageController.setVolume(webController));
           },
           // onWebResourceError: (WebResourceError error) async =>
           //     await homePageController.onWebError(webController, error, urlTextController.text),
@@ -358,15 +359,15 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       child: WebViewWidget(
                         controller: _webController,
                         gestureRecognizers: {
-                            Factory<VerticalDragGestureRecognizer>(
-                              () => VerticalDragGestureRecognizer()
-                                ..onDown = (tap) async {
-                                  urlFieldUnfocused;
-                                  await Future.delayed(
-                                      const Duration(milliseconds: 500), () async => await appBarHeightWhenScrolling());
-                                },
-                            ),
-                          },
+                          Factory<VerticalDragGestureRecognizer>(
+                            () => VerticalDragGestureRecognizer()
+                              ..onDown = (tap) async {
+                                urlFieldUnfocused;
+                                await Future.delayed(
+                                    const Duration(milliseconds: 500), () async => await appBarHeightWhenScrolling());
+                              },
+                          ),
+                        },
                       ),
                     ),
                   ),

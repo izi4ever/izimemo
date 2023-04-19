@@ -177,6 +177,12 @@ class DictionaryController extends GetxController {
   double get getSecondsPerEntries => appSettingsStorage.readSecondsPerEntries;
   late RxDouble secondsPerEntries;
 
+  bool get getIsTextReading => appSettingsStorage.readIsTextReading;
+  late RxBool isTextReading;
+
+  double get getReadingSpeed => appSettingsStorage.readReadingSpeed;
+  late RxDouble readingSpeed;
+
   late List<String> _learnedWords;
   late List<String> _learningWords;
   late List<String> _willLearnWords;
@@ -199,8 +205,10 @@ class DictionaryController extends GetxController {
     slideColorIndexList = getSlideColorIndexList.obs;
     currentWordsList = getCurrentWordsList.obs;
     secondsPerEntries = getSecondsPerEntries.obs;
+    isTextReading = getIsTextReading.obs;
+    readingSpeed = getReadingSpeed.obs;
 
-    speakFirstSlide;
+    // speakFirstSlide;
   }
 
   //
@@ -211,8 +219,6 @@ class DictionaryController extends GetxController {
     sliderWordList.value = getSliderWordList;
     slideColorIndexList.value = getSlideColorIndexList;
     currentWordsList.value = getCurrentWordsList;
-
-    speakFirstSlide;
   }
 
   void changeCurrentDic(String currentDic) {
@@ -221,6 +227,7 @@ class DictionaryController extends GetxController {
     dicLanguages.value = getDicLanguages;
 
     _updateListsForSlider();
+    speakFirstSlide;
   }
 
   void editDicNameAndLanguage(int dicIndex, String newDicName) {
@@ -313,6 +320,7 @@ class DictionaryController extends GetxController {
     dictionaryStorage.writeFirstElementForDictionary(lastOpenedDic.value, 0);
 
     _updateListsForSlider();
+    speakFirstSlide;
 
     Get.back();
     Get.back();
@@ -477,32 +485,34 @@ class DictionaryController extends GetxController {
     flutterTts.awaitSpeakCompletion(true);
     await flutterTts.setLanguage(language);
     await flutterTts.setPitch(1); // Tone
-    await flutterTts.setSpeechRate(0.25); // Speed
+    await flutterTts.setSpeechRate(readingSpeed.value); // Speed
     await flutterTts.setVolume(1.0);
     await flutterTts.speak(text);
     await Future.delayed(const Duration(milliseconds: 500));
   }
 
   Future<void> slideSpeak(int index) async {
-    String rawText = sliderWordList[index];
-    String textWithoutTranscription = rawText.replaceAll(RegExp('\\[.*?\\]'), '');
-    var stringParts = textWithoutTranscription.split(' - ');
-    var fromLanguageLocale = getFromLanguageByStorageName(lastOpenedDic.value)!;
-    var toLanguageLocale = getToLanguageByStorageName(lastOpenedDic.value)!;
-    if (stringParts.length > 1) {
-      if (directionSpeech) {
-        await _speak(stringParts[0], fromLanguageLocale);
-        await _speak(stringParts[1], toLanguageLocale);
+    if (isTextReading.value) {
+      String rawText = sliderWordList[index];
+      String textWithoutTranscription = rawText.replaceAll(RegExp('\\[.*?\\]'), '');
+      var stringParts = textWithoutTranscription.split(' - ');
+      var fromLanguageLocale = getFromLanguageByStorageName(lastOpenedDic.value)!;
+      var toLanguageLocale = getToLanguageByStorageName(lastOpenedDic.value)!;
+      if (stringParts.length > 1) {
+        if (directionSpeech) {
+          await _speak(stringParts[0], fromLanguageLocale);
+          await _speak(stringParts[1], toLanguageLocale);
+        } else {
+          await _speak(stringParts[1], toLanguageLocale);
+          await _speak(stringParts[0], fromLanguageLocale);
+        }
       } else {
-        await _speak(stringParts[1], toLanguageLocale);
-        await _speak(stringParts[0], fromLanguageLocale);
+        await _speak(textWithoutTranscription, toLanguageLocale);
       }
-    } else {
-      await _speak(textWithoutTranscription, toLanguageLocale);
-    }
 
-    if (index >= (sliderWordList.length - 1)) {
-      directionSpeech = !directionSpeech;
+      if (index >= (sliderWordList.length - 1)) {
+        directionSpeech = !directionSpeech;
+      }
     }
   }
 

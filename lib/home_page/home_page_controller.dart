@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../app_storage/app_settings_storage.dart';
 import '../custom/dialogs.dart';
 
 class HomePageController extends GetxController {
@@ -13,12 +14,14 @@ class HomePageController extends GetxController {
   late String shortUrl;
 
   Dialogs dialogs = Dialogs();
+  final AppSettingsStorage appSettingsStorage = AppSettingsStorage();
 
-  // late WebViewController webController;
+  double get getBackgroundVolume => appSettingsStorage.readBackgroundVolume;
+  late RxDouble backgroundVolume;
 
-  // HomePageController(WebViewController controller) {
-  //   webController = controller;
-  // }
+  HomePageController() {
+    backgroundVolume = getBackgroundVolume.obs;
+  }
 
   Future<bool> onGoBack(WebViewController webController) async {
     if (canGoBack.value) {
@@ -130,26 +133,25 @@ class HomePageController extends GetxController {
     loadingPercentage.value = progress;
   }
 
-  Future<void> setVolume(WebViewController webController, double volume) async {
+  Future<void> setVolume(WebViewController webController) async {
     await webController.runJavaScript('''
       var videos = document.getElementsByTagName('video');
       for (var i = 0; i < videos.length; i++) {
-        videos[i].volume = $volume;
+        videos[i].volume = ${backgroundVolume.value};
       }
 
       var audios = document.getElementsByTagName('audio');
       for (var i = 0; i < audios.length; i++) {
-        audios[i].volume = $volume;
+        audios[i].volume = ${backgroundVolume.value};
       }
 
       var iframe = document.querySelector('iframe');
       if (iframe) {
         var player = iframe.contentWindow.document.querySelector('video');
         if (player) {
-          player.volume = $volume;
+          player.volume = ${backgroundVolume.value};
         }
       }
     ''');
   }
-
 }

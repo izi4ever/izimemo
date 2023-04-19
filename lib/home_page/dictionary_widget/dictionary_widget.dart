@@ -290,7 +290,6 @@ class DictionaryWidget extends StatelessWidget {
               viewportFraction: 1,
               pauseAutoPlayInFiniteScroll: true,
               autoPlayInterval: Duration(seconds: dictionaryController.secondsPerEntries.value.round()),
-              // autoPlayInterval: Duration(seconds: settingsPageController.secondsPerEntries.value.round()),
               enlargeFactor: 1,
               initialPage: dictionaryController.carouselInitialPage.value,
               onPageChanged: (index, reason) async {

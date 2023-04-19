@@ -8,6 +8,7 @@ import 'package:video_player/video_player.dart';
 
 import '../custom/custom_constants.dart';
 import '../home_page/dictionary_widget/dictionary_widget.dart';
+import '../home_page/home_page_controller.dart';
 
 class VideoPlayerPage extends StatefulWidget {
   const VideoPlayerPage({
@@ -25,6 +26,8 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
   late VideoPlayerController _videoPlayerController;
   ChewieController? _chewieController;
   int? bufferDelay;
+
+  final HomePageController homePageController = Get.put(HomePageController());
 
   GlobalKey ratioContainer = GlobalKey();
 
@@ -52,7 +55,7 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
 
     _createChewieController();
     // TODO Add to settings
-    _videoPlayerController.setVolume(0.5); 
+    _videoPlayerController.setVolume(homePageController.backgroundVolume.value); 
     setState(() {});
   }
 

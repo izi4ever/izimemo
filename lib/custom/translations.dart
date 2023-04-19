@@ -49,7 +49,8 @@ class Languages extends Translations {
           'edit_save_entry': 'Edit and save this entry',
           'add_new_entry': 'Add each entry on a new line. Separate the translation with a hyphen with spaces " - "',
           'add_at_least_one_entry': 'Add at least one entry.',
-          'how_add_new_entries': 'Add each entry from a new line according to the principle: foreign word - translation',
+          'how_add_new_entries':
+              'Add each entry from a new line according to the principle: foreign word - translation',
           'word_translation': 'word - translation',
           'congratulation': 'Congratulation!',
           'you_learned': 'You have learned all entries in this dictionary. Now you can:',
@@ -60,6 +61,9 @@ class Languages extends Translations {
           'important': 'Important',
           'from_language': 'From',
           'to_language': 'To',
+          'read_words': 'Read words (with speech synthesizer in phone)',
+          'reading_speed': 'Reading speed — ',
+          'background_volume': 'Other content volume — ',
         },
         'ru_RU': {
           'slogan': 'Отдыхай и учись',
@@ -116,6 +120,9 @@ class Languages extends Translations {
           'translation_direction': 'Направление перевода для корректной озвучки',
           'from_language': 'С языка',
           'to_language': 'На язык',
+          'read_words': 'Читать слова (с помощью синтезатора речи в телефоне)',
+          'reading_speed': 'Скорость чтения — ',
+          'background_volume': 'Громкость остального контента — ',
         },
         'uk_UA': {
           'slogan': 'Відпочивай та навчайся',
@@ -172,6 +179,9 @@ class Languages extends Translations {
           'translation_direction': 'Напрямок перекладу для коректної озвучки',
           'from_language': 'З мови',
           'to_language': 'На мову',
+          'read_words': 'Читати слова (за допомогою синтезатору мови в телефоні)',
+          'reading_speed': 'Швидкість читання — ',
+          'background_volume': 'Гучність іншого контенту — ',
         },
         'de_DE': {
           'slogan': 'Entspanne dich und studiere',
@@ -213,11 +223,14 @@ class Languages extends Translations {
           'create': 'Erstellen',
           'enter_new_dic_title': 'Titel für neues Wörterbuch eingeben',
           'empty_field': 'Das Feld darf nicht leer sein',
-          'empty_dic': 'Dieses Wörterbuch ist jetzt leer. Tippen Sie hier und fügen Sie die ersten Einträge in diesem Wörterbuch hinzu',
+          'empty_dic':
+              'Dieses Wörterbuch ist jetzt leer. Tippen Sie hier und fügen Sie die ersten Einträge in diesem Wörterbuch hinzu',
           'edit_save_entry': 'Bearbeiten und speichern Sie diesen Eintrag',
-          'add_new_entry': 'Fügen Sie jeden Eintrag in einer neuen Zeile hinzu. Trennen Sie die Übersetzung mit einem Bindestrich mit Leerzeichen " - "',
+          'add_new_entry':
+              'Fügen Sie jeden Eintrag in einer neuen Zeile hinzu. Trennen Sie die Übersetzung mit einem Bindestrich mit Leerzeichen " - "',
           'add_at_least_one_entry': 'Fügen Sie mindestens einen Eintrag hinzu.',
-          'how_add_new_entries': 'Fügen Sie jeden Eintrag ab einer neuen Zeile nach dem Prinzip hinzu: Fremdwort - Übersetzung',
+          'how_add_new_entries':
+              'Fügen Sie jeden Eintrag ab einer neuen Zeile nach dem Prinzip hinzu: Fremdwort - Übersetzung',
           'word_translation': 'Wort - Übersetzung',
           'congratulation': 'Glückwunsch!',
           'you_learned': 'Sie haben alle Einträge in diesem Wörterbuch gelernt. Jetzt kannst du:',
@@ -228,6 +241,9 @@ class Languages extends Translations {
           'translation_direction': 'Übersetzungsrichtung für korrekten Ton',
           'from_language': 'Vom',
           'to_language': 'Ins',
+          'read_words': 'Wörter lesen (mit dem Sprachsynthesizer Ihres Telefons)',
+          'reading_speed': 'Lesevolumen — ',
+          'background_volume': 'Umfang anderer Inhalte — ',
         },
         // 'fr_FR': {
         //   'slogan': 'Détendez-vous et étudiez',
