@@ -522,9 +522,6 @@ class DictionaryController extends GetxController {
 
   Future<void> backgroundSpeech() async {
     if (isTextReading.value) {
-      // TODO sliderWordList
-      // TODO secondsPerEntries
-      // TODO carouselInitialPage.value = indexCurrentSlide;
       Future.delayed(Duration(seconds: secondsPerEntries.value.round()), () async {
         ++indexCurrentSlide;
         if (indexCurrentSlide >= slideColorIndexList.length) {
@@ -533,6 +530,17 @@ class DictionaryController extends GetxController {
         carouselInitialPage.value = indexCurrentSlide;
         await slideSpeak(indexCurrentSlide);
       });
+    }
+  }
+
+  Future<void> backgroundSpeechOnce() async {
+    if (isTextReading.value) {
+      ++indexCurrentSlide;
+      if (indexCurrentSlide >= slideColorIndexList.length) {
+        indexCurrentSlide = 0;
+      }
+      carouselInitialPage.value = indexCurrentSlide;
+      await slideSpeak(indexCurrentSlide);
     }
   }
 }

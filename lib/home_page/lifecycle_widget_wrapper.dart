@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:izimemo/home_page/dictionary_widget/dictionary_controller.dart';
@@ -15,7 +17,8 @@ class LifecycleWidgetWrapper extends StatefulWidget {
 }
 
 class _LifecycleWidgetWrapperState extends State<LifecycleWidgetWrapper> with WidgetsBindingObserver {
-  late AppLifecycleState _appLifecycleState;
+  AppLifecycleState _appLifecycleState = AppLifecycleState.resumed;
+  Timer? _timer;
   DictionaryController dictionaryController = Get.put(DictionaryController());
 
   @override
@@ -27,26 +30,22 @@ class _LifecycleWidgetWrapperState extends State<LifecycleWidgetWrapper> with Wi
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    _timer?.cancel();
     super.dispose();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.paused) {
-      dictionaryController.appIsPaused.value = true;
-    } else {
-      dictionaryController.appIsPaused.value = false;
-    }
-    // setState(() async {
-    //   _appLifecycleState = state;
-    //   if (_appLifecycleState == AppLifecycleState.paused) {
-    //     dictionaryController.backgroundSpeech();
-    //   }
-    //   print('>>> _appLifecycleState: $_appLifecycleState');
-    // while (_appLifecycleState == AppLifecycleState.paused) {
-    //   await dictionaryController.backgroundSpeech();
-    // }
-    // });
+    setState(() {
+      _appLifecycleState = state;
+      if (_appLifecycleState == AppLifecycleState.paused) {
+        _timer = Timer.periodic(Duration(seconds: dictionaryController.secondsPerEntries.value.round()), (timer) {
+          dictionaryController.backgroundSpeechOnce();
+        });
+      } else if (_appLifecycleState == AppLifecycleState.resumed) {
+        _timer?.cancel();
+      }
+    });
   }
 
   @override
