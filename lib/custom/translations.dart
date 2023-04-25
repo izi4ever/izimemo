@@ -64,6 +64,7 @@ class Languages extends Translations {
           'read_words': 'Read words (with speech synthesizer in phone)',
           'reading_speed': 'Reading speed — ',
           'background_volume': 'Other content volume — ',
+          'audio_player': 'Audio Player',
         },
         'ru_RU': {
           'slogan': 'Отдыхай и учись',
@@ -123,6 +124,7 @@ class Languages extends Translations {
           'read_words': 'Читать слова (с помощью синтезатора речи в телефоне)',
           'reading_speed': 'Скорость чтения — ',
           'background_volume': 'Громкость остального контента — ',
+          'audio_player': 'Аудио плеер',
         },
         'uk_UA': {
           'slogan': 'Відпочивай та навчайся',
@@ -182,6 +184,7 @@ class Languages extends Translations {
           'read_words': 'Читати слова (за допомогою синтезатору мови в телефоні)',
           'reading_speed': 'Швидкість читання — ',
           'background_volume': 'Гучність іншого контенту — ',
+          'audio_player': 'Аудіо плеєр',
         },
         'de_DE': {
           'slogan': 'Entspanne dich und studiere',
@@ -244,6 +247,7 @@ class Languages extends Translations {
           'read_words': 'Wörter lesen (mit dem Sprachsynthesizer Ihres Telefons)',
           'reading_speed': 'Lesevolumen — ',
           'background_volume': 'Umfang anderer Inhalte — ',
+          'audio_player': 'Audioplayer',
         },
         // 'fr_FR': {
         //   'slogan': 'Détendez-vous et étudiez',

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:izimemo/home_page/dictionary_widget/dictionary_controller.dart';
+import 'package:just_audio/just_audio.dart';
 
 class LifecycleWidgetWrapper extends StatefulWidget {
   final Widget child;
@@ -18,6 +19,7 @@ class LifecycleWidgetWrapper extends StatefulWidget {
 
 class _LifecycleWidgetWrapperState extends State<LifecycleWidgetWrapper> with WidgetsBindingObserver {
   AppLifecycleState _appLifecycleState = AppLifecycleState.resumed;
+  final player = AudioPlayer();
   Timer? _timer;
   DictionaryController dictionaryController = Get.put(DictionaryController());
 
@@ -35,17 +37,20 @@ class _LifecycleWidgetWrapperState extends State<LifecycleWidgetWrapper> with Wi
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
     setState(() {
       _appLifecycleState = state;
-      if (_appLifecycleState == AppLifecycleState.paused) {
-        _timer = Timer.periodic(Duration(seconds: dictionaryController.secondsPerEntries.value.round()), (timer) {
-          dictionaryController.backgroundSpeechOnce();
-        });
-      } else if (_appLifecycleState == AppLifecycleState.resumed) {
-        _timer?.cancel();
-      }
+      print('>>> $_appLifecycleState');
     });
+
+    if (_appLifecycleState == AppLifecycleState.paused) {
+      await player.pause();
+      _timer = Timer.periodic(Duration(seconds: dictionaryController.secondsPerEntries.value.round()), (timer) {
+        dictionaryController.backgroundSpeechOnce();
+      });
+    } else if (_appLifecycleState == AppLifecycleState.resumed) {
+      _timer?.cancel();
+    }
   }
 
   @override

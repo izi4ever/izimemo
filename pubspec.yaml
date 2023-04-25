@@ -51,6 +51,9 @@ dependencies:
   video_player: ^2.6.0
   image_picker: ^0.8.7+1
   flutter_tts: ^3.6.3
+  audioplayers: ^4.0.1
+  assets_audio_player: ^3.0.6
+  just_audio: ^0.9.32
 
 dev_dependencies:
   flutter_test:
