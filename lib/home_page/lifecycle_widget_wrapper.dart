@@ -43,13 +43,15 @@ class _LifecycleWidgetWrapperState extends State<LifecycleWidgetWrapper> with Wi
       print('>>> $_appLifecycleState');
     });
 
-    if (_appLifecycleState == AppLifecycleState.paused) {
-      await player.pause();
-      _timer = Timer.periodic(Duration(seconds: dictionaryController.secondsPerEntries.value.round()), (timer) {
-        dictionaryController.backgroundSpeechOnce();
-      });
-    } else if (_appLifecycleState == AppLifecycleState.resumed) {
-      _timer?.cancel();
+    if (dictionaryController.autoPlay.isTrue) {
+      if (_appLifecycleState == AppLifecycleState.paused) {
+        await player.pause();
+        _timer = Timer.periodic(Duration(seconds: dictionaryController.secondsPerEntries.value.round()), (timer) {
+          dictionaryController.backgroundSpeechOnce();
+        });
+      } else if (_appLifecycleState == AppLifecycleState.resumed) {
+        _timer?.cancel();
+      }
     }
   }
 

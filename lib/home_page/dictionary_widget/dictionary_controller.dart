@@ -210,7 +210,7 @@ class DictionaryController extends GetxController {
     isTextReading = getIsTextReading.obs;
     readingSpeed = getReadingSpeed.obs;
 
-    // speakFirstSlide;
+    // speakCurrentSlide;
   }
 
   //
@@ -229,7 +229,10 @@ class DictionaryController extends GetxController {
     dicLanguages.value = getDicLanguages;
 
     _updateListsForSlider();
-    speakFirstSlide;
+
+    // indexCurrentSlide = 0;
+    carouselInitialPage.value = indexCurrentSlide = 0;
+    speakCurrentSlide;
   }
 
   void editDicNameAndLanguage(int dicIndex, String newDicName) {
@@ -322,7 +325,7 @@ class DictionaryController extends GetxController {
     dictionaryStorage.writeFirstElementForDictionary(lastOpenedDic.value, 0);
 
     _updateListsForSlider();
-    speakFirstSlide;
+    speakCurrentSlide;
 
     Get.back();
     Get.back();
@@ -413,16 +416,23 @@ class DictionaryController extends GetxController {
     }
     _joinSaveUpdateDic();
     carouselInitialPage.value = 0;
+    indexCurrentSlide = 0;
+    speakCurrentSlide;
   }
 
   void moveEntry(int index) {
     _splitWordsList();
-    _willLearnWords.add(_learningWords[index]);
+    // _willLearnWords.add(_learningWords[index]);
+    var pos = 20;
+    if (_willLearnWords.length <= pos) pos = _willLearnWords.length - 1;
+    _willLearnWords.insert(pos, _learningWords[index]);
     _learningWords.removeAt(index);
     _learningWords.insert(0, _willLearnWords[0]);
     _willLearnWords.removeAt(0);
     _joinSaveUpdateDic();
     carouselInitialPage.value = 0;
+    indexCurrentSlide = 0;
+    speakCurrentSlide;
   }
 
   void deleteEntry(int index) {
@@ -434,6 +444,8 @@ class DictionaryController extends GetxController {
     }
     _joinSaveUpdateDic();
     carouselInitialPage.value = 0;
+    indexCurrentSlide = 0;
+    speakCurrentSlide;
   }
 
   void editEntry(int index, String replaceString) {
@@ -441,6 +453,7 @@ class DictionaryController extends GetxController {
     _learningWords[index] = replaceString;
     _joinSaveUpdateDic();
     carouselInitialPage.value = index;
+    speakCurrentSlide;
   }
 
   void addEntries(String rawString) {
@@ -452,6 +465,8 @@ class DictionaryController extends GetxController {
     ];
     _joinSaveUpdateDic();
     carouselInitialPage.value = 0;
+    indexCurrentSlide = 0;
+    speakCurrentSlide;
   }
 
   void addEntriesToEnd(String rawString) {
@@ -496,7 +511,7 @@ class DictionaryController extends GetxController {
   Future<void> slideSpeak(int index) async {
     if (isTextReading.value) {
       String rawText = sliderWordList[index];
-      String textWithoutTranscription = rawText.replaceAll(RegExp('\\[.*?\\]'), '');
+      String textWithoutTranscription = rawText.replaceAll(RegExp('\\[.*?\\]'), '').replaceAll(RegExp('\\(.*?\\)'), '');
       var stringParts = textWithoutTranscription.split(' - ');
       var fromLanguageLocale = getFromLanguageByStorageName(lastOpenedDic.value)!;
       var toLanguageLocale = getToLanguageByStorageName(lastOpenedDic.value)!;
@@ -518,7 +533,7 @@ class DictionaryController extends GetxController {
     }
   }
 
-  Future<void> get speakFirstSlide async => await slideSpeak(0);
+  Future<void> get speakCurrentSlide async => await slideSpeak(indexCurrentSlide);
 
   Future<void> backgroundSpeech() async {
     if (isTextReading.value) {

@@ -299,7 +299,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
                             padding: const EdgeInsets.all(14),
                           ),
                           child: Icon(
-                            _isPlaying ? Icons.pause : Icons.play_arrow,
+                            _isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
                             // size: 32,
                           ),
                         ),

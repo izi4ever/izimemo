@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:izimemo/custom/colors/custom_design_colors.dart';
 import 'package:izimemo/custom/colors/custom_lesson_colors.dart';
-import 'package:izimemo/home_page/home_page.dart';
 
 import '../../custom/custom_constants.dart';
 import '../../custom/dialogs.dart';
@@ -17,7 +16,8 @@ import 'dictionary_menu_widget.dart';
 class DictionaryWidget extends StatelessWidget {
   DictionaryWidget({super.key});
 
-  final DictionaryController dictionaryController = Get.put(DictionaryController());
+  // final DictionaryController dictionaryController = Get.put(DictionaryController());
+  final DictionaryController dictionaryController = Get.find();
 
   final Dialogs dialogs = Dialogs();
 
@@ -174,22 +174,23 @@ class DictionaryWidget extends StatelessWidget {
                                               }
                                             },
                                             icon: const Icon(Icons.check_rounded),
-                                            label: Text('have_learned'.tr),
+                                            // label: Text('have_learned'.tr),
+                                            label: Text('skip_entry'.tr),
                                             style: TextButton.styleFrom(alignment: Alignment.topLeft),
                                           ),
-                                          TextButton.icon(
-                                            onPressed: () {
-                                              if (lastEntry) {
-                                                dialogLastEntry();
-                                              } else {
-                                                dictionaryController.moveEntry(e.key);
-                                                Get.back();
-                                              }
-                                            },
-                                            icon: const Icon(Icons.last_page_rounded),
-                                            label: Text('move_later'.tr),
-                                            style: TextButton.styleFrom(alignment: Alignment.topLeft),
-                                          ),
+                                          // TextButton.icon(
+                                          //   onPressed: () {
+                                          //     if (lastEntry) {
+                                          //       dialogLastEntry();
+                                          //     } else {
+                                          //       dictionaryController.moveEntry(e.key);
+                                          //       Get.back();
+                                          //     }
+                                          //   },
+                                          //   icon: const Icon(Icons.last_page_rounded),
+                                          //   label: Text('move_later'.tr),
+                                          //   style: TextButton.styleFrom(alignment: Alignment.topLeft),
+                                          // ),
                                           TextButton.icon(
                                             onPressed: () => dialogEditEntry(e.key, e.value),
                                             icon: const Icon(Icons.edit_rounded),
@@ -352,7 +353,8 @@ class DictionaryWidget extends StatelessWidget {
                 _entryEditFormKey.currentState!.save();
                 dictionaryController.editEntry(eKey, _entryEditFieldController.text);
                 Get.back();
-                Get.to(() => const HomePage());
+                Get.back();
+                // Get.to(() => const HomePage());
               }
             },
             title: 'save'.tr,
