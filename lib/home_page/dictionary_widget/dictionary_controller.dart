@@ -338,6 +338,7 @@ class DictionaryController extends GetxController {
   void playPause() {
     autoPlay.value = !autoPlay.value;
     carouselInitialPage.value = indexCurrentSlide;
+    if (autoPlay.isTrue) speakCurrentSlide;
   }
 
   List<String> _wordListGenerator(List<String> inputList, int firstElement, int elementsInLesson) {
@@ -411,13 +412,19 @@ class DictionaryController extends GetxController {
     _learnedWords.add(_learningWords[index]);
     _learningWords.removeAt(index);
     if (_willLearnWords.isNotEmpty) {
-      _learningWords.insert(0, _willLearnWords[0]);
+      // _learningWords.insert(0, _willLearnWords[0]);
+      _learningWords.add(_willLearnWords[0]);
       _willLearnWords.removeAt(0);
+      carouselInitialPage.value = _learningWords.length - 1;
+      indexCurrentSlide = _learningWords.length - 1;
+    } else {
+      if (indexCurrentSlide >= _learningWords.length) {
+        carouselInitialPage.value = 0;
+        indexCurrentSlide = 0;
+      }
     }
-    _joinSaveUpdateDic();
-    carouselInitialPage.value = 0;
-    indexCurrentSlide = 0;
     speakCurrentSlide;
+    _joinSaveUpdateDic();
   }
 
   void moveEntry(int index) {

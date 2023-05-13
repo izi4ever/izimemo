@@ -16,15 +16,15 @@ class DictionaryStorage {
       [
         {
           'storageName': 'dic_1',
-          'humanName': 'En-Ru TOP-1000',
+          'humanName': 'En-Ru TOP',
         },
         {
           'storageName': 'dic_2',
-          'humanName': 'De-Ru 1000',
+          'humanName': 'De-Ru TOP',
         },
         {
           'storageName': 'dic_3',
-          'humanName': 'Fr-Ru base',
+          'humanName': 'Fr-Ru TOP',
         },
       ]);
   void writeAvailableDics(List<Map<String, dynamic>> value) => box.write('availableDics', value);
@@ -1118,13 +1118,27 @@ Viel Erfolg! - Удачи!
 Willkommen! - Добро пожаловать!
 Bis bald! - До скорого!
 Wie geht es dir? - Как дела? (How are you?)
+Wie geht es Ihnen? - Как поживаете?
 Wie geht's? - Как дела?
 alles gut - все хорошо
 sehr gut - очень хорошо
+Mir geht es gut - У меня все хорошо
+Und Ihnen? - А у вас?
+Auch gut - Тоже хорошо
+Was geht ab? - Что происходит?
+Alles easy. - Все окей.
+Alles klar? - Все ясно?
 Wo ist…? - Где находится...? (Where is...?)
 Wie viel kostet das? - Сколько стоит? (How much does it cost?)
 Ich verstehe nicht - Я не понимаю (I don't understand)
 Sprechen Sie Englisch? - Говорите ли вы по-английски? (Do you speak English?)
+Ich habe keine Lust. - Я не хочу.
+Es ist nicht so mein Fall. - Мне это не очень нравится.
+lesen - читать
+buchstabieren - читать по буквам или по складам
+schreiben - писать
+sagen - говорить
+Alphabet - алфавит
 H [ха] - возле гласных не читается. Читается как "х", если в начале слова
 j [йот] - читается как "й"
 L [эль] - читается "ль"
@@ -1198,6 +1212,8 @@ etwas - что-то
 nichts - ничто
 man - человек/люди
 etliche - несколько
+die Frage - вопрос
+fragen - спрашивать
 Wer? - кто? (Who?)
 Was? - что? (What?)
 Wie? - как? (How?)
@@ -1226,8 +1242,16 @@ hier oben - здесь, вверху
 hier unten - здесь, внизу
 hier hinten - здесь, сзади
 direkt - прямо
+zurück - назад
 Vor - перёд
 nach vorne - вперёд
+Eingang - вход
+Ausgang - выход
+links - лево, налево
+Rechts - право, направо
+der Biegung - поворот
+drehen - поворачивать
+die Umleitung - объезд
 mich - себя (мужской род)
 dich - себя (женский род)
 sich - себя (средний род/множественное число)
@@ -1272,6 +1296,11 @@ unter - под
 vor - перед
 zu - к
 zwischen - между
+das Geld - деньги
+kostenlos - бесплатно
+frei - бесплатно, свободно, свободный
+Penny, Pennys - копейка, копейки
+Münzen - монеты
 null - 0
 eins - 1
 zwei - 2
@@ -1332,6 +1361,7 @@ vier Komma eins vier eins - 4,141
 В числах через дробь второе чилсо идёт как порядковое
 elf Siebenundzwanzigstel - 11/27
 ein Drittel - 1/3
+Mathematik - математика
 Plus (+) - плюс
 Minus (-) - минус
 Mal (x) - умножить на
@@ -1403,13 +1433,17 @@ heute Nacht - сегодня ночью (tonight)
 gestern Nacht - вчера ночью (last night)
 am Wochenende - в выходные (on the weekend)
 am Montag, Dienstag, etc. - в понедельник, вторник, и т.д. (on Monday, Tuesday, etc.)
-Montag - Понедельник (Monday)
-Dienstag - Вторник (Tuesday)
-Mittwoch - Среда (Wednesday)
-Donnerstag - Четверг (Thursday)
-Freitag - Пятница (Friday)
-Samstag - Суббота (Saturday)
-Sonntag - Воскресенье (Sunday)
+Wochentage - дни недели
+Wochenende - выходные
+Montag - понедельник
+Dienstag - вторник
+Mittwoch - среда
+Donnerstag - четверг
+Freitag - пятница
+Samstag - суббота
+Sonntag - воскресенье
+Freizeit - свободное время
+Urlaub - отпуск
 der  Morgen  -  утро
 der  Vormittag  -  до полудня
 der  Mittag  -  полдень
@@ -1427,13 +1461,7 @@ die Uhrzeit - время
 die Sekunde - секунда
 die Minute - минута
 die Stunde - час
-Montag - понедельник
-Dienstag - вторник
-Mittwoch - среда
-Donnerstag - четверг
-Freitag - пятница
-Samstag - суббота
-Sonntag - воскресенье
+Monat, Monate - месяц, месяцы
 Januar - январь
 Februar - февраль
 März - март
@@ -1454,7 +1482,6 @@ sein - быть
 haben - иметь
 werden - становиться
 machen - делать
-sagen - говорить
 geben - давать
 kommen - приходить, приезжать
 gehen - идти
@@ -1493,7 +1520,6 @@ bedeuten - значить
 verlieren - терять
 erzählen - рассказывать
 halten - держать/останавливать
-schreiben - писать
 ziehen - тащить/перемещаться
 tragen - носить
 treffen - встречаться
@@ -1503,7 +1529,6 @@ gehören - принадлежать
 helfen - помогать
 setzen - садиться, ставить
 bringen - приносить
-lesen - читать
 bieten - предлагать, давать
 die Farbe (-n) - цвет
 rot - красный
@@ -1599,7 +1624,6 @@ die Seite - страница
 die Hand - рука
 das Wasser - вода
 das Problem - проблема
-das Geld - деньги
 der Weg - путь
 der Freund - друг
 die Familie - семья
@@ -1689,33 +1713,24 @@ das Telefon - телефон
 der Computer - компьютер
 das Internet - интернет
 das Auto - автомобиль
-Wie geht es Ihnen? - Как поживаете?
-Mir geht es gut, danke. - У меня все хорошо, спасибо.
-Es tut mir leid. - Мне жаль.
-Und Ihnen? - А у вас?
-Auch gut, danke. - Тоже хорошо, спасибо.
-Gute Besserung! - Быстрого выздоровления!
+das Fahrrad - велосипед
+das Rad - колесо
+das Motorrad - мотоцикл
+das Moped, das Mofa - мопед
 Schönes Wochenende! - Хороших выходных!
+Gute Besserung! - Быстрого выздоровления!
 Alles Gute zum Geburtstag! - С днем рождения!
 Prost! - На здоровье! (при тосте)
 Frohe Weihnachten! - Счастливого Рождества!
 Frohes Neues Jahr! - С Новым Годом!
-Was geht ab? - Что происходит?
-Alles easy. - Все окей.
-Alles klar? - Все ясно?
+Es tut mir leid. - Мне жаль.
 Keine Ahnung. - Не имею понятия.
 Es ist mir egal. - Мне все равно.
-Auf keinen Fall! - Ни в коем случае!
-Ich habe keine Lust. - Я не хочу.
 Ich habe keinen Bock. - Мне неохота.
 Ich habe die Nase voll. - Мне надоело.
-Lass uns chillen. - Давай расслабимся.
-Das ist nicht mein Ding. - Это не мое.
 Ich habe keine Zeit. - У меня нет времени.
 Das ist der Wahnsinn. - Это невероятно.
-Das geht mir auf den Keks. - Меня это бесит.
 Ich bin sprachlos. - Я не могу ничего сказать.
-Es ist nicht so mein Fall. - Мне это не очень нравится.
 Das ist der Hit. - Это шик.
 ''';
 

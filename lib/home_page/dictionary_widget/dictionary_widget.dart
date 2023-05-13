@@ -60,32 +60,38 @@ class DictionaryWidget extends StatelessWidget {
                   return GestureDetector(
                     onLongPress: () => dialogEditEntry(e.key, e.value),
                     onDoubleTap: () {
-                      // Move entry to end
+                      // Have learned entry
                       if (lastEntry) {
                         dialogLastEntry();
                       } else {
-                        dictionaryController.moveEntry(e.key);
+                        dictionaryController.learnedEntry(e.key);
                       }
-                    },
-                    onVerticalDragUpdate: (details) {
-                      // Swipe up. Have learned entry
-                      if (details.delta.dy < -8) {
-                        if (lastEntry) {
-                          dialogLastEntry();
-                        } else {
-                          dictionaryController.learnedEntry(e.key);
-                        }
-                      }
-
-                      // Swipe down. Move entry to end
-                      // if (details.delta.dy > 8) {
-                      //   if (lastEntry) {
-                      //     dialogLastEntry();
-                      //   } else {
-                      //     dictionaryController.moveEntry(e.key);
-                      //   }
+                      // Move entry to end
+                      // if (lastEntry) {
+                      //   dialogLastEntry();
+                      // } else {
+                      //   dictionaryController.moveEntry(e.key);
                       // }
                     },
+                    // onVerticalDragUpdate: (details) {
+                    // Swipe up. Have learned entry
+                    // if (details.delta.dy < -8) {
+                    //   if (lastEntry) {
+                    //     dialogLastEntry();
+                    //   } else {
+                    //     dictionaryController.learnedEntry(e.key);
+                    //   }
+                    // }
+
+                    // Swipe down. Move entry to end
+                    // if (details.delta.dy > 8) {
+                    //   if (lastEntry) {
+                    //     dialogLastEntry();
+                    //   } else {
+                    //     dictionaryController.moveEntry(e.key);
+                    //   }
+                    // }
+                    // },
                     onTap: () {
                       Get.bottomSheet(
                         Container(
