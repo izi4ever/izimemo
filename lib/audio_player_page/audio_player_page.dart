@@ -92,8 +92,8 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
       setState(() {
         _currentTrackIndex = index;
         _isPlaying = true;
-        Duration duration = Duration.zero;
-        Duration position = Duration.zero;
+        // Duration duration = Duration.zero;
+        // Duration position = Duration.zero;
       });
 
       String filePath = _audioFiles[index].path;

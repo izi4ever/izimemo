@@ -1,8 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 
+import 'package:flutter/services.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../../app_storage/app_settings_storage.dart';
 import '../../app_storage/dictionary_storage.dart';
@@ -498,14 +501,15 @@ class DictionaryController extends GetxController {
     String text,
     String language,
   ) async {
-    await flutterTts.setIosAudioCategory(
-        IosTextToSpeechAudioCategory.ambient,
-        [
-          IosTextToSpeechAudioCategoryOptions.allowBluetooth,
-          IosTextToSpeechAudioCategoryOptions.allowBluetoothA2DP,
-          IosTextToSpeechAudioCategoryOptions.mixWithOthers
-        ],
-        IosTextToSpeechAudioMode.voicePrompt);
+    await flutterTts.setSharedInstance(true);
+    // await flutterTts.setIosAudioCategory(
+    //     IosTextToSpeechAudioCategory.ambient,
+    //     [
+    //       IosTextToSpeechAudioCategoryOptions.allowBluetooth,
+    //       IosTextToSpeechAudioCategoryOptions.allowBluetoothA2DP,
+    //       IosTextToSpeechAudioCategoryOptions.mixWithOthers
+    //     ],
+    //     IosTextToSpeechAudioMode.voicePrompt);
     flutterTts.awaitSpeakCompletion(true);
     await flutterTts.setLanguage(language);
     await flutterTts.setPitch(1); // Tone
@@ -513,6 +517,25 @@ class DictionaryController extends GetxController {
     await flutterTts.setVolume(1.0);
     await flutterTts.speak(text);
     await Future.delayed(const Duration(milliseconds: 500));
+
+    // await _speakLocally('Hello, World');
+  }
+
+  Future<void> _speakLocally(String textToSpeech) async {
+    ByteData fliteData = await rootBundle.load('assets/flite/flite');
+    String flitePath = '${(await getApplicationSupportDirectory()).path}/flite';
+
+    await File(flitePath).writeAsBytes(fliteData.buffer.asUint8List());
+    await Process.run('chmod', ['+x', flitePath]); // set permission to allow execution
+
+    ProcessResult result = await Process.run(flitePath, ['-t', textToSpeech]);
+    String output = result.stdout;
+    print(output);
+  }
+
+  Future<void> _copyFliteBinary(String flitePath) async {
+    ByteData fliteData = await rootBundle.load('assets/flite/flite');
+    await File(flitePath).writeAsBytes(fliteData.buffer.asUint8List());
   }
 
   Future<void> slideSpeak(int index) async {
