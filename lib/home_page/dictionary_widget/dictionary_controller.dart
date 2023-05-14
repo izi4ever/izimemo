@@ -499,14 +499,6 @@ class DictionaryController extends GetxController {
     String language,
   ) async {
     await flutterTts.setSharedInstance(true);
-    // await flutterTts.setIosAudioCategory(
-    //     IosTextToSpeechAudioCategory.ambient,
-    //     [
-    //       IosTextToSpeechAudioCategoryOptions.allowBluetooth,
-    //       IosTextToSpeechAudioCategoryOptions.allowBluetoothA2DP,
-    //       IosTextToSpeechAudioCategoryOptions.mixWithOthers
-    //     ],
-    //     IosTextToSpeechAudioMode.voicePrompt);
     flutterTts.awaitSpeakCompletion(true);
     await flutterTts.setLanguage(language);
     await flutterTts.setPitch(1); // Tone
@@ -516,9 +508,9 @@ class DictionaryController extends GetxController {
     await Future.delayed(const Duration(milliseconds: 500));
   }
 
-
   Future<void> slideSpeak(int index) async {
     if (isTextReading.value) {
+      await flutterTts.stop();
       String rawText = sliderWordList[index];
       String textWithoutTranscription = rawText.replaceAll(RegExp('\\[.*?\\]'), '').replaceAll(RegExp('\\(.*?\\)'), '');
       var stringParts = textWithoutTranscription.split(' - ');

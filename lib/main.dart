@@ -19,6 +19,7 @@ void main() async {
     statusBarColor: Colors.transparent,
     systemNavigationBarColor: Colors.black,
   ));
+  
   runApp(const MyApp());
 }
 

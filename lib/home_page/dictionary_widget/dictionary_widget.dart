@@ -16,8 +16,7 @@ import 'dictionary_menu_widget.dart';
 class DictionaryWidget extends StatelessWidget {
   DictionaryWidget({super.key});
 
-  // final DictionaryController dictionaryController = Get.put(DictionaryController());
-  final DictionaryController dictionaryController = Get.find();
+  final DictionaryController dictionaryController = Get.put(DictionaryController());
 
   final Dialogs dialogs = Dialogs();
 

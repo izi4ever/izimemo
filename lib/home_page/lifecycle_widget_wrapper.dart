@@ -3,15 +3,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:izimemo/home_page/dictionary_widget/dictionary_controller.dart';
-import 'package:just_audio/just_audio.dart';
+import 'package:wakelock/wakelock.dart';
 
 class LifecycleWidgetWrapper extends StatefulWidget {
   final Widget child;
 
   const LifecycleWidgetWrapper({
-    super.key,
+    Key? key,
     required this.child,
-  });
+  }) : super(key: key);
 
   @override
   State<LifecycleWidgetWrapper> createState() => _LifecycleWidgetWrapperState();
@@ -19,7 +19,6 @@ class LifecycleWidgetWrapper extends StatefulWidget {
 
 class _LifecycleWidgetWrapperState extends State<LifecycleWidgetWrapper> with WidgetsBindingObserver {
   AppLifecycleState _appLifecycleState = AppLifecycleState.resumed;
-  final player = AudioPlayer();
   Timer? _timer;
   DictionaryController dictionaryController = Get.put(DictionaryController());
 
@@ -45,11 +44,13 @@ class _LifecycleWidgetWrapperState extends State<LifecycleWidgetWrapper> with Wi
 
     if (dictionaryController.autoPlay.isTrue) {
       if (_appLifecycleState == AppLifecycleState.paused) {
-        await player.pause();
         _timer = Timer.periodic(Duration(seconds: dictionaryController.secondsPerEntries.value.round()), (timer) {
           dictionaryController.backgroundSpeechOnce();
         });
+      } else if (_appLifecycleState == AppLifecycleState.detached) {
+        Wakelock.enable();
       } else if (_appLifecycleState == AppLifecycleState.resumed) {
+        Wakelock.disable();
         _timer?.cancel();
       }
     }
