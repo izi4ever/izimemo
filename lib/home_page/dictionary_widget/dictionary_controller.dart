@@ -494,18 +494,17 @@ class DictionaryController extends GetxController {
   // SOUND
   //
 
-  Future<void> _speak(
-    String text,
-    String language,
-  ) async {
-    await flutterTts.setSharedInstance(true);
-    flutterTts.awaitSpeakCompletion(true);
-    await flutterTts.setLanguage(language);
-    await flutterTts.setPitch(1); // Tone
-    await flutterTts.setSpeechRate(readingSpeed.value); // Speed
-    await flutterTts.setVolume(1.0);
-    await flutterTts.speak(text);
-    await Future.delayed(const Duration(milliseconds: 500));
+  Future<void> _speak(String text, String language) async {
+    if (text.isNotEmpty) {
+      await flutterTts.setSharedInstance(true);
+      flutterTts.awaitSpeakCompletion(true);
+      await flutterTts.setLanguage(language);
+      await flutterTts.setPitch(1); // Tone
+      await flutterTts.setSpeechRate(readingSpeed.value); // Speed
+      await flutterTts.setVolume(1.0);
+      await flutterTts.speak(text);
+      await Future.delayed(const Duration(milliseconds: 500));
+    }
   }
 
   Future<void> slideSpeak(int index) async {
@@ -534,7 +533,12 @@ class DictionaryController extends GetxController {
     }
   }
 
-  Future<void> get speakCurrentSlide async => await slideSpeak(indexCurrentSlide);
+  Future<void> get speakCurrentSlide async {
+    if (isTextReading.value) {
+      await flutterTts.stop();
+      await slideSpeak(indexCurrentSlide);
+    }
+  }
 
   Future<void> backgroundSpeech() async {
     if (isTextReading.value) {

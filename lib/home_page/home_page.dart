@@ -5,7 +5,6 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:izimemo/audio_player_page/audio_player_page.dart';
 import 'package:izimemo/home_page/custom_links/default_links.dart';
 import 'package:izimemo/home_page/dictionary_widget/dictionary_widget.dart';
 import 'package:izimemo/home_page/home_page_controller.dart';
@@ -195,10 +194,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                 },
                               ),
                               ...[
-                                IconButton(
-                                  icon: Image.asset('assets/bookmarks/002-audio-headset.png'),
-                                  onPressed: () => Get.to(() => const AudioPlayerPage()),
-                                ),
+                                // IconButton(
+                                //   icon: Image.asset('assets/bookmarks/002-audio-headset.png'),
+                                //   onPressed: () => Get.to(() => const AudioPlayerPage()),
+                                // ),
                                 IconButton(
                                   icon: Image.asset('assets/bookmarks/001-play-button-1.png'),
                                   onPressed: openVideoFile,

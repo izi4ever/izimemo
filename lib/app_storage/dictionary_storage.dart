@@ -1117,23 +1117,23 @@ Gesundheit! - Будьте здоровы!
 Viel Erfolg! - Удачи!
 Willkommen! - Добро пожаловать!
 Bis bald! - До скорого!
-Wie geht es dir? - Как дела? (How are you?)
-Wie geht es Ihnen? - Как поживаете?
+gehen - идти
 Wie geht's? - Как дела?
+Wie geht es dir? - Как у тебя дела?
+Wie geht es Ihnen? - Как у Вас дела?
+Was geht ab? - Что происходит?
 alles gut - все хорошо
 sehr gut - очень хорошо
-Mir geht es gut - У меня все хорошо
 Und Ihnen? - А у вас?
 Auch gut - Тоже хорошо
-Was geht ab? - Что происходит?
 Alles easy. - Все окей.
 Alles klar? - Все ясно?
 Wo ist…? - Где находится...? (Where is...?)
 Wie viel kostet das? - Сколько стоит? (How much does it cost?)
 Ich verstehe nicht - Я не понимаю (I don't understand)
 Sprechen Sie Englisch? - Говорите ли вы по-английски? (Do you speak English?)
-Ich habe keine Lust. - Я не хочу.
-Es ist nicht so mein Fall. - Мне это не очень нравится.
+Ich will nicht. - Я не хочу.
+Gefällt mir nicht. - Мне не нравится.
 lesen - читать
 buchstabieren - читать по буквам или по складам
 schreiben - писать
@@ -1148,15 +1148,15 @@ S [эс] - когда одна, читается как "з". Как "с" чит
 V [фау] - в английских и иностранных словах читается как "в", в немецких словах читается как "ф"
 W [вэ] - читается как "в"
 X [икс] - читается как "кс"
-Y [ипсилон] - читается как "у"
+Y [упсилон] - читается как "у"
 Z [цет] - читается как "ц"
 Ä [а умлаут] - читается как "ьэ"
 Ö [о умлаут] - читается как "ьо"
 Ü [у умлаут] - читается как "ьу"
 ß [εs tse:t] - читается как "с"
 ie - читается как "и"
-еi = ai - читается как "ай"
-eu = äu - читается как "ой"
+еi (= ai) - читается как "ай"
+eu (= äu) - читается как "ой"
 ch - читается как "х" после букв "а, о, u"
 сk - читается как "к"
 chs - читается как "кс"
@@ -1175,13 +1175,13 @@ eine - неопределённый артикль, женский род
 Нулевой артикль используется для определения чего-то общего, профессии или национальности
 ich - я
 du - ты
+ihr - вы
 er - он
 sie - она
 es - оно
 wir - мы
-ihr - вы (единственное число)
 sie - они
-Sie - вы (множественное число, формальное обращение)
+Sie - Вы (формальное обращение)
 mein - мой
 dein - твой
 sein - его
@@ -1205,26 +1205,26 @@ welcher - который
 wessen - чей
 wem - кому
 wen - кого
-alle - все
-jemand - кто-то
-niemand - никто
-etwas - что-то
-nichts - ничто
 man - человек/люди
 etliche - несколько
+alle - все
+jemand - кто-то
+etwas - что-то
+niemand - никто
+nichts - ничто
 die Frage - вопрос
 fragen - спрашивать
 Wer? - кто? (Who?)
 Was? - что? (What?)
-Wie? - как? (How?)
 Wo? - где? (Where?)
+Wie? - как? (How?)
 Wann? - когда? (When?)
 Warum? - почему? (Why?)
 Wie viel? / Wie viele? - сколько? (How much? / How many?)
 Welcher / Welche / Welches? - какой / какая / какое? (Which?)
-Wofür? - для чего? (What for?)
 Womit? - чем? (With what?)
 Wodurch? - чем? (Through what?)
+Wofür? - для чего? (What for?)
 Woran? - на чем? (On what?)
 Worauf? - на что? (On what?)
 Wohin? - куда? (Where to?)
@@ -1252,12 +1252,14 @@ Rechts - право, направо
 der Biegung - поворот
 drehen - поворачивать
 die Umleitung - объезд
+
 mich - себя (мужской род)
 dich - себя (женский род)
 sich - себя (средний род/множественное число)
 uns - себя (мы)
 euch - себя (вы)
 sich - себя (они)
+
 und - и
 oder - или
 aber - но, а
@@ -1379,23 +1381,24 @@ sehr - очень
 auch - также
 dann - потом
 jetzt - сейчас
-doch - однако
 wieder - снова
 wiederum - вновь
 fast - почти
+doch - однако
 nur - только
 mal - раз
 so - так
 eben - просто
 ganz - совсем
 vielleicht - возможно
-ziemlich - довольно
 etwa - приблизительно, может быть
+ziemlich - довольно
 darum - поэтому
 irgendwie - как-то
 erst - только
 viel - много
 einfach - просто, простой
+
 endlich - наконец
 plötzlich - вдруг
 eigentlich - на самом деле
@@ -1418,9 +1421,9 @@ gestern - вчера (yesterday)
 morgen - завтра (tomorrow)
 vorgestern - позавчера (the day before yesterday)
 übermorgen - послезавтра (the day after tomorrow)
-bald - скоро (soon)
 schon - уже (already)
 noch - еще (still/yet)
+bald - скоро (soon)
 oft - часто (often)
 manchmal - иногда (sometimes)
 immer - всегда (always)
@@ -1458,9 +1461,9 @@ das  Abendessen  -  ужин
 der  Imbiss  -  перекус
 die  Mahlzeit  -  приятного аппетита (может использоваться при любом приеме пищи)
 die Uhrzeit - время
-die Sekunde - секунда
-die Minute - минута
 die Stunde - час
+die Minute - минута
+die Sekunde - секунда
 Monat, Monate - месяц, месяцы
 Januar - январь
 Februar - февраль
@@ -1531,16 +1534,16 @@ setzen - садиться, ставить
 bringen - приносить
 bieten - предлагать, давать
 die Farbe (-n) - цвет
-rot - красный
-blau - синий
-grün - зеленый
-gelb - желтый
-orange - оранжевый
 schwarz - черный
 weiß - белый
-braun - коричневый
 grau - серый
+grün - зеленый
+blau - синий
+gelb - желтый
+rot - красный
 rosa - розовый
+orange - оранжевый
+braun - коричневый
 lila, violett - фиолетовый
 gold - золотой
 silber - серебряный
@@ -1731,7 +1734,6 @@ Ich habe die Nase voll. - Мне надоело.
 Ich habe keine Zeit. - У меня нет времени.
 Das ist der Wahnsinn. - Это невероятно.
 Ich bin sprachlos. - Я не могу ничего сказать.
-Das ist der Hit. - Это шик.
 ''';
 
   String dic3 = '''

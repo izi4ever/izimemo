@@ -31,6 +31,8 @@ class DictionaryMenuWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
+      // TODO Was error with this State in stream. Test it latter
+      // List<Map<String, dynamic>> dicsList = dictionaryController.availableDics;
       List<Map<String, dynamic>> dicsList = dictionaryController.availableDics.value;
       return PopupMenuButton(
         initialValue: dictionaryController.lastOpenedDic.value,

@@ -45,6 +45,7 @@ class _LifecycleWidgetWrapperState extends State<LifecycleWidgetWrapper> with Wi
     if (dictionaryController.autoPlay.isTrue) {
       if (_appLifecycleState == AppLifecycleState.paused) {
         _timer = Timer.periodic(Duration(seconds: dictionaryController.secondsPerEntries.value.round()), (timer) {
+          Wakelock.enable();
           dictionaryController.backgroundSpeechOnce();
         });
       } else if (_appLifecycleState == AppLifecycleState.detached) {

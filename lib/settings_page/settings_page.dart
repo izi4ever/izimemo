@@ -52,9 +52,9 @@ class SettingsPage extends StatelessWidget {
             Slider(
               value: settingsPageController.entriesInLesson.value,
               onChanged: (double value) => settingsPageController.onChangedEntriesInLesson(value),
-              min: 2,
-              max: 30,
-              divisions: 28,
+              min: 1,
+              max: 100,
+              divisions: 99,
               label: settingsPageController.entriesInLesson.value.round().toString(),
             ),
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:izimemo/instruction_page/instruction_page.dart';
 
 import '../../custom/colors/custom_design_colors.dart';
 import '../../custom/custom_constants.dart';
@@ -85,12 +86,12 @@ class SnippetHeaderMenu extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 2, top: 40),
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: () => Get.to(() => InstructionPage()),
                   icon: const Icon(
                     Icons.help_outline,
                     size: 28,
-                    // TODO color: Colors.white,
-                    color: CustomDesignColors.darkBlue,
+                    color: Colors.white,
+                    // color: CustomDesignColors.darkBlue,
                   ),
                 ),
               ),

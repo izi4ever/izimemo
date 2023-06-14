@@ -67,6 +67,12 @@ class Languages extends Translations {
           'reading_speed': 'Reading speed — ',
           'background_volume': 'Other content volume — ',
           'audio_player': 'Audio Player',
+          'page_1_title': 'This is unordinary program.',
+          'page_2_body': '''
+It allows you to learn foreign languages while you are relaxing with your phone.
+
+It's perfect for cramming new words or repeating words you already know.
+''',
         },
         'ru_RU': {
           'slogan': 'Отдыхай и учись',
