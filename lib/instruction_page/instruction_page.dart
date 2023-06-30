@@ -2,29 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:izimemo/custom/colors/custom_design_colors.dart';
+import 'package:izimemo/instruction_page/instruction_controller.dart';
 
 class InstructionPage extends StatelessWidget {
   InstructionPage({super.key});
 
   final introKey = GlobalKey<IntroductionScreenState>();
 
+  final InstructionController instructionController = Get.put(InstructionController());
+
   @override
   Widget build(BuildContext context) {
     return IntroductionScreen(
       key: introKey,
-      // globalBackgroundColor: CustomDesignColors.darkBlue,
       globalBackgroundColor: CustomDesignColors.mediumBlue,
       nextFlex: 0,
       skipOrBackFlex: 0,
       pages: [
         PageViewModel(
-          // title: 'Для чего эта программа?',
-          title: 'Это необычная программа',
-          body: '''
-Она позволяет учить иностранные языки прямо во время твоего отдыха в телефоне.
-
-Она идеально подходит, чтобы зубрить новые или повторять знакомые слова.
-''',
+          title: 'page_1_title'.tr,
+          body: 'page_1_body'.tr,
           image: Image.asset("assets/instruction/page_1_3.png", height: 220.0),
           decoration: const PageDecoration(
             titleTextStyle: TextStyle(fontSize: 22),
@@ -32,8 +29,8 @@ class InstructionPage extends StatelessWidget {
           ),
         ),
         PageViewModel(
-          title: 'В этой программе ты можешь открыть любой сайт',
-          body: 'Это могут быть твои любимые социальные сети, новости, онлайн-игры, фильмы или музыка.',
+          title: 'page_2_title'.tr,
+          body: 'page_2_body'.tr,
           image: Image.asset('assets/instruction/page_2_3.png', height: 220.0),
           decoration: const PageDecoration(
             titleTextStyle: TextStyle(fontSize: 22),
@@ -41,12 +38,8 @@ class InstructionPage extends StatelessWidget {
           ),
         ),
         PageViewModel(
-          title: 'Самое главное — внизу программы',
-          body: '''
-Там ты увидишь поле, где по кругу листаются иностранные слова, пока ты их не выучишь.
-
-Это происходит прямо во время того, как ты смотришь в программе то, что хочешь.
-''',
+          title: 'page_3_title'.tr,
+          body: 'page_3_body'.tr,
           image: Image.asset('assets/instruction/page_3_3.png', height: 220.0),
           decoration: const PageDecoration(
             titleTextStyle: TextStyle(fontSize: 22),
@@ -54,12 +47,8 @@ class InstructionPage extends StatelessWidget {
           ),
         ),
         PageViewModel(
-          title: 'Нажми на слово, когда ты его выучил',
-          body: '''
-В появившемся меню нажми Пропустить. На место этого слова подставится следующее из словаря. 
-
-Делай так, пока всё не выучишь.
-''',
+          title: 'page_4_title'.tr,
+          body: 'page_4_body'.tr,
           image: Image.asset('assets/instruction/page_4_2.png', height: 220.0),
           decoration: const PageDecoration(
             titleTextStyle: TextStyle(fontSize: 22),
@@ -67,12 +56,8 @@ class InstructionPage extends StatelessWidget {
           ),
         ),
         PageViewModel(
-          title: 'Используй закладки тех сайтов, где мы тратим больше всего времени',
-          body: '''
-Нажми на сердечко, чтобы добавить новую закладку.
-
-Чтобы изменить или удалить свою закладку, просто нажми на неё долго.
-''',
+          title: 'page_5_title'.tr,
+          body: 'page_5_body'.tr,
           image: Image.asset('assets/instruction/page_5_2.png', height: 220.0),
           decoration: const PageDecoration(
             titleTextStyle: TextStyle(fontSize: 22),
@@ -80,12 +65,8 @@ class InstructionPage extends StatelessWidget {
           ),
         ),
         PageViewModel(
-          title: 'Выбери словарь или создай свой',
-          body: '''
-Лучше создать свой собственный словарь. 
-
-Добавляй в него те слова, которые ты сам часто говоришь или встречаешь в общении.
-''',
+          title: 'page_6_title'.tr,
+          body: 'page_6_body'.tr,
           image: Image.asset('assets/instruction/page_6_1.png', height: 220.0),
           decoration: const PageDecoration(
             titleTextStyle: TextStyle(fontSize: 22),
@@ -93,14 +74,8 @@ class InstructionPage extends StatelessWidget {
           ),
         ),
         PageViewModel(
-          title: 'Особенности программы',
-          body: '''
-Надеемся, она достаточно интуитивна, и ты сможешь разобраться в ней больше.
-*
-Она работает с веб-версиями популярных приложений. Они имеют свои особенности, на которые мы не можем влиять. Тут решай сам, что тебе важнее.
-*
-Эту инструкцию ты можешь открыть в любой момент, нажав знак вопроса в меню.
-''',
+          title: 'page_7_title'.tr,
+          body: 'page_7_body'.tr,
           image: Image.asset('assets/instruction/page_7_1.png', height: 220.0),
           decoration: const PageDecoration(
             titleTextStyle: TextStyle(fontSize: 22),
@@ -108,8 +83,8 @@ class InstructionPage extends StatelessWidget {
           ),
         ),
         PageViewModel(
-          title: 'Трать своё время в телефоне продуктивно',
-          body: 'Всё можно выучить, если делать это каждый день, насколько тебе комфортно.',
+          title: 'page_8_title'.tr,
+          body: 'page_8_body'.tr,
           image: Image.asset('assets/instruction/page_8_1.png', height: 220.0),
           decoration: const PageDecoration(
             titleTextStyle: TextStyle(fontSize: 22),
@@ -128,9 +103,9 @@ class InstructionPage extends StatelessWidget {
         Get.back();
       },
       showSkipButton: true,
-      skip: const Text('Skip'),
+      skip: Text('skip'.tr),
       next: const Icon(Icons.arrow_forward),
-      done: const Text('Done', style: TextStyle(fontWeight: FontWeight.w600)),
+      done: Text('done'.tr, style: const TextStyle(fontWeight: FontWeight.w600)),
     );
   }
 }

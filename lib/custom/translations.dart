@@ -67,12 +67,51 @@ class Languages extends Translations {
           'reading_speed': 'Reading speed — ',
           'background_volume': 'Other content volume — ',
           'audio_player': 'Audio Player',
-          'page_1_title': 'This is unordinary program.',
-          'page_2_body': '''
+          'page_1_title': 'This is unordinary program',
+          'page_1_body': '''
 It allows you to learn foreign languages while you are relaxing with your phone.
 
 It's perfect for cramming new words or repeating words you already know.
 ''',
+          'page_2_title': 'In this program you can open any website',
+          'page_2_body': 'It can be your favorite social networks, news, online games, movies or music.',
+          'page_3_title': 'The most important thing is at the bottom of the program',
+          'page_3_body': '''
+There you will see a field where foreign words are scrolled in a circle until you learn them.
+
+It happens while you watch what you want in the program.
+''',
+          'page_4_title': 'Click on the word when you have learned it',
+          'page_4_body': '''
+In the menu that appears, click Skip. The next word in the dictionary will be substituted for this word.
+
+Do this until you learn all.
+''',
+          'page_5_title': 'Bookmark the sites where we spend the most time',
+          'page_5_body': '''
+Click on the heart to add a new bookmark.
+
+To edit or delete your bookmark, simply long press on it.
+''',
+          'page_6_title': 'Choose a dictionary or create your own',
+          'page_6_body': '''
+Better to create your own dictionary.
+
+Add to it those words that you yourself often say or meet in communication.
+''',
+          'page_7_title': 'Program features',
+          'page_7_body': '''
+We hope it is intuitive enough that you can understand it more.
+*
+It works with web versions of popular applications. Its have their own characteristics, which we cannot influence. Decide for yourself what is more important to you.
+*
+You can open this manual at any time by clicking the question mark in the menu.
+''',
+          'page_8_title': 'Spend your time on your phone productively',
+          'page_8_body': 'Everything can be learned if you do it every day, as far as you are comfortable.',
+
+          'skip': 'Skip',
+          'done': 'Done',
         },
         'ru_RU': {
           'slogan': 'Отдыхай и учись',
@@ -135,6 +174,51 @@ It's perfect for cramming new words or repeating words you already know.
           'reading_speed': 'Скорость чтения — ',
           'background_volume': 'Громкость остального контента — ',
           'audio_player': 'Аудио плеер',
+          'page_1_title': 'Это необычная программа',
+          'page_1_body': '''
+Она позволяет учить иностранные языки прямо во время твоего отдыха в телефоне.
+
+Она идеально подходит, чтобы зубрить новые или повторять знакомые слова.
+''',
+          'page_2_title': 'В этой программе ты можешь открыть любой сайт',
+          'page_2_body': 'Это могут быть твои любимые социальные сети, новости, онлайн-игры, фильмы или музыка.',
+          'page_3_title': 'Самое главное — внизу программы',
+          'page_3_body': '''
+Там ты увидишь поле, где по кругу листаются иностранные слова, пока ты их не выучишь.
+
+Это происходит прямо во время того, как ты смотришь в программе то, что хочешь.
+''',
+          'page_4_title': 'Нажми на слово, когда ты его выучил',
+          'page_4_body': '''
+В появившемся меню нажми Пропустить. На место этого слова подставится следующее из словаря. 
+
+Делай так, пока всё не выучишь.
+''',
+          'page_5_title': 'Используй закладки тех сайтов, где мы тратим больше всего времени',
+          'page_5_body': '''
+Нажми на сердечко, чтобы добавить новую закладку.
+
+Чтобы изменить или удалить свою закладку, просто нажми на неё долго.
+''',
+          'page_6_title': 'Выбери словарь или создай свой',
+          'page_6_body': '''
+Лучше создать свой собственный словарь. 
+
+Добавляй в него те слова, которые ты сам часто говоришь или встречаешь в общении.
+''',
+          'page_7_title': 'Особенности программы',
+          'page_7_body': '''
+Надеемся, она достаточно интуитивна, и ты сможешь разобраться в ней больше.
+*
+Она работает с веб-версиями популярных приложений. Они имеют свои особенности, на которые мы не можем влиять. Тут решай сам, что тебе важнее.
+*
+Эту инструкцию ты можешь открыть в любой момент, нажав знак вопроса в меню.
+''',
+          'page_8_title': 'Трать своё время в телефоне продуктивно',
+          'page_8_body': 'Всё можно выучить, если делать это каждый день, насколько тебе комфортно.',
+
+          'skip': 'Пропустить',
+          'done': 'Закрыть',
         },
         'uk_UA': {
           'slogan': 'Відпочивай та навчайся',
@@ -197,6 +281,51 @@ It's perfect for cramming new words or repeating words you already know.
           'reading_speed': 'Швидкість читання — ',
           'background_volume': 'Гучність іншого контенту — ',
           'audio_player': 'Аудіо плеєр',
+          'page_1_title': 'Це — незвична програма',
+          'page_1_body': '''
+Вона дозволяє вчити іноземні мови прямо під час твого відпочинку в телефоні.
+
+Вона ідеально підходить, щоб зубрити нові або повторювати знайомі слова.
+''',
+          'page_2_title': 'В цьому додатку ти можеш переглядати будь-які сайти',
+          'page_2_body': 'Це можуть бути твої улюблені соціальні мережі, онлайн-ігри, фільми чи музика.',
+          'page_3_title': 'Саме головне — внизу програми',
+          'page_3_body': '''
+Там ти побачиш поле, де по колу гортаються іноземні слова до тих пір, поки ти їх не вивчиш.
+
+Це відбувається прямо під час того, як ти дивишся в додатку те, що хочеш.
+''',
+          'page_4_title': 'Натисни на слово, коли ти його вивчив',
+          'page_4_body': '''
+В меню, що з'явиться, натисни Пропустити. На місце цього слова підставиться наступне зі словника.
+
+Роби так, поки все не вивчиш.
+''',
+          'page_5_title': 'Використовуй закладки на ті сайти, де ми витрачаєм більше всього часу',
+          'page_5_body': '''
+Натисни на сердечко, щоб додати нову закладку.
+
+Щоб змінити чи видалити свою закладку, просто натисни на неї довго.
+''',
+          'page_6_title': 'Обери словник чи створи свій',
+          'page_6_body': '''
+Найкраще — створити власний словник.
+
+Додавай до нього ті слова, які ти сам часто вживаєш чи зустрічаєш в розмові.
+''',
+          'page_7_title': 'Особливості програми',
+          'page_7_body': '''
+Сподіваємось, вона достатньо інтуїтивна, і ти зможеш розібратись в ній більше.
+*
+Вона працює з веб-версіями популярних сервісів. Вони мають свої особливості, на які ми не можемо впливати. Тут вирішуй сам, що тобі важливіше.
+*
+Цю інструкцію ти можеш відкрити в будь-який час, натиснувши в меню знак питання.
+''',
+          'page_8_title': 'Витрачай свій час в телефоні продуктивно',
+          'page_8_body': 'Все можна вивчити, якщо робити це кожен день, наскільки тобі комфортно.',
+
+          'skip': 'Пропустити',
+          'done': 'Закрити',
         },
         'de_DE': {
           'slogan': 'Entspanne dich und studiere',
@@ -262,6 +391,53 @@ It's perfect for cramming new words or repeating words you already know.
           'reading_speed': 'Lesevolumen — ',
           'background_volume': 'Umfang anderer Inhalte — ',
           'audio_player': 'Audioplayer',
+          'page_1_title': 'Das ist ein außergewöhnliches Programm',
+          'page_1_body': '''
+So können Sie Fremdsprachen lernen, während Sie entspannt am Telefon sitzen.
+
+Dies ist ideal, um neue Wörter zu lernen oder bekannte Wörter zu wiederholen.
+''',
+          'page_2_title': 'In diesem Programm können Sie jede Website öffnen',
+          'page_2_body':
+              'Es können Ihre bevorzugten sozialen Netzwerke, Nachrichten, Online-Spiele, Filme oder Musik sein.',
+          'page_3_title': 'Das Wichtigste steht ganz unten im Programm',
+          'page_3_body': '''
+Dort sehen Sie ein Feld, in dem Fremdwörter im Kreis gescrollt werden, bis Sie sie gelernt haben.
+
+Dies geschieht, während Sie auf Ihrem Telefon sehen, was Sie möchten.
+''',
+          'page_4_title': 'Klicken Sie auf das Wort, wenn Sie es gelernt haben',
+          'page_4_body': '''
+Klicken Sie im angezeigten Menü auf Überspringen. Anstelle dieses Wortes wird das nächste Wort aus dem Wörterbuch ersetzt.
+
+Tun Sie dies, bis Sie alles gelernt haben.
+''',
+          'page_5_title': 'Benutzen Sie ein Lesezeichen für die Websites, auf denen wir die meiste Zeit verbringen',
+          'page_5_body': '''
+Klicken Sie auf das Herz, um ein neues Lesezeichen hinzuzufügen.
+
+Um Ihr Lesezeichen zu bearbeiten oder zu löschen, drücken Sie einfach lange darauf.
+''',
+          'page_6_title': 'Wählen Sie ein Wörterbuch oder erstellen Sie Ihr eigenes',
+          'page_6_body': '''
+Erstellen Sie besser Ihr eigenes Wörterbuch.
+
+Fügen Sie Ihrem Wörterbuch die Wörter hinzu, die Sie selbst oft sagen oder in der Kommunikation treffen.
+''',
+          'page_7_title': 'Programmfunktionen',
+          'page_7_body': '''
+Wir hoffen, dass es so intuitiv ist, dass Sie es besser verstehen können.
+*
+Es funktioniert mit Webversionen beliebter Anwendungen. Sie haben ihre eigenen Eigenschaften, die wir nicht beeinflussen können. Entscheiden Sie selbst, was Ihnen wichtiger ist.
+*
+Sie können dieses Handbuch jederzeit öffnen, indem Sie im Menü auf das Fragezeichen klicken.
+''',
+          'page_8_title': 'Verbringen Sie Ihre Zeit produktiv am Telefon',
+          'page_8_body':
+              'Alles kann man lernen, wenn man es jeden Tag tut. Machen Sie es so, wie Sie sich wohl fühlen.',
+
+          'skip': 'Überspringen',
+          'done': 'Schließen',
         },
         // 'fr_FR': {
         //   'slogan': 'Détendez-vous et étudiez',

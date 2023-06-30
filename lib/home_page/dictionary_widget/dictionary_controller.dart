@@ -325,6 +325,7 @@ class DictionaryController extends GetxController {
     dictionaryStorage.writeFirstElementForDictionary(lastOpenedDic.value, 0);
 
     _updateListsForSlider();
+    indexCurrentSlide = 0;
     speakCurrentSlide;
 
     Get.back();
