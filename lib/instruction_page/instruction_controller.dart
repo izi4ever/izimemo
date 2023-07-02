@@ -7,7 +7,11 @@ class InstructionController extends GetxController {
 
   bool get getReadInstructionIsShown => appSettingsStorage.readInstructionIsShown;
 
-  void saveClosingInstruction() {
+  void dontShowInstruction() {
     appSettingsStorage.writeInstructionIsShown(true);
+  }
+
+  void readLaterInstruction() {
+    appSettingsStorage.writeInstructionIsShown(false);
   }
 }

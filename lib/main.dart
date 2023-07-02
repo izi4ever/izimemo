@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:izimemo/instruction_page/instruction_controller.dart';
+import 'package:izimemo/instruction_page/instruction_page.dart';
 
 import 'custom/colors/custom_design_colors.dart';
 import 'custom/translations.dart';
@@ -19,12 +21,14 @@ void main() async {
     statusBarColor: Colors.transparent,
     systemNavigationBarColor: Colors.black,
   ));
-  
-  runApp(const MyApp());
+
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  final InstructionController instructionController = Get.put(InstructionController());
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +38,8 @@ class MyApp extends StatelessWidget {
       fallbackLocale: const Locale('en', 'US'),
       title: 'izimemo',
       // home: const HomePage(),
-      home: const LifecycleWidgetWrapper(
-        child: HomePage(),
+      home: LifecycleWidgetWrapper(
+        child: instructionController.getReadInstructionIsShown ? const HomePage() : InstructionPage(),
       ),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(

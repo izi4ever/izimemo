@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:izimemo/custom/colors/custom_design_colors.dart';
+import 'package:izimemo/home_page/home_page.dart';
 import 'package:izimemo/instruction_page/instruction_controller.dart';
 
 class InstructionPage extends StatelessWidget {
@@ -95,12 +96,14 @@ class InstructionPage extends StatelessWidget {
       onDone: () {
         // Action to perform after the last page is shown (e.g., go to the home screen)
         // You can navigate to a new screen or set a flag to indicate the user has seen the introduction
-        Get.back();
+        instructionController.dontShowInstruction();
+        Get.to(() => const HomePage());
       },
       onSkip: () {
         // Action to perform when the user taps on the Skip button
         // You can navigate to a new screen or set a flag to indicate the user has skipped the introduction
-        Get.back();
+        instructionController.readLaterInstruction();
+        Get.to(() => const HomePage());
       },
       showSkipButton: true,
       skip: Text('skip'.tr),

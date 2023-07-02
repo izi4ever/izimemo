@@ -110,8 +110,9 @@ You can open this manual at any time by clicking the question mark in the menu.
           'page_8_title': 'Spend your time on your phone productively',
           'page_8_body': 'Everything can be learned if you do it every day, as far as you are comfortable.',
 
-          'skip': 'Skip',
-          'done': 'Done',
+          'skip': 'Later',
+          // 'done': "Understood",
+          'done': "Don't show",
         },
         'ru_RU': {
           'slogan': 'Отдыхай и учись',
@@ -217,8 +218,9 @@ You can open this manual at any time by clicking the question mark in the menu.
           'page_8_title': 'Трать своё время в телефоне продуктивно',
           'page_8_body': 'Всё можно выучить, если делать это каждый день, насколько тебе комфортно.',
 
-          'skip': 'Пропустить',
-          'done': 'Закрыть',
+          'skip': 'Потом',
+          // 'done': 'Понятно',
+          'done': 'Не показивать',
         },
         'uk_UA': {
           'slogan': 'Відпочивай та навчайся',
@@ -324,8 +326,9 @@ You can open this manual at any time by clicking the question mark in the menu.
           'page_8_title': 'Витрачай свій час в телефоні продуктивно',
           'page_8_body': 'Все можна вивчити, якщо робити це кожен день, наскільки тобі комфортно.',
 
-          'skip': 'Пропустити',
-          'done': 'Закрити',
+          'skip': 'Потім',
+          // 'done': 'Зрозумів',
+          'done': 'Не показувати',
         },
         'de_DE': {
           'slogan': 'Entspanne dich und studiere',
@@ -436,8 +439,9 @@ Sie können dieses Handbuch jederzeit öffnen, indem Sie im Menü auf das Fragez
           'page_8_body':
               'Alles kann man lernen, wenn man es jeden Tag tut. Machen Sie es so, wie Sie sich wohl fühlen.',
 
-          'skip': 'Überspringen',
-          'done': 'Schließen',
+          'skip': 'Nach',
+          // 'done': 'Verstanden',
+          'done': 'Nicht zeigen',
         },
         // 'fr_FR': {
         //   'slogan': 'Détendez-vous et étudiez',

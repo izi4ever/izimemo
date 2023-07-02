@@ -256,15 +256,6 @@ class DictionaryController extends GetxController {
   void deleteDic(int dicIndex) {
     String dicKey = availableDics[dicIndex]['storageName'];
 
-    // Delete dic, its first element and its languages info;
-    dictionaryStorage.deleteWordListByDicKey(dicKey);
-    dictionaryStorage.deleteFirstElementForDictionary(dicKey);
-    dictionaryStorage.deleteDicLanguages(dicKey);
-
-    // Delete info about dic in description list in storage
-    availableDics.removeAt(dicIndex);
-    dictionaryStorage.writeAvailableDics(availableDics);
-
     //If deleted dic is current dic?
     if (dicKey == lastOpenedDic.value) {
       lastOpenedDic.value = availableDics[0]['storageName'];
@@ -273,6 +264,15 @@ class DictionaryController extends GetxController {
       // dicLanguages.value = dictionaryStorage.readDicLanguages(lastOpenedDic.value);
       dicLanguages.value = getDicLanguages;
     }
+
+    // Delete dic, its first element and its languages info;
+    dictionaryStorage.deleteWordListByDicKey(dicKey);
+    dictionaryStorage.deleteFirstElementForDictionary(dicKey);
+    dictionaryStorage.deleteDicLanguages(dicKey);
+
+    // Delete info about dic in description list in storage
+    availableDics.removeAt(dicIndex);
+    dictionaryStorage.writeAvailableDics(availableDics);
 
     // It will be impossible to delete dic when one's left
     lengthDicsList.value = availableDics.length;
@@ -328,8 +328,7 @@ class DictionaryController extends GetxController {
     indexCurrentSlide = 0;
     speakCurrentSlide;
 
-    Get.back();
-    Get.back();
+    // Get.back();
   }
 
   //

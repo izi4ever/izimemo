@@ -1,9 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:izimemo/home_page/dictionary_widget/dictionary_controller.dart';
 import 'package:wakelock/wakelock.dart';
+
+import '../instruction_page/instruction_controller.dart';
 
 class LifecycleWidgetWrapper extends StatefulWidget {
   final Widget child;
@@ -21,11 +24,13 @@ class _LifecycleWidgetWrapperState extends State<LifecycleWidgetWrapper> with Wi
   AppLifecycleState _appLifecycleState = AppLifecycleState.resumed;
   Timer? _timer;
   DictionaryController dictionaryController = Get.put(DictionaryController());
+  final InstructionController instructionController = Get.put(InstructionController());
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    initialization();
   }
 
   @override
@@ -35,6 +40,11 @@ class _LifecycleWidgetWrapperState extends State<LifecycleWidgetWrapper> with Wi
     super.dispose();
   }
 
+  void initialization() async {
+    await Future.delayed(const Duration(seconds: 1));
+    FlutterNativeSplash.remove();
+  }
+
   @override
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
     setState(() {
@@ -42,7 +52,7 @@ class _LifecycleWidgetWrapperState extends State<LifecycleWidgetWrapper> with Wi
       print('>>> $_appLifecycleState');
     });
 
-    if (dictionaryController.autoPlay.isTrue) {
+    if (dictionaryController.autoPlay.isTrue && instructionController.getReadInstructionIsShown) {
       if (_appLifecycleState == AppLifecycleState.paused) {
         _timer = Timer.periodic(Duration(seconds: dictionaryController.secondsPerEntries.value.round()), (timer) {
           Wakelock.enable();

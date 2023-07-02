@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -126,13 +125,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
     _webController = webController;
 
-    initialization();
+    
   }
 
-  void initialization() async {
-    await Future.delayed(const Duration(seconds: 1));
-    FlutterNativeSplash.remove();
-  }
+  
 
   // Future<void> openVideo() async {
   //   FilePickerResult? filePickerResult = await FilePicker.platform.pickFiles();
