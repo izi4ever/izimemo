@@ -119,9 +119,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           },
           // onWebResourceError: (WebResourceError error) async =>
           //     await homePageController.onWebError(webController, error, urlTextController.text),
+          onWebResourceError: (error) => homePageController.saveLastUrl('https://www.google.com/'),
         ),
       )
-      ..loadRequest(Uri.parse('https://www.google.com/'));
+      ..loadRequest(Uri.parse(homePageController.getLastUrl));
 
     _webController = webController;
 

@@ -12,7 +12,7 @@ class AppSettingsStorage {
   bool get readLoadLastUrl => box.read('loadLastUrl') ?? false;
   void writeLoadLastUrl(bool value) => box.write('loadLastUrl', value);
 
-  String get readLastUrl => box.read('lastUrl') ?? 'https://google.com/';
+  String get readLastUrl => box.read('lastUrl') ?? 'https://www.google.com/';
   void writeLastUrl(String value) => box.write('lastUrl', value);
 
   bool get readIsTextReading => box.read('isTextReading') ?? true;

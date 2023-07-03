@@ -19,9 +19,13 @@ class HomePageController extends GetxController {
   double get getBackgroundVolume => appSettingsStorage.readBackgroundVolume;
   late RxDouble backgroundVolume;
 
+  String get getLastUrl => appSettingsStorage.readLastUrl;
+
   HomePageController() {
     backgroundVolume = getBackgroundVolume.obs;
   }
+
+  void saveLastUrl(String url) => appSettingsStorage.writeLastUrl(url);
 
   Future<bool> onGoBack(WebViewController webController) async {
     if (canGoBack.value) {
@@ -116,7 +120,7 @@ class HomePageController extends GetxController {
     if (shortUrl.substring(0, 4) == 'www.') {
       shortUrl = shortUrl.substring(4);
     }
-    // urlTextController.text = shortUrl;
+    saveLastUrl(url);
     return shortUrl;
   }
 
