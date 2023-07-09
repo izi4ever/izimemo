@@ -74,7 +74,7 @@ class SnippetHeaderMenu extends StatelessWidget {
                   color: Colors.white,
                 ),
                 child: const Text(
-                  'v 1.3.7',
+                  CustomConstants.thisAppBuildVersion,
                   style: TextStyle(
                     color: CustomDesignColors.darkBlue,
                     fontSize: 12,

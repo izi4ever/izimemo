@@ -34,7 +34,6 @@ class DictionaryMenuWidget extends StatelessWidget {
       // TODO Was error with this State in stream. Test it latter
       // List<Map<String, dynamic>> dicsList = dictionaryController.availableDics;
       List<Map<String, dynamic>> dicsList = dictionaryController.availableDics.value;
-      print('>>> $dicsList');
       return PopupMenuButton(
         initialValue: dictionaryController.lastOpenedDic.value,
         onSelected: (value) {
@@ -161,6 +160,8 @@ class DictionaryMenuWidget extends StatelessWidget {
                         motion: const ScrollMotion(),
                         extentRatio: 0.7,
                         children: [
+
+                          // >>> EDIT DIC
                           SlidableAction(
                             onPressed: (BuildContext context) {
                               _dicNameFieldController.text = e.value['humanName']!;
@@ -257,6 +258,8 @@ class DictionaryMenuWidget extends StatelessWidget {
                             spacing: 0,
                             padding: EdgeInsets.zero,
                           ),
+
+                          // >>> RESET DIC
                           SlidableAction(
                             onPressed: (BuildContext context) {
                               dialogs.showDialog(
@@ -283,6 +286,8 @@ class DictionaryMenuWidget extends StatelessWidget {
                             spacing: 0,
                             padding: EdgeInsets.zero,
                           ),
+
+                          // >>> DELETE DIC
                           (dictionaryController.lengthDicsList > 1)
                               ? SlidableAction(
                                   onPressed: (BuildContext context) {

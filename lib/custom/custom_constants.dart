@@ -1,4 +1,5 @@
 class CustomConstants {
+  static const String thisAppBuildVersion = '1.7.3';
   static const double urlFieldHeight = 38;
   static const double webviewRadius = 20;
   static const double lessonRadius = 15;

@@ -4,6 +4,7 @@ class Languages extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
         'en_US': {
+          'current_language': 'en',
           'slogan': 'Learn while relaxing',
           'share_content': 'Share opened content with friends',
           'add_bookmark': 'Add opened content to bookmark',
@@ -111,10 +112,10 @@ You can open this manual at any time by clicking the question mark in the menu.
           'page_8_body': 'Everything can be learned if you do it every day, as far as you are comfortable.',
 
           'skip': 'Later',
-          // 'done': "Understood",
           'done': "Don't show",
         },
         'ru_RU': {
+          'current_language': 'ru',
           'slogan': 'Отдыхай и учись',
           'share_content': 'Переслать друзьям эту страницу',
           'add_bookmark': 'Добавить в закладки эту страницу',
@@ -219,10 +220,10 @@ You can open this manual at any time by clicking the question mark in the menu.
           'page_8_body': 'Всё можно выучить, если делать это каждый день, насколько тебе комфортно.',
 
           'skip': 'Потом',
-          // 'done': 'Понятно',
           'done': 'Не показивать',
         },
         'uk_UA': {
+          'current_language': 'uk',
           'slogan': 'Відпочивай та навчайся',
           'share_content': 'Переслати друзям те, що відкрито',
           'add_bookmark': 'Додати в закладки те, що відкрито',
@@ -327,10 +328,10 @@ You can open this manual at any time by clicking the question mark in the menu.
           'page_8_body': 'Все можна вивчити, якщо робити це кожен день, наскільки тобі комфортно.',
 
           'skip': 'Потім',
-          // 'done': 'Зрозумів',
           'done': 'Не показувати',
         },
         'de_DE': {
+          'current_language': 'de',
           'slogan': 'Entspanne dich und studiere',
           'share_content': 'Schicke Freunden aktuelle Inhalte',
           'add_bookmark': 'Zu Lesezeichen hinzufügen',
@@ -440,7 +441,6 @@ Sie können dieses Handbuch jederzeit öffnen, indem Sie im Menü auf das Fragez
               'Alles kann man lernen, wenn man es jeden Tag tut. Machen Sie es so, wie Sie sich wohl fühlen.',
 
           'skip': 'Nach',
-          // 'done': 'Verstanden',
           'done': 'Nicht zeigen',
         },
         // 'fr_FR': {

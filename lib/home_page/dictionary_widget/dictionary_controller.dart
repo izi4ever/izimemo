@@ -256,14 +256,14 @@ class DictionaryController extends GetxController {
   void deleteDic(int dicIndex) {
     String dicKey = availableDics[dicIndex]['storageName'];
 
-    //If deleted dic is current dic?
-    if (dicKey == lastOpenedDic.value) {
-      lastOpenedDic.value = availableDics[0]['storageName'];
-      dictionaryStorage.writeLastOpenedDic(lastOpenedDic.value);
-      firstElementCurrentDic.value = dictionaryStorage.readFirstElementForDictionary(lastOpenedDic.value);
-      // dicLanguages.value = dictionaryStorage.readDicLanguages(lastOpenedDic.value);
-      dicLanguages.value = getDicLanguages;
-    }
+    // //If deleted dic is current dic?
+    // if (dicKey == lastOpenedDic.value) {
+    //   lastOpenedDic.value = availableDics[0]['storageName'];
+    //   dictionaryStorage.writeLastOpenedDic(lastOpenedDic.value);
+    //   firstElementCurrentDic.value = dictionaryStorage.readFirstElementForDictionary(lastOpenedDic.value);
+    //   // dicLanguages.value = dictionaryStorage.readDicLanguages(lastOpenedDic.value);
+    //   dicLanguages.value = getDicLanguages;
+    // }
 
     // Delete dic, its first element and its languages info;
     dictionaryStorage.deleteWordListByDicKey(dicKey);
@@ -276,6 +276,15 @@ class DictionaryController extends GetxController {
 
     // It will be impossible to delete dic when one's left
     lengthDicsList.value = availableDics.length;
+
+    //If deleted dic is current dic?
+    if (dicKey == lastOpenedDic.value) {
+      lastOpenedDic.value = availableDics[0]['storageName'];
+      dictionaryStorage.writeLastOpenedDic(lastOpenedDic.value);
+      firstElementCurrentDic.value = dictionaryStorage.readFirstElementForDictionary(lastOpenedDic.value);
+      // dicLanguages.value = dictionaryStorage.readDicLanguages(lastOpenedDic.value);
+      dicLanguages.value = getDicLanguages;
+    }
 
     _updateListsForSlider();
 
@@ -328,7 +337,7 @@ class DictionaryController extends GetxController {
     indexCurrentSlide = 0;
     speakCurrentSlide;
 
-    // Get.back();
+    Get.back();
   }
 
   //
