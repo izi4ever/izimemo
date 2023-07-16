@@ -55,6 +55,7 @@ dependencies:
   wakelock: ^0.6.2
   audio_service: ^0.18.10
   introduction_screen: ^3.1.8
+  dio: ^5.2.1+1
 
 dev_dependencies:
   flutter_test:

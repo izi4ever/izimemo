@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       webScrollYNew = webViewOffset.dy.round();
     } catch (e) {
       webScrollYNew = 0;
-      print('getScrollY catch error: $e');
+      debugPrint('getScrollY catch error: $e');
     }
 
     if (webScrollYNew > webScrollYOld) {

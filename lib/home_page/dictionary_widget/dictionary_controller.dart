@@ -344,10 +344,14 @@ class DictionaryController extends GetxController {
   // STUDY
   //
 
-  void playPause() {
+  Future<void> playPause() async {
     autoPlay.value = !autoPlay.value;
     carouselInitialPage.value = indexCurrentSlide;
-    if (autoPlay.isTrue) speakCurrentSlide;
+    if (autoPlay.isTrue) {
+      speakCurrentSlide;
+    } else {
+      await flutterTts.stop();
+    }
   }
 
   List<String> _wordListGenerator(List<String> inputList, int firstElement, int elementsInLesson) {
