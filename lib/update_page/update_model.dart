@@ -1,32 +1,42 @@
 class UpdateModel {
   String? appLastVersion;
-  Comment? comment;
-  Comment? buttonText;
+  Lang? lang;
   Link? link;
 
-  UpdateModel({this.appLastVersion, this.comment, this.buttonText, this.link});
+  UpdateModel({this.appLastVersion, this.lang, this.link});
 
   UpdateModel.fromJson(Map<String, dynamic> json) {
     appLastVersion = json['app_last_version'];
-    comment = json['comment'] != null ? Comment.fromJson(json['comment']) : null;
-    buttonText = json['button_text'] != null ? Comment.fromJson(json['button_text']) : null;
+    lang = json['lang'] != null ? Lang.fromJson(json['lang']) : null;
     link = json['link'] != null ? Link.fromJson(json['link']) : null;
   }
 }
 
-class Comment {
-  String? en;
-  String? ru;
-  String? uk;
-  String? de;
+class Lang {
+  LangData? en;
+  LangData? ru;
+  LangData? uk;
+  LangData? de;
 
-  Comment({this.en, this.ru, this.uk, this.de});
+  Lang({this.en, this.ru, this.uk, this.de});
 
-  Comment.fromJson(Map<String, dynamic> json) {
-    en = json['en'];
-    ru = json['ru'];
-    uk = json['uk'];
-    de = json['de'];
+  Lang.fromJson(Map<String, dynamic> json) {
+    en = json['en'] != null ? LangData.fromJson(json['en']) : null;
+    ru = json['ru'] != null ? LangData.fromJson(json['ru']) : null;
+    uk = json['uk'] != null ? LangData.fromJson(json['uk']) : null;
+    de = json['de'] != null ? LangData.fromJson(json['de']) : null;
+  }
+}
+
+class LangData {
+  String? comment;
+  String? buttonText;
+
+  LangData({this.comment, this.buttonText});
+
+  LangData.fromJson(Map<String, dynamic> json) {
+    comment = json['comment'];
+    buttonText = json['button_text'];
   }
 }
 
