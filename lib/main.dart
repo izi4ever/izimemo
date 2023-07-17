@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:izimemo/instruction_page/instruction_controller.dart';
 import 'package:izimemo/instruction_page/instruction_page.dart';
+import 'package:izimemo/update_page/update_controller.dart';
+import 'package:izimemo/update_page/update_page.dart';
 
 import 'custom/colors/custom_design_colors.dart';
 import 'custom/translations.dart';
@@ -29,6 +31,7 @@ class MyApp extends StatelessWidget {
   MyApp({super.key});
 
   final InstructionController instructionController = Get.put(InstructionController());
+  final UpdateController updateController = Get.put(UpdateController());
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +40,22 @@ class MyApp extends StatelessWidget {
       locale: Get.deviceLocale,
       fallbackLocale: const Locale('en', 'US'),
       title: 'izimemo',
-      // home: const HomePage(),
       home: LifecycleWidgetWrapper(
-        child: instructionController.getReadInstructionIsShown ? const HomePage() : InstructionPage(),
+        child: FutureBuilder<bool>(
+            future: updateController.isOldVersion(),
+            builder: (context, snapshot) {
+              
+              // Show UpdatePage when isOldVersion is true
+              if (snapshot.connectionState == ConnectionState.done) {
+                final bool isOldVersion = snapshot.data ?? false;
+                if (isOldVersion) {
+                  Future.delayed(const Duration(seconds: 5), () => Get.to(() => const UpdatePage()));
+                }
+              }
+
+              // Show HomePage directly in any case
+              return instructionController.getReadInstructionIsShown ? const HomePage() : InstructionPage();
+            }),
       ),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(

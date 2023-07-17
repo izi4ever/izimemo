@@ -11,16 +11,16 @@ class UpdateController extends GetxController {
     updateModel = await updateRepository.checkRepository();
     String? appLastVersion = updateModel?.appLastVersion;
     if (appLastVersion != null) {
-      List<String> splitAppVersion = appLastVersion.split(appLastVersion);
+      List<String> splitAppVersion = appLastVersion.split('.');
+      List<String> splitThisAppVersion = CustomConstants.thisAppBuildVersion.split('.');
       int majorAppLastVersion = int.parse(splitAppVersion[0]);
-      int majorThisAppVersion = int.parse(CustomConstants.thisAppBuildVersion);
+      int majorThisAppVersion = int.parse(splitThisAppVersion[0]);
 
       if (majorAppLastVersion > majorThisAppVersion) {
         return true;
       } else {
         return false;
       }
-      
     } else {
       return false;
     }

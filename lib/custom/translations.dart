@@ -113,6 +113,7 @@ You can open this manual at any time by clicking the question mark in the menu.
 
           'skip': 'Later',
           'done': "Don't show",
+          'update_page' : 'Update Page',
         },
         'ru_RU': {
           'current_language': 'ru',
@@ -221,6 +222,7 @@ You can open this manual at any time by clicking the question mark in the menu.
 
           'skip': 'Потом',
           'done': 'Не показивать',
+          'update_page' : 'Страница обновления',
         },
         'uk_UA': {
           'current_language': 'uk',
@@ -329,6 +331,7 @@ You can open this manual at any time by clicking the question mark in the menu.
 
           'skip': 'Потім',
           'done': 'Не показувати',
+          'update_page' : 'Сторінка оновлення',
         },
         'de_DE': {
           'current_language': 'de',
@@ -442,6 +445,7 @@ Sie können dieses Handbuch jederzeit öffnen, indem Sie im Menü auf das Fragez
 
           'skip': 'Nach',
           'done': 'Nicht zeigen',
+          'update_page' : 'Seite aktualisieren',
         },
         // 'fr_FR': {
         //   'slogan': 'Détendez-vous et étudiez',
