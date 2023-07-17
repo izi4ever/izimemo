@@ -46,15 +46,21 @@ class UpdatePage extends StatelessWidget {
     }
 
     // var contentData = updateData.lang.en;
-    return CustomScaffold(
-      appBarTitle: 'update_page'.tr,
-      // child: Center(child: Text('update_page'.tr)),
-      child: Column(
-        children: [
-          Text(comment ?? ''),
-          Text(buttonText ?? ''),
-          Text(marketLink ?? ''),
-        ],
+    return WillPopScope(
+      onWillPop: () async {
+        // Return false to block the back navigation
+        return false;
+      },
+      child: CustomScaffold(
+        appBarTitle: 'update_page'.tr,
+        showBackButtonInAppBar: false,
+        child: Column(
+          children: [
+            Text(comment ?? ''),
+            Text(buttonText ?? ''),
+            Text(marketLink ?? ''),
+          ],
+        ),
       ),
     );
   }

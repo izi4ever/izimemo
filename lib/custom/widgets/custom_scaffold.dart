@@ -9,6 +9,7 @@ class CustomScaffold extends StatelessWidget {
     required this.appBarTitle,
     this.appBarColor = CustomDesignColors.lightBlue,
     this.appBarTitleColor = CustomDesignColors.darkBlue,
+    this.showBackButtonInAppBar = true,
     this.bodyColor = Colors.white,
     this.padding = const EdgeInsets.symmetric(horizontal: 16),
     required this.child,
@@ -17,6 +18,7 @@ class CustomScaffold extends StatelessWidget {
   final String appBarTitle;
   final Color? appBarColor;
   final Color? appBarTitleColor;
+  final bool showBackButtonInAppBar;
   final Color? bodyColor;
   final EdgeInsetsGeometry? padding;
   final Widget child;
@@ -30,6 +32,7 @@ class CustomScaffold extends StatelessWidget {
         backgroundColor: appBarColor,
         foregroundColor: appBarTitleColor,
         elevation: 0,
+        automaticallyImplyLeading: showBackButtonInAppBar,
       ),
       backgroundColor: Colors.black,
       body: Stack(
