@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:izimemo/custom/colors/custom_design_colors.dart';
 
 import '../custom/widgets/scaffold_with_study.dart';
+import '../home_page/dictionary_widget/dictionary_widget.dart';
 
 class AudioPlayerPage extends StatefulWidget {
   const AudioPlayerPage({super.key});
@@ -139,7 +140,6 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
     });
   }
 
-  // String formatTime(Duration d) => d.toString().split('.').first.padLeft(8, "0");
   String formatTime(Duration d) {
     var v1 = d.toString().split('.').first.padLeft(8, "0").split(':');
     if (v1[0] == '00') {
@@ -154,11 +154,10 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
     return ScaffoldWithStudy(
       padding: const EdgeInsets.all(0),
       appBarTitle: 'audio_player'.tr,
-      // appBarTitleColor: CustomDesignColors.lightBlue,
       appBarTitleColor: Colors.white,
       appBarColor: CustomDesignColors.darkBlue,
+      // dictionaryWidget: DictionaryWidget(),
       child: Column(
-        // crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
             child: ListView.builder(
@@ -166,7 +165,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
               itemBuilder: (context, index) {
                 return Container(
                   color: (index == _currentTrackIndex)
-                      ? Color.fromARGB(255, 223, 239, 245)
+                      ? const Color.fromARGB(255, 223, 239, 245)
                       : ((index % 2) == 0)
                           ? Colors.white
                           : Colors.grey[50],
@@ -194,7 +193,6 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
                         fontWeight: (index == _currentTrackIndex) ? FontWeight.w900 : FontWeight.w500,
                         fontSize: (index == _currentTrackIndex) ? 18 : 16,
                       ),
-                      // overflow: TextOverflow.ellipsis,
                       overflow: TextOverflow.fade,
                       maxLines: 1,
                       softWrap: false,
@@ -208,7 +206,6 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
                       });
                     },
                     trailing: IconButton(
-                      // icon: Icon(Icons.delete_sweep_rounded),
                       icon: Icon(
                         Icons.close,
                         size: 14,
@@ -238,11 +235,8 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
             ),
           ),
           Container(
-            // color: CustomDesignColors.lightBlue,
-            // color: CustomDesignColors.mediumBlue,
             color: CustomDesignColors.menuBlue,
             child: Padding(
-              // padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
               padding: const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 20),
               child: Column(
                 children: [
@@ -280,9 +274,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
                       if (_audioFiles.isNotEmpty)
                         IconButton(
                           onPressed: _playPreviousAudio,
-                          icon: Icon(
-                            // Icons.skip_previous_rounded,
-                            // size: 28,
+                          icon: const Icon(
                             size: 22,
                             FontAwesomeIcons.backward,
                             color: CustomDesignColors.darkBlue,
@@ -292,25 +284,17 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
                         ElevatedButton(
                           onPressed: () => _isPlaying ? _pauseAudio() : _playAudio(_currentTrackIndex),
                           style: ElevatedButton.styleFrom(
-                            shape: const CircleBorder(), //<-- SEE HERE
-                            // padding: const EdgeInsets.all(12),
+                            shape: const CircleBorder(),
                             padding: const EdgeInsets.all(14),
                           ),
                           child: Icon(
                             _isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
-                            // size: 32,
                           ),
                         ),
-                      // IconButton(
-                      //   onPressed: () => _isPlaying ? _pauseAudio() : _playAudio(_currentTrackIndex),
-                      //   icon: Icon(_isPlaying ? Icons.pause : Icons.play_arrow),
-                      // ),
                       if (_audioFiles.isNotEmpty)
                         IconButton(
                           onPressed: _playNextAudio,
-                          icon: Icon(
-                            // Icons.skip_next_rounded,
-                            // size: 28,
+                          icon: const Icon(
                             size: 22,
                             FontAwesomeIcons.forward,
                             color: CustomDesignColors.darkBlue,
@@ -319,7 +303,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
                       if (_audioFiles.isNotEmpty)
                         IconButton(
                           onPressed: _stopAudio,
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.stop_rounded,
                             color: CustomDesignColors.darkBlue,
                           ),

@@ -13,6 +13,7 @@ import 'package:izimemo/home_page/snippets_appbar_menu/snippet_header_menu.dart'
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
+import '../audio_player_page/audio_player_page.dart';
 import '../custom/colors/custom_design_colors.dart';
 import '../custom/custom_constants.dart';
 import '../custom/widgets/custom_settings_icon_button.dart';
@@ -191,10 +192,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                 },
                               ),
                               ...[
-                                // IconButton(
-                                //   icon: Image.asset('assets/bookmarks/002-audio-headset.png'),
-                                //   onPressed: () => Get.to(() => const AudioPlayerPage()),
-                                // ),
+                                IconButton(
+                                  icon: Image.asset('assets/bookmarks/002-audio-headset.png'),
+                                  onPressed: () => Get.to(() => const AudioPlayerPage()),
+                                ),
                                 IconButton(
                                   icon: Image.asset('assets/bookmarks/001-play-button-1.png'),
                                   onPressed: openVideoFile,

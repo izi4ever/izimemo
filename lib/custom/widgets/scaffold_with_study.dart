@@ -15,6 +15,7 @@ class ScaffoldWithStudy extends StatelessWidget {
     this.bodyColor = Colors.white,
     this.padding = const EdgeInsets.symmetric(horizontal: 16),
     required this.child,
+    this.dictionaryWidget,
   });
 
   final String appBarTitle;
@@ -25,6 +26,7 @@ class ScaffoldWithStudy extends StatelessWidget {
   final Color? bodyColor;
   final EdgeInsetsGeometry? padding;
   final Widget child;
+  final Widget? dictionaryWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +63,7 @@ class ScaffoldWithStudy extends StatelessWidget {
                           ? const Radius.circular(CustomConstants.lessonRadius)
                           : const Radius.circular(0),
                     ),
-                    child: DictionaryWidget(),
+                    child: dictionaryWidget ?? DictionaryWidget(),
                   ),
                 ),
                 Positioned(

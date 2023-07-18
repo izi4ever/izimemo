@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:izimemo/custom/colors/custom_design_colors.dart';
 
-class CustomElevatedButton extends StatelessWidget {
-  const CustomElevatedButton({
+class CustomElevatedButtonIcon extends StatelessWidget {
+  const CustomElevatedButtonIcon({
     super.key,
     required this.onPressed,
     required this.title,
+    required this.icon,
     this.verticalPadding = 14,
     this.horizontalPadding = 24,
     this.backgroundColor = CustomDesignColors.darkBlue,
@@ -13,14 +14,15 @@ class CustomElevatedButton extends StatelessWidget {
   });
   final VoidCallback onPressed;
   final String title;
+  final IconData icon;
   final double verticalPadding;
   final double horizontalPadding;
-  final Color? backgroundColor;
-  final Color? foregroundColor;
+  final Color backgroundColor;
+  final Color foregroundColor;
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return ElevatedButton.icon(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         elevation: 0,
@@ -29,7 +31,8 @@ class CustomElevatedButton extends StatelessWidget {
         backgroundColor: backgroundColor,
         foregroundColor: foregroundColor,
       ),
-      child: Text(
+      icon: Icon(icon),
+      label: Text(
         title,
         style: TextStyle(
           color: foregroundColor,
