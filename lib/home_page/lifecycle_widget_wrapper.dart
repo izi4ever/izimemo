@@ -41,7 +41,7 @@ class _LifecycleWidgetWrapperState extends State<LifecycleWidgetWrapper> with Wi
   }
 
   void initialization() async {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 3));
     FlutterNativeSplash.remove();
   }
 

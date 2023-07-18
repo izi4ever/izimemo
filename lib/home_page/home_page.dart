@@ -126,11 +126,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       ..loadRequest(Uri.parse(homePageController.getLastUrl));
 
     _webController = webController;
-
-    
   }
-
-  
 
   // Future<void> openVideo() async {
   //   FilePickerResult? filePickerResult = await FilePicker.platform.pickFiles();
@@ -194,7 +190,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                               ...[
                                 IconButton(
                                   icon: Image.asset('assets/bookmarks/002-audio-headset.png'),
-                                  onPressed: () => Get.to(() => const AudioPlayerPage()),
+                                  onPressed: () => Get.to(() => AudioPlayerPage()),
                                 ),
                                 IconButton(
                                   icon: Image.asset('assets/bookmarks/001-play-button-1.png'),

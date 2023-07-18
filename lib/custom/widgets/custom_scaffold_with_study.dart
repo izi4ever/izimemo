@@ -4,11 +4,11 @@ import '../../home_page/dictionary_widget/dictionary_widget.dart';
 import '../colors/custom_design_colors.dart';
 import '../custom_constants.dart';
 
-class ScaffoldWithStudy extends StatelessWidget {
-  const ScaffoldWithStudy({
+class CustomScaffoldWithStudy extends StatelessWidget {
+  const CustomScaffoldWithStudy({
     super.key,
     required this.appBarTitle,
-    this.centerTitle,
+    this.centerTitle = true,
     this.actions,
     this.appBarColor = CustomDesignColors.lightBlue,
     this.appBarTitleColor = CustomDesignColors.darkBlue,
@@ -19,7 +19,7 @@ class ScaffoldWithStudy extends StatelessWidget {
   });
 
   final String appBarTitle;
-  final bool? centerTitle;
+  final bool centerTitle;
   final List<Widget>? actions;
   final Color? appBarColor;
   final Color? appBarTitleColor;
