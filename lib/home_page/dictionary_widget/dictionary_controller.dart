@@ -213,6 +213,10 @@ class DictionaryController extends GetxController {
     // speakCurrentSlide;
   }
 
+  Future<void> stopReading() async {
+    await flutterTts.stop();
+  }
+
   //
   // MENU
   //
