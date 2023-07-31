@@ -1,3 +1,4 @@
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
 import 'package:izimemo/app_storage/app_settings_storage.dart';
 import 'package:izimemo/home_page/home_page_controller.dart';

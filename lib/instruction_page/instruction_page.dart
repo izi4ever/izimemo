@@ -19,6 +19,7 @@ class InstructionPage extends StatelessWidget {
       globalBackgroundColor: CustomDesignColors.mediumBlue,
       nextFlex: 0,
       skipOrBackFlex: 0,
+      dotsFlex: 0,
       pages: [
         PageViewModel(
           title: 'page_1_title'.tr,

@@ -31,6 +31,8 @@ class _LifecycleWidgetWrapperState extends State<LifecycleWidgetWrapper> with Wi
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     initialization();
+
+    dictionaryController.initFlutterTts();
   }
 
   @override

@@ -34,6 +34,46 @@ class DictionaryController extends GetxController {
     return mapLang['toLanguage'];
   }
 
+  // All languages list: ko-KR, mr-IN, ru-RU, zh-TW, hu-HU, sw-KE, th-TH, ur-PK, nb-NO, da-DK, tr-TR, et-EE, pt-PT, vi-VN, en-US, sq-AL, sv-SE, ar, su-ID, bs-BA, bn-BD, gu-IN, kn-IN, el-GR, hi-IN, fi-FI, km-KH, bn-IN, fr-FR, uk-UA, pa-IN, en-AU, lv-LV, nl-NL, fr-CA, sr, pt-BR, ml-IN, si-LK, de-DE, cs-CZ, pl-PL, sk-SK, fil-PH, it-IT, ne-NP, ms-MY, hr, en-NG, nl-BE, zh-CN, es-ES, cy, ta-IN, ja-JP, bg-BG, yue-HK, en-IN, es-US, jv-ID, id-ID, te-IN, ro-RO, ca, en-GB
+
+  /* Not used: 
+mr-IN - Marathi (India)
+zh-TW - Chinese (Taiwan)
+sw-KE - Swahili (Kenya)
+th-TH - Thai
+ur-PK - Urdu (Islamic Republic of Pakistan)
+da-DK - Danish (Denmark)
+sq-AL - Albanian (Albania)
+sv-SE - Swedish (Sweden)
+su-ID - Sundanese (Indonesia)
+bs-BA - Bosnian (Bosnia and Herzegovina)
+bn-BD - Bengali (Bangladesh)
+gu-IN - Gujarati (India)
+kn-IN - Kannada (India)
+el-GR - Greek (Greece)
+km-KH - Khmer (Cambodia)
+bn-IN - Bengali (India)
+pa-IN - Punjabi (India)
+fr-CA - French (Canada)
+sr - Serbian (no specific country code provided, could be Serbian in general)
+pt-BR - Portuguese (Brazil)
+ml-IN - Malayalam (India)
+si-LK - Sinhala (Sri Lanka)
+fil-PH - Filipino (Philippines)
+ne-NP - Nepali (Nepal)
+ms-MY - Malay (Malaysia)
+nl-BE - Dutch (Belgium)
+cy - Welsh
+ta-IN - Tamil (India)
+bg-BG - Bulgarian (Bulgaria)
+yue-HK - Cantonese (Hong Kong)
+es-US - Spanish (United States)
+jv-ID - Javanese (Indonesia)
+id-ID - Indonesian (Indonesia)
+te-IN - Telugu (India)
+ca - Catalan
+  */
+
   List<Map<String, String>> availableLanguages = [
     {
       'key': 'en-US',
@@ -60,8 +100,8 @@ class DictionaryController extends GetxController {
       'text': 'Čeština',
     },
     {
-      'key': 'sl-SK',
-      'text': 'Slovenský',
+      'key': 'sk-SK',
+      'text': 'Slovak',
     },
     {
       'key': 'ru-RU',
@@ -92,8 +132,8 @@ class DictionaryController extends GetxController {
       'text': 'Nederlands',
     },
     {
-      'key': 'nl',
-      'text': 'Dansk',
+      'key': 'da-DK',
+      'text': 'Danish',
     },
     {
       'key': 'hu-HU',
@@ -104,19 +144,19 @@ class DictionaryController extends GetxController {
       'text': 'Latviski',
     },
     {
-      'key': 'lt-LT',
-      'text': 'Lietuvių',
-    },
-    {
       'key': 'et-EE',
       'text': 'Eestlane',
+    },
+    {
+      'key': 'sr',
+      'text': 'Serbian',
     },
     {
       'key': 'fi-FI',
       'text': 'Suomen',
     },
     {
-      'key': 'nn-NO',
+      'key': 'nb-NO',
       'text': 'Norsk',
     },
     {
@@ -124,15 +164,11 @@ class DictionaryController extends GetxController {
       'text': 'Ελληνικά',
     },
     {
-      'key': 'hr-HR',
+      'key': 'hr',
       'text': 'Hrvatski',
     },
     {
-      'key': 'sr-Latn-ME',
-      'text': 'Srpski',
-    },
-    {
-      'key': 'ar-SA',
+      'key': 'ar',
       'text': 'عربي',
     },
     {
@@ -213,10 +249,6 @@ class DictionaryController extends GetxController {
     // speakCurrentSlide;
   }
 
-  Future<void> stopReading() async {
-    await flutterTts.stop();
-  }
-
   //
   // MENU
   //
@@ -259,15 +291,6 @@ class DictionaryController extends GetxController {
 
   void deleteDic(int dicIndex) {
     String dicKey = availableDics[dicIndex]['storageName'];
-
-    // //If deleted dic is current dic?
-    // if (dicKey == lastOpenedDic.value) {
-    //   lastOpenedDic.value = availableDics[0]['storageName'];
-    //   dictionaryStorage.writeLastOpenedDic(lastOpenedDic.value);
-    //   firstElementCurrentDic.value = dictionaryStorage.readFirstElementForDictionary(lastOpenedDic.value);
-    //   // dicLanguages.value = dictionaryStorage.readDicLanguages(lastOpenedDic.value);
-    //   dicLanguages.value = getDicLanguages;
-    // }
 
     // Delete dic, its first element and its languages info;
     dictionaryStorage.deleteWordListByDicKey(dicKey);
@@ -511,14 +534,19 @@ class DictionaryController extends GetxController {
   // SOUND
   //
 
+  Future<void> initFlutterTts() async {
+    await flutterTts.setSharedInstance(true);
+    await flutterTts.awaitSpeakCompletion(true);
+    await flutterTts.awaitSynthCompletion(true);
+    await flutterTts.setPitch(1); // Tone
+    await flutterTts.setSpeechRate(readingSpeed.value); // Speed
+    await flutterTts.setVolume(1.0);
+  }
+
   Future<void> _speak(String text, String language) async {
     if (text.isNotEmpty) {
-      await flutterTts.setSharedInstance(true);
-      flutterTts.awaitSpeakCompletion(true);
+      // speakFlutterTts(text, language);
       await flutterTts.setLanguage(language);
-      await flutterTts.setPitch(1); // Tone
-      await flutterTts.setSpeechRate(readingSpeed.value); // Speed
-      await flutterTts.setVolume(1.0);
       await flutterTts.speak(text);
       await Future.delayed(const Duration(milliseconds: 500));
     }

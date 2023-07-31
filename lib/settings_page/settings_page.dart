@@ -21,10 +21,6 @@ class SettingsPage extends StatelessWidget {
             const SizedBox(height: 44),
             Text.rich(
               TextSpan(children: [
-                // const TextSpan(
-                //   text: 'Number of entries per lesson — ',
-                //   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                // ),
                 WidgetSpan(
                   child: Container(
                     padding: const EdgeInsets.only(bottom: 3),
@@ -115,83 +111,90 @@ class SettingsPage extends StatelessWidget {
               ],
             ),
 
-            // TODO readingSpeed
-            const SizedBox(height: 32),
-            Text.rich(
-              TextSpan(children: [
-                // const TextSpan(
-                //   text: 'Number of entries per lesson — ',
-                //   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                // ),
-                WidgetSpan(
-                  child: Container(
-                    padding: const EdgeInsets.only(bottom: 3),
-                    child: Text(
-                      'reading_speed'.tr,
-                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                ),
-                WidgetSpan(
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                      color: CustomDesignColors.darkBlue,
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
-                    child: Text(
-                      settingsPageController.readingSpeed.value.toString(),
-                      style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                ),
-              ]),
-            ),
-            Slider(
-              value: settingsPageController.readingSpeed.value,
-              onChanged: (double value) => settingsPageController.onChangedReadingSpeed(value),
-              min: 0.25,
-              max: 1.0,
-              divisions: 3,
-              label: settingsPageController.readingSpeed.value.toString(),
-            ),
+            settingsPageController.isTextReading.value
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // TODO readingSpeed
+                      const SizedBox(height: 32),
+                      Text.rich(
+                        TextSpan(children: [
+                          // const TextSpan(
+                          //   text: 'Number of entries per lesson — ',
+                          //   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                          // ),
+                          WidgetSpan(
+                            child: Container(
+                              padding: const EdgeInsets.only(bottom: 3),
+                              child: Text(
+                                'reading_speed'.tr,
+                                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          ),
+                          WidgetSpan(
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.all(Radius.circular(4)),
+                                color: CustomDesignColors.darkBlue,
+                              ),
+                              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+                              child: Text(
+                                settingsPageController.readingSpeed.value.toString(),
+                                style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          ),
+                        ]),
+                      ),
+                      Slider(
+                        value: settingsPageController.readingSpeed.value,
+                        onChanged: (double value) => settingsPageController.onChangedReadingSpeed(value),
+                        min: 0.25,
+                        max: 1.0,
+                        divisions: 3,
+                        label: settingsPageController.readingSpeed.value.toString(),
+                      ),
 
-            // TODO backgroundVolume
-            const SizedBox(height: 24),
-            Text.rich(
-              TextSpan(children: [
-                WidgetSpan(
-                  child: Container(
-                    padding: const EdgeInsets.only(bottom: 3),
-                    child: Text(
-                      'background_volume'.tr,
-                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                ),
-                WidgetSpan(
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                      color: CustomDesignColors.darkBlue,
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
-                    child: Text(
-                      '${(settingsPageController.backgroundVolume.value * 100).round()}%',
-                      style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                ),
-              ]),
-            ),
-            Slider(
-              value: settingsPageController.backgroundVolume.value * 100,
-              onChanged: (double value) => settingsPageController.onChangedBackgroundVolume(value / 100),
-              min: 0,
-              max: 100,
-              divisions: 20,
-              label: (settingsPageController.backgroundVolume.value * 100).round().toString(),
-            ),
+                      // TODO backgroundVolume
+                      const SizedBox(height: 24),
+                      Text.rich(
+                        TextSpan(children: [
+                          WidgetSpan(
+                            child: Container(
+                              padding: const EdgeInsets.only(bottom: 3),
+                              child: Text(
+                                'background_volume'.tr,
+                                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          ),
+                          WidgetSpan(
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.all(Radius.circular(4)),
+                                color: CustomDesignColors.darkBlue,
+                              ),
+                              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+                              child: Text(
+                                '${(settingsPageController.backgroundVolume.value * 100).round()}%',
+                                style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          ),
+                        ]),
+                      ),
+                      Slider(
+                        value: settingsPageController.backgroundVolume.value * 100,
+                        onChanged: (double value) => settingsPageController.onChangedBackgroundVolume(value / 100),
+                        min: 0,
+                        max: 100,
+                        divisions: 20,
+                        label: (settingsPageController.backgroundVolume.value * 100).round().toString(),
+                      ),
+                    ],
+                  )
+                : const SizedBox.shrink(),
 
             // Buttons for saving or canceling
             const SizedBox(height: 32),
