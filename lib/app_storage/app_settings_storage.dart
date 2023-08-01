@@ -28,7 +28,7 @@ class AppSettingsStorage {
       return 1.0;
     }
   }
-
+  // double get readBackgroundVolume => box.read('backgroundVolume') ?? 0.45;
   void writeBackgroundVolume(double value) => box.write('backgroundVolume', value);
 
   bool get readInstructionIsShown => box.read('showedInstruction') ?? false;

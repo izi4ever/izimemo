@@ -15,6 +15,7 @@ class HomePageController extends GetxController {
 
   Dialogs dialogs = Dialogs();
   final AppSettingsStorage appSettingsStorage = AppSettingsStorage();
+  
 
   double get getBackgroundVolume => appSettingsStorage.readBackgroundVolume;
   late RxDouble backgroundVolume;
