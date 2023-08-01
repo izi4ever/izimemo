@@ -111,8 +111,8 @@ class SettingsPage extends StatelessWidget {
               ],
             ),
 
-            settingsPageController.isTextReading.value
-                ? Column(
+            // settingsPageController.isTextReading.value ? 
+              Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // TODO readingSpeed
@@ -193,8 +193,8 @@ class SettingsPage extends StatelessWidget {
                         label: (settingsPageController.backgroundVolume.value * 100).round().toString(),
                       ),
                     ],
-                  )
-                : const SizedBox.shrink(),
+                  ),
+                // : const SizedBox.shrink(),
 
             // Buttons for saving or canceling
             const SizedBox(height: 32),

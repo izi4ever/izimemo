@@ -21,14 +21,14 @@ class AppSettingsStorage {
   double get readReadingSpeed => box.read('readingSpeed') ?? 0.25;
   void writeReadingSpeed(double value) => box.write('readingSpeed', value);
 
-  double get readBackgroundVolume {
-    if (readIsTextReading) {
-      return box.read('backgroundVolume') ?? 0.45;
-    } else {
-      return 1.0;
-    }
-  }
-  // double get readBackgroundVolume => box.read('backgroundVolume') ?? 0.45;
+  // double get readBackgroundVolume {
+  //   if (readIsTextReading) {
+  //     return box.read('backgroundVolume') ?? 0.45;
+  //   } else {
+  //     return 1.0;
+  //   }
+  // }
+  double get readBackgroundVolume => box.read('backgroundVolume') ?? 0.45;
   void writeBackgroundVolume(double value) => box.write('backgroundVolume', value);
 
   bool get readInstructionIsShown => box.read('showedInstruction') ?? false;
