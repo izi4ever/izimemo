@@ -539,13 +539,13 @@ ca - Catalan
     await flutterTts.awaitSpeakCompletion(true);
     await flutterTts.awaitSynthCompletion(true);
     await flutterTts.setPitch(1); // Tone
-    await flutterTts.setSpeechRate(readingSpeed.value); // Speed
     await flutterTts.setVolume(1.0);
   }
 
   Future<void> _speak(String text, String language) async {
     if (text.isNotEmpty) {
       // speakFlutterTts(text, language);
+      await flutterTts.setSpeechRate(readingSpeed.value); // Speed
       await flutterTts.setLanguage(language);
       await flutterTts.speak(text);
       await Future.delayed(const Duration(milliseconds: 500));
