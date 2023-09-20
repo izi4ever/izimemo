@@ -4,6 +4,7 @@ import 'package:izimemo/custom/colors/custom_design_colors.dart';
 import 'package:izimemo/custom/widgets/custom_scaffold.dart';
 import 'package:izimemo/settings_page/settings_page_controller.dart';
 
+import '../custom/custom_constants.dart';
 import '../custom/widgets/custom_elevated_button.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -38,7 +39,9 @@ class SettingsPage extends StatelessWidget {
                     ),
                     padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
                     child: Text(
-                      settingsPageController.entriesInLesson.value.round().toString(),
+                      settingsPageController.entriesInLesson.value == CustomConstants.maxEntriesInLesson
+                          ? '∞'
+                          : settingsPageController.entriesInLesson.value.round().toString(),
                       style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
                     ),
                   ),
@@ -48,10 +51,10 @@ class SettingsPage extends StatelessWidget {
             Slider(
               value: settingsPageController.entriesInLesson.value,
               onChanged: (double value) => settingsPageController.onChangedEntriesInLesson(value),
-              min: 1,
-              max: 100,
-              divisions: 99,
-              label: settingsPageController.entriesInLesson.value.round().toString(),
+              min: CustomConstants.minEntriesInLesson.toDouble(),
+              max: CustomConstants.maxEntriesInLesson.toDouble(),
+              divisions: CustomConstants.maxEntriesInLesson - CustomConstants.minEntriesInLesson,
+              // label: settingsPageController.entriesInLesson.value.round().toString(),
             ),
 
             // Seconds per entry
@@ -85,10 +88,10 @@ class SettingsPage extends StatelessWidget {
             Slider(
               value: settingsPageController.secondsPerEntries.value,
               onChanged: (double value) => settingsPageController.onChangedSecondsPerEntries(value),
-              min: 3,
-              max: 30,
-              divisions: 27,
-              label: settingsPageController.secondsPerEntries.value.round().toString(),
+              min: CustomConstants.minSecondsPerEntry.toDouble(),
+              max: CustomConstants.maxSecondsPerEntry.toDouble(),
+              divisions: CustomConstants.maxSecondsPerEntry - CustomConstants.minSecondsPerEntry,
+              // label: settingsPageController.secondsPerEntries.value.round().toString(),
             ),
 
             // TODO isTextReading
@@ -153,7 +156,7 @@ class SettingsPage extends StatelessWidget {
                   min: 0.5,
                   max: 2.0,
                   divisions: 3,
-                  label: (settingsPageController.readingSpeed.value * 2).toString(),
+                  // label: (settingsPageController.readingSpeed.value * 2).toString(),
                 ),
 
                 // TODO backgroundVolume
@@ -190,7 +193,7 @@ class SettingsPage extends StatelessWidget {
                   min: 0,
                   max: 100,
                   divisions: 20,
-                  label: (settingsPageController.backgroundVolume.value * 100).round().toString(),
+                  // label: (settingsPageController.backgroundVolume.value * 100).round().toString(),
                 ),
               ],
             ),

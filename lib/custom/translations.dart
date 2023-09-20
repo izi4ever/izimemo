@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 class Languages extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
+        // ENGLISH
         'en_US': {
           'current_language': 'en',
           'slogan': 'Learn while relaxing',
@@ -113,8 +114,13 @@ You can open this manual at any time by clicking the question mark in the menu.
 
           'skip': 'Later',
           'done': "Don't show",
-          'update_page' : 'Update Page',
+          'update_page': 'Update Page',
+
+          'extra_hyphen':
+              'ⓘ Edit this entry. Leave 1 hyphen separating the translation. Replace the others with a dash.',
         },
+
+        // RUSSIAN
         'ru_RU': {
           'current_language': 'ru',
           'slogan': 'Отдыхай и учись',
@@ -222,8 +228,13 @@ You can open this manual at any time by clicking the question mark in the menu.
 
           'skip': 'Потом',
           'done': 'Не показивать',
-          'update_page' : 'Страница обновления',
+          'update_page': 'Страница обновления',
+
+          'extra_hyphen':
+              'ⓘ Отредактируйте эту запись. Оставьте 1 дефис, который отделяет перевод. Другие замените на тире.',
         },
+
+        // UKRAINIAN
         'uk_UA': {
           'current_language': 'uk',
           'slogan': 'Відпочивай та навчайся',
@@ -331,8 +342,12 @@ You can open this manual at any time by clicking the question mark in the menu.
 
           'skip': 'Потім',
           'done': 'Не показувати',
-          'update_page' : 'Сторінка оновлення',
+          'update_page': 'Сторінка оновлення',
+
+          'extra_hyphen': 'ⓘ Відредагуйте цей запис. Залиште 1 дефіс, який відділяє переклад. Інші замініть на тире.',
         },
+
+        // GERMAN
         'de_DE': {
           'current_language': 'de',
           'slogan': 'Entspanne dich und studiere',
@@ -445,7 +460,10 @@ Sie können dieses Handbuch jederzeit öffnen, indem Sie im Menü auf das Fragez
 
           'skip': 'Nach',
           'done': 'Nicht zeigen',
-          'update_page' : 'Seite aktualisieren',
+          'update_page': 'Seite aktualisieren',
+
+          'extra_hyphen':
+              '(!) Lassen Sie 1 Bindestrich zwischen den Übersetzungen stehen. Ersetzen Sie den anderen durch einen Gedankenstrich.',
         },
         // 'fr_FR': {
         //   'slogan': 'Détendez-vous et étudiez',

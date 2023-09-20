@@ -247,7 +247,7 @@ class DictionaryWidget extends StatelessWidget {
                       ),
                       color: CustomLessonColors.values[dictionaryController.slideColorIndexList[e.key]].color,
                       child: Center(
-                        child: (splitStrings.length > 1)
+                        child: (splitStrings.length == 2)
                             ? AutoSizeText.rich(
                                 TextSpan(
                                   children: [
@@ -259,7 +259,7 @@ class DictionaryWidget extends StatelessWidget {
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
-                                    const TextSpan(text: '\n'),
+                                    TextSpan(text: (splitStrings[1].isEmpty) ? '' : '\n'),
                                     TextSpan(
                                       text: splitStrings[0],
                                       style: const TextStyle(
@@ -273,15 +273,38 @@ class DictionaryWidget extends StatelessWidget {
                                 ),
                                 textAlign: TextAlign.center,
                               )
-                            : AutoSizeText(
-                                splitStrings[0],
-                                style: const TextStyle(
-                                  color: Colors.white70,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w700,
+                            : AutoSizeText.rich(
+                                TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: e.value,
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    TextSpan(text: (splitStrings.length > 2) ? '\n' : ''),
+                                    TextSpan(
+                                      text: (splitStrings.length > 2) ? 'extra_hyphen'.tr : '',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.red[50],
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 textAlign: TextAlign.center,
                               ),
+                        // : AutoSizeText(
+                        //     e.value,
+                        //     style: const TextStyle(
+                        //       fontSize: 18,
+                        //       fontWeight: FontWeight.w500,
+                        //       color: Colors.white,
+                        //     ),
+                        //     textAlign: TextAlign.center,
+                        //   ),
                       ),
                     ),
                   );

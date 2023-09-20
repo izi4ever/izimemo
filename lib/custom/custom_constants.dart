@@ -9,4 +9,10 @@ class CustomConstants {
   static const double appBarHeight = 56;
   static const double textFieldRadius = 12;
   static const int urlTitleMaxLength = 30;
+
+  static const int minEntriesInLesson = 1;
+  static const int maxEntriesInLesson = 21;
+
+  static const int minSecondsPerEntry = 3;
+  static const int maxSecondsPerEntry = 30;
 }

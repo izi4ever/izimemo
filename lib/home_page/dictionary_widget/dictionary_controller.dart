@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
+import 'package:izimemo/custom/custom_constants.dart';
 
 import '../../app_storage/app_settings_storage.dart';
 import '../../app_storage/dictionary_storage.dart';
@@ -382,7 +383,8 @@ ca - Catalan
   }
 
   List<String> _wordListGenerator(List<String> inputList, int firstElement, int elementsInLesson) {
-    if ((firstElement + elementsInLesson) > inputList.length) {
+    if ((firstElement + elementsInLesson) > inputList.length ||
+        (elementsInLesson == CustomConstants.maxEntriesInLesson)) {
       return inputList.sublist(firstElement);
     } else {
       return inputList.sublist(
@@ -556,11 +558,11 @@ ca - Catalan
     if (isTextReading.value) {
       await flutterTts.stop();
       String rawText = sliderWordList[index];
-      String textWithoutTranscription = rawText.replaceAll(RegExp('\\[.*?\\]'), '').replaceAll(RegExp('\\(.*?\\)'), '');
-      var stringParts = textWithoutTranscription.split(' - ');
+      String textWithoutBrackets = rawText.replaceAll(RegExp('\\[.*?\\]'), '').replaceAll(RegExp('\\(.*?\\)'), '');
+      var stringParts = textWithoutBrackets.split(' - ');
       var fromLanguageLocale = getFromLanguageByStorageName(lastOpenedDic.value)!;
       var toLanguageLocale = getToLanguageByStorageName(lastOpenedDic.value)!;
-      if (stringParts.length > 1) {
+      if (stringParts.length == 2) {
         if (directionSpeech) {
           await _speak(stringParts[0], fromLanguageLocale);
           await _speak(stringParts[1], toLanguageLocale);
@@ -568,8 +570,10 @@ ca - Catalan
           await _speak(stringParts[1], toLanguageLocale);
           await _speak(stringParts[0], fromLanguageLocale);
         }
+      } else if (stringParts.length == 1) {
+        await _speak(textWithoutBrackets, toLanguageLocale);
       } else {
-        await _speak(textWithoutTranscription, toLanguageLocale);
+        await _speak(textWithoutBrackets, fromLanguageLocale);
       }
 
       if (index >= (sliderWordList.length - 1)) {
