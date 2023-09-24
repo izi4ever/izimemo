@@ -211,7 +211,17 @@ ca - Catalan
   List<int> get getSlideColorIndexList => _slideColorListGenerator(sliderWordList.length);
   late RxList<int> slideColorIndexList;
 
-  double get getSecondsPerEntries => appSettingsStorage.readSecondsPerEntries;
+  // double get getSecondsPerEntries => appSettingsStorage.readSecondsPerEntries;
+  double get getSecondsPerEntries {
+    var sPE = appSettingsStorage.readSecondsPerEntries;
+    var isTR = appSettingsStorage.readIsTextReading;
+    if (isTR) {
+      return 1000; // Extra delay for reading entry more then 1 time
+    } else {
+      return sPE;
+    }
+  }
+
   late RxDouble secondsPerEntries;
 
   bool get getIsTextReading => appSettingsStorage.readIsTextReading;
@@ -566,6 +576,8 @@ ca - Catalan
       var stringParts = textWithoutBrackets.split(' - ');
       var fromLanguageLocale = getFromLanguageByStorageName(lastOpenedDic.value)!;
       var toLanguageLocale = getToLanguageByStorageName(lastOpenedDic.value)!;
+
+
       if (stringParts.length == 2) {
         if (directionSpeech) {
           await _speak(stringParts[0], fromLanguageLocale);

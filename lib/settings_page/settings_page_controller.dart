@@ -40,7 +40,8 @@ class SettingsPageController extends GetxController {
 
   void onCancelSettings() {
     entriesInLesson.value = appSettings.readEntriesInLesson;
-    secondsPerEntries.value = appSettings.readSecondsPerEntries;
+    // secondsPerEntries.value = appSettings.readSecondsPerEntries;
+    secondsPerEntries.value = dictionaryController.getSecondsPerEntries;
     isTextReading.value = appSettings.readIsTextReading;
     readingTimes.value = appSettings.readReadingTimes;
     readingSpeed.value = appSettings.readReadingSpeed;
@@ -60,7 +61,8 @@ class SettingsPageController extends GetxController {
     dictionaryController.sliderWordList.value = dictionaryController.getSliderWordList;
     dictionaryController.slideColorIndexList.value = dictionaryController.getSlideColorIndexList;
 
-    dictionaryController.secondsPerEntries = secondsPerEntries;
+    // dictionaryController.secondsPerEntries = secondsPerEntries;
+    dictionaryController.secondsPerEntries.value = dictionaryController.getSecondsPerEntries;
     dictionaryController.isTextReading = isTextReading;
     dictionaryController.readingTimes = readingTimes;
     dictionaryController.readingSpeed = readingSpeed;
