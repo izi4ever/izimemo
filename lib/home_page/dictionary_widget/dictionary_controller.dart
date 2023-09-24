@@ -217,6 +217,9 @@ ca - Catalan
   bool get getIsTextReading => appSettingsStorage.readIsTextReading;
   late RxBool isTextReading;
 
+  int get getReadingTimes => appSettingsStorage.readReadingTimes;
+  late RxInt readingTimes;
+
   double get getReadingSpeed => appSettingsStorage.readReadingSpeed;
   late RxDouble readingSpeed;
 
@@ -246,6 +249,7 @@ ca - Catalan
     secondsPerEntries = getSecondsPerEntries.obs;
     isTextReading = getIsTextReading.obs;
     readingSpeed = getReadingSpeed.obs;
+    readingTimes = getReadingTimes.obs;
 
     // speakCurrentSlide;
   }
@@ -589,18 +593,18 @@ ca - Catalan
     }
   }
 
-  Future<void> backgroundSpeech() async {
-    if (isTextReading.value) {
-      Future.delayed(Duration(seconds: secondsPerEntries.value.round()), () async {
-        ++indexCurrentSlide;
-        if (indexCurrentSlide >= slideColorIndexList.length) {
-          indexCurrentSlide = 0;
-        }
-        carouselInitialPage.value = indexCurrentSlide;
-        await slideSpeak(indexCurrentSlide);
-      });
-    }
-  }
+  // Future<void> backgroundSpeech() async {
+  //   if (isTextReading.value) {
+  //     Future.delayed(Duration(seconds: secondsPerEntries.value.round()), () async {
+  //       ++indexCurrentSlide;
+  //       if (indexCurrentSlide >= slideColorIndexList.length) {
+  //         indexCurrentSlide = 0;
+  //       }
+  //       carouselInitialPage.value = indexCurrentSlide;
+  //       await slideSpeak(indexCurrentSlide);
+  //     });
+  //   }
+  // }
 
   Future<void> backgroundSpeechOnce() async {
     if (isTextReading.value) {
@@ -611,5 +615,10 @@ ca - Catalan
       carouselInitialPage.value = indexCurrentSlide;
       await slideSpeak(indexCurrentSlide);
     }
+  }
+
+  Future<void> onSlideChanged(int index) async {
+    indexCurrentSlide = index;
+    await slideSpeak(index);
   }
 }

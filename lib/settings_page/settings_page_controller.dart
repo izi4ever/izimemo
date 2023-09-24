@@ -13,6 +13,7 @@ class SettingsPageController extends GetxController {
   late RxDouble entriesInLesson;
   late RxDouble secondsPerEntries;
   late RxBool isTextReading;
+  late RxInt readingTimes;
   late RxDouble readingSpeed;
   late RxDouble backgroundVolume;
 
@@ -20,6 +21,7 @@ class SettingsPageController extends GetxController {
     entriesInLesson = appSettings.readEntriesInLesson.obs;
     secondsPerEntries = appSettings.readSecondsPerEntries.obs;
     isTextReading = appSettings.readIsTextReading.obs;
+    readingTimes = appSettings.readReadingTimes.obs;
     readingSpeed = appSettings.readReadingSpeed.obs;
     backgroundVolume = appSettings.readBackgroundVolume.obs;
   }
@@ -30,6 +32,8 @@ class SettingsPageController extends GetxController {
 
   void onChangedIsTextReading(bool value) => isTextReading.value = value;
 
+  void onChangedReadingTimes(int value) => readingTimes.value = value;
+
   void onChangedReadingSpeed(double value) => readingSpeed.value = value;
 
   void onChangedBackgroundVolume(double value) => backgroundVolume.value = value;
@@ -38,6 +42,7 @@ class SettingsPageController extends GetxController {
     entriesInLesson.value = appSettings.readEntriesInLesson;
     secondsPerEntries.value = appSettings.readSecondsPerEntries;
     isTextReading.value = appSettings.readIsTextReading;
+    readingTimes.value = appSettings.readReadingTimes;
     readingSpeed.value = appSettings.readReadingSpeed;
     backgroundVolume.value = appSettings.readBackgroundVolume;
 
@@ -48,6 +53,7 @@ class SettingsPageController extends GetxController {
     appSettings.writeEntriesInLesson(entriesInLesson.value);
     appSettings.writeSecondsPerEntries(secondsPerEntries.value);
     appSettings.writeIsReading(isTextReading.value);
+    appSettings.writeReadingTimes(readingTimes.value);
     appSettings.writeReadingSpeed(readingSpeed.value);
     appSettings.writeBackgroundVolume(backgroundVolume.value);
 
@@ -56,6 +62,7 @@ class SettingsPageController extends GetxController {
 
     dictionaryController.secondsPerEntries = secondsPerEntries;
     dictionaryController.isTextReading = isTextReading;
+    dictionaryController.readingTimes = readingTimes;
     dictionaryController.readingSpeed = readingSpeed;
     homePageController.backgroundVolume = backgroundVolume;
 

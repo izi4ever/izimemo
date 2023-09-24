@@ -18,6 +18,9 @@ class AppSettingsStorage {
   bool get readIsTextReading => box.read('isTextReading') ?? false;
   void writeIsReading(bool value) => box.write('isTextReading', value);
 
+  int get readReadingTimes => box.read('readingTimes') ?? 1;
+  void writeReadingTimes(int value) => box.write('readingTimes', value);
+
   double get readReadingSpeed => box.read('readingSpeed') ?? 0.25;
   void writeReadingSpeed(double value) => box.write('readingSpeed', value);
 

@@ -118,6 +118,8 @@ You can open this manual at any time by clicking the question mark in the menu.
 
           'extra_hyphen':
               'ⓘ Edit this entry. Leave 1 hyphen separating the translation. Replace the others with a dash.',
+
+          'reading_times': 'How many times to read each entry — ',
         },
 
         // RUSSIAN
@@ -232,6 +234,8 @@ You can open this manual at any time by clicking the question mark in the menu.
 
           'extra_hyphen':
               'ⓘ Отредактируйте эту запись. Оставьте 1 дефис, который отделяет перевод. Другие замените на тире.',
+
+          'reading_times': 'Сколько раз читать каждую запись — ',
         },
 
         // UKRAINIAN
@@ -345,6 +349,8 @@ You can open this manual at any time by clicking the question mark in the menu.
           'update_page': 'Сторінка оновлення',
 
           'extra_hyphen': 'ⓘ Відредагуйте цей запис. Залиште 1 дефіс, який відділяє переклад. Інші замініть на тире.',
+
+          'reading_times': 'Скільки разів читати кожен запис — ',
         },
 
         // GERMAN
@@ -464,6 +470,8 @@ Sie können dieses Handbuch jederzeit öffnen, indem Sie im Menü auf das Fragez
 
           'extra_hyphen':
               '(!) Lassen Sie 1 Bindestrich zwischen den Übersetzungen stehen. Ersetzen Sie den anderen durch einen Gedankenstrich.',
+
+          'reading_times': 'Wie oft jeder Eintrag zu lesen ist — ',
         },
         // 'fr_FR': {
         //   'slogan': 'Détendez-vous et étudiez',
