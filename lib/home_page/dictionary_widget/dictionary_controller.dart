@@ -571,12 +571,12 @@ ca - Catalan
   Future<void> slideSpeak(int index) async {
     if (isTextReading.value) {
       await flutterTts.stop();
+
       String rawText = sliderWordList[index];
       String textWithoutBrackets = rawText.replaceAll(RegExp('\\[.*?\\]'), '').replaceAll(RegExp('\\(.*?\\)'), '');
       var stringParts = textWithoutBrackets.split(' - ');
       var fromLanguageLocale = getFromLanguageByStorageName(lastOpenedDic.value)!;
       var toLanguageLocale = getToLanguageByStorageName(lastOpenedDic.value)!;
-
 
       if (stringParts.length == 2) {
         if (directionSpeech) {
@@ -605,19 +605,6 @@ ca - Catalan
     }
   }
 
-  // Future<void> backgroundSpeech() async {
-  //   if (isTextReading.value) {
-  //     Future.delayed(Duration(seconds: secondsPerEntries.value.round()), () async {
-  //       ++indexCurrentSlide;
-  //       if (indexCurrentSlide >= slideColorIndexList.length) {
-  //         indexCurrentSlide = 0;
-  //       }
-  //       carouselInitialPage.value = indexCurrentSlide;
-  //       await slideSpeak(indexCurrentSlide);
-  //     });
-  //   }
-  // }
-
   Future<void> backgroundSpeechOnce() async {
     if (isTextReading.value) {
       ++indexCurrentSlide;
@@ -631,6 +618,10 @@ ca - Catalan
 
   Future<void> onSlideChanged(int index) async {
     indexCurrentSlide = index;
-    await slideSpeak(index);
+
+    for (var i = 0; i < readingTimes.value; i++) {
+      await slideSpeak(index);
+      await Future.delayed(const Duration(milliseconds: 3000));
+    }
   }
 }

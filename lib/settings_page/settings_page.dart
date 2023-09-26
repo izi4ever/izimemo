@@ -150,8 +150,8 @@ class SettingsPage extends StatelessWidget {
                   value: settingsPageController.readingTimes.value.toDouble(),
                   onChanged: (double value) => settingsPageController.onChangedReadingTimes(value.toInt()),
                   min: 1,
-                  max: 4,
-                  divisions: 3,
+                  max: 10,
+                  divisions: 9,
                   // label: (settingsPageController.readingSpeed.value * 2).toString(),
                 ),
 

@@ -57,7 +57,7 @@ class HomePageController extends GetxController {
     //   print('loadUrl error: $e');
     // }
 
-    await webController.loadRequest(Uri.parse(url));
+    webController.loadRequest(Uri.parse(url));
 
     // if (url != 'about:blank') {
     //   await webController.loadUrl(Uri.parse(url).toString());
@@ -87,7 +87,7 @@ class HomePageController extends GetxController {
         loadedUrl = 'https://www.google.com/search?q=${urlText.replaceAll(' ', '+')}';
       }
     }
-    await onLoadUrl(webController, loadedUrl);
+    onLoadUrl(webController, loadedUrl);
   }
 
   Future<void> onClearCache(WebViewController webController) async {
@@ -109,7 +109,7 @@ class HomePageController extends GetxController {
   Future<void> onWebError(WebViewController webController, WebResourceError error, String urlTextFromField) async {
     if (error.errorCode == -2) {
       final searchString = urlTextFromField.replaceAll(' ', '+');
-      await onLoadUrl(webController, 'https://www.google.com/search?q=$searchString');
+      onLoadUrl(webController, 'https://www.google.com/search?q=$searchString');
     }
   }
 
@@ -139,7 +139,7 @@ class HomePageController extends GetxController {
   }
 
   Future<void> setVolume(WebViewController webController) async {
-    await webController.runJavaScript('''
+    webController.runJavaScript('''
       var videos = document.getElementsByTagName('video');
       for (var i = 0; i < videos.length; i++) {
         videos[i].volume = ${backgroundVolume.value};

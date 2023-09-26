@@ -56,6 +56,6 @@ class SnippetSaveShareLinksController extends GetxController {
 
   Future<void> onBookmarkPressed(WebViewController webController, String url) async {
     Get.back();
-    await homePageController.onLoadUrl(webController, url);
+    homePageController.onLoadUrl(webController, url);
   }
 }

@@ -83,7 +83,7 @@ class _SnippetSaveShareLinksState extends State<SnippetSaveShareLinks> {
                           child: CustomBookmarkButton(
                             title: e.value['title']!,
                             url: e.value['url']!,
-                            onPressed: () async => await snippetSaveShareLinksController.onBookmarkPressed(
+                            onPressed: () => snippetSaveShareLinksController.onBookmarkPressed(
                                 widget.webController, e.value['url']),
                             // Dialog for editing and deleting bookmark
                             onLongPress: () {

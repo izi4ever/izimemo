@@ -359,7 +359,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                               ..onDown = (tap) async {
                                 urlFieldUnfocused;
                                 await Future.delayed(
-                                    const Duration(milliseconds: 500), () async => await appBarHeightWhenScrolling());
+                                    const Duration(milliseconds: 500), () => appBarHeightWhenScrolling());
                               },
                           ),
                         },
