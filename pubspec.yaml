@@ -47,16 +47,16 @@ dependencies:
   flutter_native_splash: ^2.3.0
   file_picker: ^5.2.10 # file_picker: ^5.3.0
   chewie: ^1.5.0
-  video_player: ^2.6.1
+  video_player: ^2.7.2
   image_picker: ^1.0.4
   flutter_tts: ^3.7.0
-  audioplayers: ^4.1.0
+  audioplayers: ^5.2.0
   path_provider: ^2.1.1
   wakelock: ^0.6.2
-  audio_service: ^0.18.10
-  introduction_screen: ^3.1.8
-  dio: ^5.2.1+1
-  url_launcher: ^6.1.12
+  audio_service: ^0.18.12
+  introduction_screen: ^3.1.12
+  dio: ^5.3.3
+  url_launcher: ^6.1.14
   # flutter_tts_tizen: ^1.4.0
 
 dev_dependencies:
