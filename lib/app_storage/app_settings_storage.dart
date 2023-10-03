@@ -6,7 +6,7 @@ class AppSettingsStorage {
   double get readEntriesInLesson => box.read('entriesInLesson') ?? 10;
   void writeEntriesInLesson(double value) => box.write('entriesInLesson', value);
 
-  double get readSecondsPerEntries => box.read('secondsPerEntries') ?? 10;
+  double get readSecondsPerEntries => box.read('secondsPerEntries') ?? 12;
   void writeSecondsPerEntries(double value) => box.write('secondsPerEntries', value);
 
   bool get readLoadLastUrl => box.read('loadLastUrl') ?? false;

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
 import 'package:izimemo/custom/custom_constants.dart';
@@ -211,16 +212,15 @@ ca - Catalan
   List<int> get getSlideColorIndexList => _slideColorListGenerator(sliderWordList.length);
   late RxList<int> slideColorIndexList;
 
-  // double get getSecondsPerEntries => appSettingsStorage.readSecondsPerEntries;
-  double get getSecondsPerEntries {
-    var sPE = appSettingsStorage.readSecondsPerEntries;
-    var isTR = appSettingsStorage.readIsTextReading;
-    if (isTR) {
-      return 1000; // Extra delay for reading entry more then 1 time
-    } else {
-      return sPE;
-    }
-  }
+  double get getSecondsPerEntries => appSettingsStorage.readSecondsPerEntries;
+  // double get getSecondsPerEntries {
+  //   if (appSettingsStorage.readIsTextReading) {
+  //     autoPlay.value = false;
+  //   } else {
+  //     autoPlay.value = true;
+  //   }
+  //   return appSettingsStorage.readSecondsPerEntries;
+  // }
 
   late RxDouble secondsPerEntries;
 
@@ -242,7 +242,7 @@ ca - Catalan
 
   late RxBool lastEntry;
 
-  RxBool appIsPaused = false.obs;
+  // RxBool appIsPaused = false.obs;
 
   DictionaryController() {
     lastCreatedDicIndex = dictionaryStorage.readLastCreatedDicIndex.obs;
@@ -616,12 +616,19 @@ ca - Catalan
     }
   }
 
-  Future<void> onSlideChanged(int index) async {
+  Future<void> onSlideChanged(int index, CarouselController carouselController) async {
     indexCurrentSlide = index;
+    await slideSpeak(index);
 
-    for (var i = 0; i < readingTimes.value; i++) {
-      await slideSpeak(index);
-      await Future.delayed(const Duration(milliseconds: 3000));
-    }
+    // await flutterTts.stop();
+
+    // var i = 0;
+    // while (i < readingTimes.value) {
+    //   await slideSpeak(index);
+    //   await Future.delayed(const Duration(milliseconds: 3000));
+    //   i++;
+    // }
+
+    // if (i >= readingTimes.value) carouselController.nextPage();
   }
 }

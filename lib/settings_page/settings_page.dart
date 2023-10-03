@@ -120,43 +120,42 @@ class SettingsPage extends StatelessWidget {
               children: [
                 // TODO readingTimes
                 const SizedBox(height: 32),
-                Text.rich(
-                  TextSpan(children: [
-                    WidgetSpan(
-                      child: Container(
-                        padding: const EdgeInsets.only(bottom: 3),
-                        child: Text(
-                          'reading_times'.tr,
-                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ),
-                    WidgetSpan(
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(4)),
-                          color: CustomDesignColors.darkBlue,
-                        ),
-                        padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
-                        child: Text(
-                          settingsPageController.readingTimes.value.toString(),
-                          style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ),
-                  ]),
-                ),
-                Slider(
-                  value: settingsPageController.readingTimes.value.toDouble(),
-                  onChanged: (double value) => settingsPageController.onChangedReadingTimes(value.toInt()),
-                  min: 1,
-                  max: 10,
-                  divisions: 9,
-                  // label: (settingsPageController.readingSpeed.value * 2).toString(),
-                ),
+                // Text.rich(
+                //   TextSpan(children: [
+                //     WidgetSpan(
+                //       child: Container(
+                //         padding: const EdgeInsets.only(bottom: 3),
+                //         child: Text(
+                //           'reading_times'.tr,
+                //           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                //         ),
+                //       ),
+                //     ),
+                //     WidgetSpan(
+                //       child: Container(
+                //         decoration: const BoxDecoration(
+                //           borderRadius: BorderRadius.all(Radius.circular(4)),
+                //           color: CustomDesignColors.darkBlue,
+                //         ),
+                //         padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+                //         child: Text(
+                //           settingsPageController.readingTimes.value.toString(),
+                //           style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
+                //         ),
+                //       ),
+                //     ),
+                //   ]),
+                // ),
+                // Slider(
+                //   value: settingsPageController.readingTimes.value.toDouble(),
+                //   onChanged: (double value) => settingsPageController.onChangedReadingTimes(value.toInt()),
+                //   min: 1,
+                //   max: 10,
+                //   divisions: 9,
+                // ),
 
                 // TODO readingSpeed
-                const SizedBox(height: 24),
+                // const SizedBox(height: 24),
                 Text.rich(
                   TextSpan(children: [
                     // const TextSpan(

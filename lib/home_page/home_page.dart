@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   void get urlFieldUnfocused => FocusManager.instance.primaryFocus?.unfocus();
 
-  var webScrollYOld = 0;
+  var  webScrollYOld = 0;
   var webScrollYNew = 0;
 
   Future<void> appBarHeightWhenScrolling() async {
