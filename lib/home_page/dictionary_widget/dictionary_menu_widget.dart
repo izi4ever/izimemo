@@ -4,6 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:izimemo/custom/widgets/custom_dropdown_button.dart';
+import 'package:izimemo/custom/available_languages.dart';
 import 'package:izimemo/home_page/dictionary_widget/dictionary_controller.dart';
 
 import '../../custom/colors/custom_design_colors.dart';
@@ -33,7 +34,7 @@ class DictionaryMenuWidget extends StatelessWidget {
     return Obx(() {
       // TODO Was error with this State in stream. Test it latter
       // List<Map<String, dynamic>> dicsList = dictionaryController.availableDics;
-      List<Map<String, dynamic>> dicsList = dictionaryController.availableDics.value;
+      List<Map<String, dynamic>> dicsList = dictionaryController.availableDicsDataList.value;
       return PopupMenuButton(
         initialValue: dictionaryController.lastOpenedDic.value,
         onSelected: (value) {
@@ -84,7 +85,8 @@ class DictionaryMenuWidget extends StatelessWidget {
                               flex: 1,
                               child: CustomDropdownButton(
                                 hintText: 'from_language'.tr,
-                                items: dictionaryController.availableLanguages,
+                                // items: dictionaryController.availableLanguages,
+                                items: AvailableLanguages.getList,
                                 onChanged: (String? value) => dictionaryController.formFromLanguage.value = value!,
                               ),
                             ),
@@ -93,7 +95,8 @@ class DictionaryMenuWidget extends StatelessWidget {
                               flex: 1,
                               child: CustomDropdownButton(
                                 hintText: 'to_language'.tr,
-                                items: dictionaryController.availableLanguages,
+                                // items: dictionaryController.availableLanguages,
+                                items: AvailableLanguages.getList,
                                 onChanged: (String? value) => dictionaryController.formToLanguage.value = value!,
                               ),
                             ),
@@ -160,7 +163,6 @@ class DictionaryMenuWidget extends StatelessWidget {
                         motion: const ScrollMotion(),
                         extentRatio: 0.7,
                         children: [
-
                           // >>> EDIT DIC
                           SlidableAction(
                             onPressed: (BuildContext context) {
@@ -204,7 +206,8 @@ class DictionaryMenuWidget extends StatelessWidget {
                                                   hintText: 'from_language'.tr,
                                                   defaultValue: dictionaryController
                                                       .getFromLanguageByStorageName(e.value['storageName']),
-                                                  items: dictionaryController.availableLanguages,
+                                                  // items: dictionaryController.availableLanguages,
+                                                  items: AvailableLanguages.getList,
                                                   onChanged: (String? value) =>
                                                       dictionaryController.formFromLanguage.value = value!,
                                                 ),
@@ -216,7 +219,8 @@ class DictionaryMenuWidget extends StatelessWidget {
                                                   hintText: 'to_language'.tr,
                                                   defaultValue: dictionaryController
                                                       .getToLanguageByStorageName(e.value['storageName']),
-                                                  items: dictionaryController.availableLanguages,
+                                                  // items: dictionaryController.availableLanguages,
+                                                  items: AvailableLanguages.getList,
                                                   onChanged: (String? value) =>
                                                       dictionaryController.formToLanguage.value = value!,
                                                 ),
