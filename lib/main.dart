@@ -44,7 +44,6 @@ class MyApp extends StatelessWidget {
         child: FutureBuilder<bool>(
             future: updateController.isOldVersion(),
             builder: (context, snapshot) {
-              
               // Show UpdatePage when isOldVersion is true
               if (snapshot.connectionState == ConnectionState.done) {
                 final bool isOldVersion = snapshot.data ?? false;
@@ -63,6 +62,10 @@ class MyApp extends StatelessWidget {
           primary: CustomDesignColors.darkBlue,
           secondary: CustomDesignColors.lightBlue,
         ),
+        sliderTheme: const SliderThemeData(
+          inactiveTrackColor: CustomDesignColors.lightBlue,
+        ),
+        // switchTheme: SwitchThemeData(),
       ),
     );
   }

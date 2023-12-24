@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   void get urlFieldUnfocused => FocusManager.instance.primaryFocus?.unfocus();
 
-  var  webScrollYOld = 0;
+  var webScrollYOld = 0;
   var webScrollYNew = 0;
 
   Future<void> appBarHeightWhenScrolling() async {
@@ -148,12 +148,13 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () => homePageController.onGoBack(_webController),
+    return PopScope(
+      onPopInvoked: (_) => homePageController.onGoBack(_webController), // TODO <<< If pressed button back
       child: Scaffold(
         backgroundColor: Colors.black,
         drawer: Drawer(
           backgroundColor: CustomDesignColors.lightBlue,
+          surfaceTintColor: Colors.transparent,
           child: Column(
             children: [
               Expanded(
@@ -181,7 +182,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                         Get.back();
                                         homePageController.onLoadUrl(_webController, e.url);
                                       },
-                                      icon: Image.asset('assets/bookmarks/${e.imageFileName}'),
+                                      icon: Image.asset(
+                                        'assets/bookmarks/${e.imageFileName}',
+                                        height: 32,
+                                      ),
                                     );
                                   }
                                   return const SizedBox.shrink();
@@ -189,11 +193,17 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                               ),
                               ...[
                                 IconButton(
-                                  icon: Image.asset('assets/bookmarks/002-audio-headset.png'),
-                                  onPressed: () => Get.to(() => AudioPlayerPage()),
+                                  icon: Image.asset(
+                                    'assets/bookmarks/002-audio-headset.png',
+                                    height: 32,
+                                  ),
+                                  onPressed: () => Get.to(() => const AudioPlayerPage()),
                                 ),
                                 IconButton(
-                                  icon: Image.asset('assets/bookmarks/001-play-button-1.png'),
+                                  icon: Image.asset(
+                                    'assets/bookmarks/001-play-button-1.png',
+                                    height: 32,
+                                  ),
                                   onPressed: openVideoFile,
                                 ),
                               ],
@@ -246,6 +256,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         ),
         appBar: AppBar(
           toolbarHeight: appBarSizeAnimation.value,
+          backgroundColor: CustomDesignColors.darkBlue,
+          foregroundColor: Colors.white,
           title: Obx(() => SnippetAppBarTitle(
                 onUrlFieldFocus: onUrlFieldFocus,
                 loadingPercentage: homePageController.loadingPercentage.value,

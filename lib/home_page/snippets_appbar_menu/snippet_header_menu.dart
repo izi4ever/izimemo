@@ -50,7 +50,11 @@ class SnippetHeaderMenu extends StatelessWidget {
                   // const SizedBox(height: 2),
                   Text(
                     'slogan'.tr,
-                    style: const TextStyle(color: CustomDesignColors.lightBlue, fontWeight: FontWeight.w700),
+                    style: const TextStyle(
+                      color: CustomDesignColors.lightBlue,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                    ),
                   ),
                   const SizedBox(height: 16),
                 ],

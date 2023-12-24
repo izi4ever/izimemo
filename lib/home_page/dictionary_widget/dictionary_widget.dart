@@ -145,6 +145,7 @@ class DictionaryWidget extends StatelessWidget {
                                         padding: const EdgeInsets.all(0),
                                         elevation: 0,
                                         side: const BorderSide(color: Colors.white),
+                                        backgroundColor: Colors.transparent,
                                       ),
                                       child: const Icon(
                                         Icons.close,

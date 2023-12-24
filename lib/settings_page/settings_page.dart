@@ -100,7 +100,11 @@ class SettingsPage extends StatelessWidget {
               children: [
                 Switch(
                   value: settingsPageController.isTextReading.value,
-                  activeColor: CustomDesignColors.darkBlue,
+                  // activeColor: CustomDesignColors.darkBlue,
+                  activeTrackColor: CustomDesignColors.darkBlue,
+                  activeColor: CustomDesignColors.lightBlue,
+                  inactiveTrackColor: CustomDesignColors.lightBlue,
+                  inactiveThumbColor: CustomDesignColors.darkBlue,
                   onChanged: (bool value) => settingsPageController.onChangedIsTextReading(value),
                 ),
                 const SizedBox(width: 8),

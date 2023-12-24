@@ -75,11 +75,11 @@ class HomePageController extends GetxController {
       loadedUrl = 'http://$urlText';
 
       var matchCaseOne = RegExp(
-              "^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?",
+              "^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?",
               caseSensitive: false)
           .firstMatch(loadedUrl);
       var matchCaseTwo =
-          RegExp("^([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?", caseSensitive: false)
+          RegExp("^([0-9A-Za-z-\\.@:%_+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?", caseSensitive: false)
               .firstMatch(loadedUrl);
       if (matchCaseOne != null || matchCaseTwo != null) {
         print('Valid URL');

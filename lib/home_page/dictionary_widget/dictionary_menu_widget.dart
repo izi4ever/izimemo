@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:izimemo/custom/widgets/custom_dropdown_button.dart';
 import 'package:izimemo/custom/available_languages.dart';
+import 'package:izimemo/custom/widgets/custom_dropdown_button.dart';
 import 'package:izimemo/home_page/dictionary_widget/dictionary_controller.dart';
 
 import '../../custom/colors/custom_design_colors.dart';
@@ -154,6 +154,7 @@ class DictionaryMenuWidget extends StatelessWidget {
           ...dicsList.asMap().entries.map(
                 // ...dictionaryMenuWidgetController.availableDics.value.asMap().entries.map(
                 (e) => PopupMenuItem(
+                  padding: const EdgeInsets.only(left: 16, right: 16),
                   key: ValueKey(e.value['storageName']),
                   value: e.value['storageName'],
                   // ClipRRect is for cropping element name behind menu border
