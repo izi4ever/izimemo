@@ -66,6 +66,10 @@ class MyApp extends StatelessWidget {
           inactiveTrackColor: CustomDesignColors.lightBlue,
         ),
         // switchTheme: SwitchThemeData(),
+        dividerTheme: DividerThemeData(
+          color: Colors.grey[350],
+          // thickness: 1,
+        ),
       ),
     );
   }

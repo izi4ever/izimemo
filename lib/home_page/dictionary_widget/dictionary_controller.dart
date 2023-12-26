@@ -245,13 +245,15 @@ class DictionaryController extends GetxController {
   }
 
   List<String> _wordListGenerator(List<String> inputList, int firstElement, int elementsInLesson) {
-    if ((firstElement + elementsInLesson) > inputList.length ||
-        (elementsInLesson == CustomConstants.maxEntriesInLesson)) {
+    int _elementsInLesson = elementsInLesson;
+    if (elementsInLesson >= CustomConstants.maxEntriesInLesson) _elementsInLesson = inputList.length;
+
+    if ((firstElement + _elementsInLesson) > inputList.length) {
       return inputList.sublist(firstElement);
     } else {
       return inputList.sublist(
         firstElement,
-        firstElement + elementsInLesson,
+        firstElement + _elementsInLesson,
       );
     }
   }
@@ -283,6 +285,10 @@ class DictionaryController extends GetxController {
 
       // _willLearnWords list
       int entriesInLesson = appSettingsStorage.readEntriesInLesson.round();
+      if (entriesInLesson >= CustomConstants.maxEntriesInLesson) {
+        entriesInLesson = currentWordsList.length - firstElementCurrentDic.value;
+      }
+
       if ((firstElementCurrentDic.value + entriesInLesson) >= currentWordsList.length) {
         _willLearnWords = [];
       } else {
