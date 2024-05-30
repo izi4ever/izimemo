@@ -5,7 +5,6 @@ import 'dart:math';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
-
 import 'package:izimemo/custom/custom_constants.dart';
 
 import '../../app_storage/app_settings_storage.dart';
@@ -48,11 +47,13 @@ class DictionaryController extends GetxController {
   bool directionSpeech = true;
 
   List<String> get getCurrentWordsList => dictionaryStorage.readWordListByDicKey(dictionaryStorage.readLastOpenedDic);
+  int get getFirstElementCurrentDic =>
+      dictionaryStorage.readFirstElementForDictionary(dictionaryStorage.readLastOpenedDic);
   late RxList<String> currentWordsList;
 
   List<String> get getSliderWordList => _wordListGenerator(
-        dictionaryStorage.readWordListByDicKey(dictionaryStorage.readLastOpenedDic),
-        dictionaryStorage.readFirstElementForDictionary(dictionaryStorage.readLastOpenedDic),
+        getCurrentWordsList,
+        getFirstElementCurrentDic,
         appSettingsStorage.readEntriesInLesson.round(),
       );
   late RxList<String> sliderWordList;
@@ -97,7 +98,7 @@ class DictionaryController extends GetxController {
     lastOpenedDic = dictionaryStorage.readLastOpenedDic.obs;
     availableDicsDataList = dictionaryStorage.readAvailableDicsDataList.obs;
     lengthDicsList = availableDicsDataList.length.obs;
-    firstElementCurrentDic = dictionaryStorage.readFirstElementForDictionary(dictionaryStorage.readLastOpenedDic).obs;
+    firstElementCurrentDic = getFirstElementCurrentDic.obs;
     // dicLanguages = dictionaryStorage.readDicLanguages(dictionaryStorage.readLastOpenedDic).obs;
     dicLanguages = getDicLanguages.obs;
 
@@ -120,12 +121,14 @@ class DictionaryController extends GetxController {
     sliderWordList.value = getSliderWordList;
     slideColorIndexList.value = getSlideColorIndexList;
     currentWordsList.value = getCurrentWordsList;
+
+    firstElementCurrentDic.value = getFirstElementCurrentDic;
   }
 
   void changeCurrentDic(String currentDic) {
     lastOpenedDic.value = currentDic;
     dictionaryStorage.writeLastOpenedDic(currentDic);
-    dicLanguages.value = getDicLanguages;
+    dicLanguages.value = getDicLanguages; // TODO <<<< Changing language
 
     _updateListsForSlider();
 
@@ -245,15 +248,15 @@ class DictionaryController extends GetxController {
   }
 
   List<String> _wordListGenerator(List<String> inputList, int firstElement, int elementsInLesson) {
-    int _elementsInLesson = elementsInLesson;
-    if (elementsInLesson >= CustomConstants.maxEntriesInLesson) _elementsInLesson = inputList.length;
+    int elementsInLesson0 = elementsInLesson;
+    if (elementsInLesson >= CustomConstants.maxEntriesInLesson) elementsInLesson0 = inputList.length;
 
-    if ((firstElement + _elementsInLesson) > inputList.length) {
+    if ((firstElement + elementsInLesson0) > inputList.length) {
       return inputList.sublist(firstElement);
     } else {
       return inputList.sublist(
         firstElement,
-        firstElement + _elementsInLesson,
+        firstElement + elementsInLesson0,
       );
     }
   }
@@ -331,10 +334,14 @@ class DictionaryController extends GetxController {
       if (indexCurrentSlide >= _learningWords.length) {
         carouselInitialPage.value = 0;
         indexCurrentSlide = 0;
+      } else {
+        carouselInitialPage.value = index;
+        indexCurrentSlide = index;
       }
     }
-    speakCurrentSlide;
+
     _joinSaveUpdateDic();
+    speakCurrentSlide;
   }
 
   void moveEntry(int index) {
