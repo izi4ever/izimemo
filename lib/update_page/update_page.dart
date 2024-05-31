@@ -11,11 +11,8 @@ class UpdatePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final UpdateController updateController = Get.put(UpdateController());
 
-    return WillPopScope(
-      onWillPop: () async {
-        // Return false to block the back navigation
-        return false;
-      },
+    return PopScope(
+      onPopInvoked: (onPop) => {},
       child: CustomScaffold(
         appBarTitle: 'update_page'.tr,
         showBackButtonInAppBar: false,

@@ -34,7 +34,8 @@ class DictionaryMenuWidget extends StatelessWidget {
     return Obx(() {
       // TODO Was error with this State in stream. Test it latter
       // List<Map<String, dynamic>> dicsList = dictionaryController.availableDics;
-      List<Map<String, dynamic>> dicsList = dictionaryController.availableDicsDataList.value;
+      // List<Map<String, dynamic>> dicsList = dictionaryController.availableDicsDataList.value;
+      List<Map<String, dynamic>> dicsList = dictionaryController.availableDicsDataList;
       return PopupMenuButton(
         initialValue: dictionaryController.lastOpenedDic.value,
         onSelected: (value) {

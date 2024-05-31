@@ -52,8 +52,8 @@ class Dialogs {
       AlertDialog(
         content: Container(
           width: (widthRatio != null)
-              ? MediaQueryData.fromView(WidgetsBinding.instance.window).size.width * widthRatio
-              : MediaQueryData.fromView(WidgetsBinding.instance.window).size.width * 0.7,
+              ? Get.width * widthRatio
+              : Get.width * 0.7,
           padding: (contentPadding != null) ? contentPadding : const EdgeInsets.only(top: 4),
           child: content,
         ),

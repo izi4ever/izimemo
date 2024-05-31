@@ -325,7 +325,6 @@ class DictionaryController extends GetxController {
     _learnedWords.add(_learningWords[index]);
     _learningWords.removeAt(index);
     if (_willLearnWords.isNotEmpty) {
-      // _learningWords.insert(0, _willLearnWords[0]);
       _learningWords.add(_willLearnWords[0]);
       _willLearnWords.removeAt(0);
       carouselInitialPage.value = _learningWords.length - 1;

@@ -82,7 +82,7 @@ class HomePageController extends GetxController {
           RegExp("^([0-9A-Za-z-\\.@:%_+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?", caseSensitive: false)
               .firstMatch(loadedUrl);
       if (matchCaseOne != null || matchCaseTwo != null) {
-        print('Valid URL');
+        // print('Valid URL');
       } else {
         loadedUrl = 'https://www.google.com/search?q=${urlText.replaceAll(' ', '+')}';
       }

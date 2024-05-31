@@ -12,9 +12,9 @@ class LifecycleWidgetWrapper extends StatefulWidget {
   final Widget child;
 
   const LifecycleWidgetWrapper({
-    Key? key,
+    super.key,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   State<LifecycleWidgetWrapper> createState() => _LifecycleWidgetWrapperState();
@@ -51,7 +51,7 @@ class _LifecycleWidgetWrapperState extends State<LifecycleWidgetWrapper> with Wi
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
     setState(() {
       _appLifecycleState = state;
-      print('>>> $_appLifecycleState');
+      // print('>>> $_appLifecycleState');
     });
 
     if (dictionaryController.autoPlay.isTrue && instructionController.getReadInstructionIsShown) {
