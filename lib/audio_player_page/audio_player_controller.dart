@@ -57,6 +57,18 @@ class AudioPlayerController extends GetxController {
       positionSecond.value = position.inSeconds.toDouble();
       positionString.value = formatTime(position);
     });
+
+    audioPlayer.onPlayerStateChanged.listen((PlayerState state) {
+      print('>>> PlayerState: $state');
+    });
+
+    audioPlayer.onPlayerComplete.listen((event) {
+      print('>>> Player complete event');
+    });
+
+    audioPlayer.onSeekComplete.listen((event) {
+      print('>>> Seek complete event');
+    });
   }
 
   Future<void> onChangedPosition(double value) async {
@@ -97,7 +109,8 @@ class AudioPlayerController extends GetxController {
     await pickAudioFiles();
   }
 
-  void onPlayPause() => isPlaying.value ? pauseAudio() : playAudio(currentTrackIndex);
+  // void onPlayPause() => isPlaying.value ? pauseAudio() : playAudio(currentTrackIndex);
+  void onPlayPause() => isPlaying.value ? pauseAudio() : resumeAudio();
 
   Future<void> playAudio(int index) async {
     await audioPlayer.stop();
@@ -109,6 +122,11 @@ class AudioPlayerController extends GetxController {
       String filePath = listAudioFiles[index].path;
       await audioPlayer.play(DeviceFileSource(filePath));
     }
+  }
+
+  Future<void> resumeAudio() async {
+    await audioPlayer.resume();
+    isPlaying.value = true;
   }
 
   Future<void> pauseAudio() async {
