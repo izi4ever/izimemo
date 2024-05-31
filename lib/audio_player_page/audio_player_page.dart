@@ -40,7 +40,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
                 itemCount: audioPlayerController.listAudioFiles.length,
                 itemBuilder: (context, index) {
                   return Container(
-                    color: (index == audioPlayerController.currentTrackIndex)
+                    color: (index == audioPlayerController.currentTrackIndex.value)
                         ? const Color.fromARGB(255, 223, 239, 245)
                         : ((index % 2) == 0)
                             ? Colors.white
@@ -51,7 +51,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          (index == audioPlayerController.currentTrackIndex)
+                          (index == audioPlayerController.currentTrackIndex.value)
                               ? Icon(audioPlayerController.isPlaying.value
                                   ? Icons.play_arrow_rounded
                                   : Icons.pause_circle_rounded)
@@ -67,24 +67,24 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
                       title: Text(
                         audioPlayerController.listAudioFiles[index].path.split('/').last,
                         style: TextStyle(
-                          color: (index == audioPlayerController.currentTrackIndex)
+                          color: (index == audioPlayerController.currentTrackIndex.value)
                               ? CustomDesignColors.darkBlue
                               : Colors.blueGrey[900],
                           fontWeight:
-                              (index == audioPlayerController.currentTrackIndex) ? FontWeight.w900 : FontWeight.w500,
-                          fontSize: (index == audioPlayerController.currentTrackIndex) ? 18 : 16,
+                              (index == audioPlayerController.currentTrackIndex.value) ? FontWeight.w900 : FontWeight.w500,
+                          fontSize: (index == audioPlayerController.currentTrackIndex.value) ? 18 : 16,
                         ),
                         overflow: TextOverflow.fade,
                         maxLines: 1,
                         softWrap: false,
                       ),
-                      selected: audioPlayerController.currentTrackIndex == index,
+                      selected: audioPlayerController.currentTrackIndex.value == index,
                       onTap: () => audioPlayerController.onItemTap(index),
                       trailing: IconButton(
                         icon: Icon(
                           Icons.close,
                           size: 14,
-                          color: (index == audioPlayerController.currentTrackIndex)
+                          color: (index == audioPlayerController.currentTrackIndex.value)
                               ? CustomDesignColors.darkBlue
                               : Colors.grey[500],
                         ),

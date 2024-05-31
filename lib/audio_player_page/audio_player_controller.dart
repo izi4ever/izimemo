@@ -1,15 +1,15 @@
 import 'dart:io';
 
-import 'package:audioplayers/audioplayers.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
+import 'package:just_audio/just_audio.dart';
 
 import '../home_page/home_page_controller.dart';
 
 class AudioPlayerController extends GetxController {
   final AudioPlayer audioPlayer = AudioPlayer();
-  var listAudioFiles = [].obs;
-  var currentTrackIndex = -1.obs;
+  var listAudioFiles = <File>[].obs;
+  var currentTrackIndex = (-1).obs;
   var isPlaying = false.obs;
 
   Duration duration = Duration.zero;
@@ -26,60 +26,50 @@ class AudioPlayerController extends GetxController {
   }
 
   void listenPlayPause() {
-    audioPlayer.onPlayerStateChanged.listen((PlayerState state) {
-      if (state == PlayerState.playing) {
-        isPlaying.value = true;
-      } else {
-        isPlaying.value = false;
-      }
+    audioPlayer.playerStateStream.listen((playerState) {
+      final isPlaying = playerState.playing;
+      this.isPlaying.value = isPlaying;
 
-      if (state == PlayerState.completed) {
-        currentTrackIndex++;
-        if (currentTrackIndex >= listAudioFiles.length) {
-          currentTrackIndex = 0;
+      final processingState = playerState.processingState;
+      if (processingState == ProcessingState.completed) {
+        currentTrackIndex.value++;
+        if (currentTrackIndex.value >= listAudioFiles.length) {
+          currentTrackIndex.value = 0;
         }
-        playAudio(currentTrackIndex);
+        playAudio(currentTrackIndex.value);
       }
     });
   }
 
   void listenDuration() {
-    audioPlayer.onDurationChanged.listen((newDuration) {
-      duration = newDuration;
-      durationSecond.value = duration.inSeconds.toDouble();
-      durationString.value = formatTime(duration);
+    audioPlayer.durationStream.listen((newDuration) {
+      if (newDuration != null) {
+        duration = newDuration;
+        durationSecond.value = duration.inSeconds.toDouble();
+        durationString.value = formatTime(duration);
+      }
     });
   }
 
   void listenPosition() {
-    audioPlayer.onPositionChanged.listen((newPosition) {
+    audioPlayer.positionStream.listen((newPosition) {
       position = newPosition;
       positionSecond.value = position.inSeconds.toDouble();
       positionString.value = formatTime(position);
-    });
-
-    audioPlayer.onPlayerStateChanged.listen((PlayerState state) {
-      print('>>> PlayerState: $state');
-    });
-
-    audioPlayer.onPlayerComplete.listen((event) {
-      print('>>> Player complete event');
-    });
-
-    audioPlayer.onSeekComplete.listen((event) {
-      print('>>> Seek complete event');
     });
   }
 
   Future<void> onChangedPosition(double value) async {
     final position = Duration(seconds: value.toInt());
     await audioPlayer.seek(position);
-    await audioPlayer.resume();
+    if (isPlaying.value) {
+      await audioPlayer.play();
+    }
   }
 
   void onItemTap(int index) {
-    currentTrackIndex = index;
-    playAudio(currentTrackIndex);
+    currentTrackIndex.value = index;
+    playAudio(currentTrackIndex.value);
   }
 
   Future<void> onDispose() async {
@@ -93,14 +83,14 @@ class AudioPlayerController extends GetxController {
     );
 
     if (result != null) {
-      List<FileSystemEntity> pickedFiles = result.paths.map((path) => File(path!)).toList();
+      List<File> pickedFiles = result.paths.map((path) => File(path!)).toList();
 
-      currentTrackIndex = listAudioFiles.length;
+      currentTrackIndex.value = listAudioFiles.length;
       listAudioFiles.addAll(pickedFiles);
 
       await audioPlayer.setVolume(homePageController.backgroundVolume.value);
 
-      playAudio(currentTrackIndex);
+      playAudio(currentTrackIndex.value);
     }
   }
 
@@ -109,23 +99,23 @@ class AudioPlayerController extends GetxController {
     await pickAudioFiles();
   }
 
-  // void onPlayPause() => isPlaying.value ? pauseAudio() : playAudio(currentTrackIndex);
   void onPlayPause() => isPlaying.value ? pauseAudio() : resumeAudio();
 
   Future<void> playAudio(int index) async {
     await audioPlayer.stop();
 
     if (index >= 0 && index < listAudioFiles.length) {
-      currentTrackIndex = index;
+      currentTrackIndex.value = index;
       isPlaying.value = true;
 
       String filePath = listAudioFiles[index].path;
-      await audioPlayer.play(DeviceFileSource(filePath));
+      await audioPlayer.setFilePath(filePath);
+      await audioPlayer.play();
     }
   }
 
   Future<void> resumeAudio() async {
-    await audioPlayer.resume();
+    await audioPlayer.play();
     isPlaying.value = true;
   }
 
@@ -136,24 +126,25 @@ class AudioPlayerController extends GetxController {
 
   Future<void> stopAudio() async {
     await audioPlayer.stop();
+    await audioPlayer.seek(Duration.zero);
     isPlaying.value = false;
   }
 
   Future<void> playPreviousAudio() async {
-    currentTrackIndex--;
-    if (currentTrackIndex < 0) {
-      currentTrackIndex = listAudioFiles.length - 1;
+    currentTrackIndex.value--;
+    if (currentTrackIndex.value < 0) {
+      currentTrackIndex.value = listAudioFiles.length - 1;
     }
     await stopAudio();
-    playAudio(currentTrackIndex);
+    playAudio(currentTrackIndex.value);
   }
 
   void playNextAudio() {
-    currentTrackIndex++;
-    if (currentTrackIndex >= listAudioFiles.length) {
-      currentTrackIndex = 0;
+    currentTrackIndex.value++;
+    if (currentTrackIndex.value >= listAudioFiles.length) {
+      currentTrackIndex.value = 0;
     }
-    playAudio(currentTrackIndex);
+    playAudio(currentTrackIndex.value);
   }
 
   Future<void> deleteItem(int index) async {
@@ -164,15 +155,15 @@ class AudioPlayerController extends GetxController {
       durationString.value = '00:00';
       positionString.value = '00:00';
       positionSecond.value = 0;
-    } else if (index == currentTrackIndex) {
-      if (currentTrackIndex == listAudioFiles.length) {
+    } else if (index == currentTrackIndex.value) {
+      if (currentTrackIndex.value == listAudioFiles.length) {
         playAudio(0);
-        currentTrackIndex = 0;
+        currentTrackIndex.value = 0;
       } else {
-        playAudio(currentTrackIndex);
+        playAudio(currentTrackIndex.value);
       }
-    } else if (index < currentTrackIndex) {
-      currentTrackIndex--;
+    } else if (index < currentTrackIndex.value) {
+      currentTrackIndex.value--;
     }
   }
 
