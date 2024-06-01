@@ -12,7 +12,8 @@ class UpdatePage extends StatelessWidget {
     final UpdateController updateController = Get.put(UpdateController());
 
     return PopScope(
-      onPopInvoked: (onPop) => {},
+      canPop: false,
+      // onPopInvoked: (didPop) => {},
       child: CustomScaffold(
         appBarTitle: 'update_page'.tr,
         showBackButtonInAppBar: false,

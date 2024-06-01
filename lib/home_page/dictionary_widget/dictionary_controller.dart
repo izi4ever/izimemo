@@ -93,6 +93,8 @@ class DictionaryController extends GetxController {
 
   // RxBool appIsPaused = false.obs;
 
+  var reverseOrder = false.obs;
+
   DictionaryController() {
     lastCreatedDicIndex = dictionaryStorage.readLastCreatedDicIndex.obs;
     lastOpenedDic = dictionaryStorage.readLastOpenedDic.obs;
@@ -401,10 +403,33 @@ class DictionaryController extends GetxController {
   }
 
   List<String> cleanAndSplitString(String multiRowString) {
-    var tmpList = lineSplitter.convert(multiRowString);
+    var modifiedString = multiRowString.replaceAll(RegExp(r' +'), ' ');
+
+    var tmpList = lineSplitter.convert(modifiedString);
     tmpList.removeWhere((element) => element.length < 5);
+
+    if (reverseOrder.value) {
+      tmpList = tmpList.reversed.toList();
+    }
+    reverseOrder.value = false;
+
     return tmpList;
   }
+
+  // List<String> cleanAndSplitString(String multiRowString) {
+  //   var modifiedString = multiRowString.replaceAll(RegExp(r' +'), ' ');
+  //   var lines = modifiedString.split('\n').map((line) => line.trim()).toList();
+  //   lines.removeWhere((element) => element.length < 5);
+
+  //   if (reverseOrder.value) {
+  //     lines = lines.reversed.toList();
+  //   }
+  //   reverseOrder.value = false;
+
+  //   return lines;
+  // }
+
+  void onChangedReverseOrder(bool value) => reverseOrder.value = value;
 
   //
   // SOUND

@@ -105,7 +105,7 @@ class SettingsPage extends StatelessWidget {
                   activeColor: CustomDesignColors.lightBlue,
                   inactiveTrackColor: CustomDesignColors.lightBlue,
                   inactiveThumbColor: CustomDesignColors.mediumBlue,
-                  onChanged: (bool value) => settingsPageController.onChangedIsTextReading(value),
+                  onChanged: (bool value) => settingsPageController.onChangedIsTextReading(value), 
                 ),
                 const SizedBox(width: 8),
                 Flexible(

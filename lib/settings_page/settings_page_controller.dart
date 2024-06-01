@@ -30,7 +30,7 @@ class SettingsPageController extends GetxController {
 
   void onChangedSecondsPerEntries(double value) => secondsPerEntries.value = value;
 
-  void onChangedIsTextReading(bool value) => isTextReading.value = value;
+  void onChangedIsTextReading(bool value) => isTextReading.value = value; 
 
   void onChangedReadingTimes(int value) => readingTimes.value = value;
 

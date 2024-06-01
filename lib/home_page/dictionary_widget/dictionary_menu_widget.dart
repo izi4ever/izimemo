@@ -122,6 +122,33 @@ class DictionaryMenuWidget extends StatelessWidget {
                           }
                         },
                       ),
+
+                      // TODO isReverseOrder
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          Obx(
+                            () => Switch(
+                              value: dictionaryController.reverseOrder.value,
+                              // activeColor: CustomDesignColors.darkBlue,
+                              activeTrackColor: CustomDesignColors.darkBlue,
+                              activeColor: CustomDesignColors.lightBlue,
+                              inactiveTrackColor: CustomDesignColors.lightBlue,
+                              inactiveThumbColor: CustomDesignColors.mediumBlue,
+                              onChanged: (bool value) => dictionaryController.onChangedReverseOrder(value),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Flexible(
+                            child: CustomFormLabel(
+                              title: 'reverse_order'.tr,
+                              topPadding: 12,
+                              horizontalPadding: 0,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
