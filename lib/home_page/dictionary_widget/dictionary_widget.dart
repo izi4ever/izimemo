@@ -253,16 +253,16 @@ class DictionaryWidget extends StatelessWidget {
                                 TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: splitStrings[1],
+                                      text: splitStrings[1].trim(),
                                       style: const TextStyle(
                                         color: Colors.white70,
                                         fontSize: 18,
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
-                                    TextSpan(text: (splitStrings[1].isEmpty) ? '' : '\n'),
+                                    TextSpan(text: (splitStrings[1].isEmpty || splitStrings[0].isEmpty) ? '' : '\n'),
                                     TextSpan(
-                                      text: splitStrings[0],
+                                      text: splitStrings[0].trim(),
                                       style: const TextStyle(
                                         color: Colors.white,
                                       ),
@@ -278,7 +278,7 @@ class DictionaryWidget extends StatelessWidget {
                                 TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: e.value,
+                                      text: e.value.trim(),
                                       style: const TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w500,
