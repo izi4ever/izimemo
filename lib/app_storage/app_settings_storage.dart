@@ -21,7 +21,7 @@ class AppSettingsStorage {
   int get readReadingTimes => box.read('readingTimes') ?? 1;
   void writeReadingTimes(int value) => box.write('readingTimes', value);
 
-  double get readReadingSpeed => box.read('readingSpeed') ?? 0.25;
+  double get readReadingSpeed => box.read('readingSpeed') ?? 0.375;
   void writeReadingSpeed(double value) => box.write('readingSpeed', value);
 
   // double get readBackgroundVolume {

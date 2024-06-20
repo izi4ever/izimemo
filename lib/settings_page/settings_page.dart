@@ -105,7 +105,7 @@ class SettingsPage extends StatelessWidget {
                   activeColor: CustomDesignColors.lightBlue,
                   inactiveTrackColor: CustomDesignColors.lightBlue,
                   inactiveThumbColor: CustomDesignColors.mediumBlue,
-                  onChanged: (bool value) => settingsPageController.onChangedIsTextReading(value), 
+                  onChanged: (bool value) => settingsPageController.onChangedIsTextReading(value),
                 ),
                 const SizedBox(width: 8),
                 Flexible(
@@ -195,7 +195,7 @@ class SettingsPage extends StatelessWidget {
                   onChanged: (double value) => settingsPageController.onChangedReadingSpeed(value / 2),
                   min: 0.5,
                   max: 2.0,
-                  divisions: 3,
+                  divisions: 12,
                   // label: (settingsPageController.readingSpeed.value * 2).toString(),
                 ),
 
