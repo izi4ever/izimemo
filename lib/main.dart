@@ -7,6 +7,7 @@ import 'package:izimemo/instruction_page/instruction_controller.dart';
 import 'package:izimemo/instruction_page/instruction_page.dart';
 import 'package:izimemo/update_page/update_controller.dart';
 import 'package:izimemo/update_page/update_page.dart';
+import 'package:wakelock/wakelock.dart';
 
 import 'custom/colors/custom_design_colors.dart';
 import 'custom/translations.dart';
@@ -25,6 +26,7 @@ void main() async {
   ));
 
   runApp(MyApp());
+  // Wakelock.enable();
 }
 
 class MyApp extends StatelessWidget {
