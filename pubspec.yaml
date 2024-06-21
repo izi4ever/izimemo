@@ -52,7 +52,7 @@ dependencies:
   flutter_tts: ^4.0.2
   audioplayers: ^6.0.0
   path_provider: ^2.1.1
-  wakelock: ^0.4.0
+  wakelock: ^0.6.2
   audio_service: ^0.18.12
   introduction_screen: ^3.1.12
   dio: ^5.3.3
